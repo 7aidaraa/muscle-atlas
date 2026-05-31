@@ -269,12 +269,29 @@ body{
 }
 .ex-name{font-family:var(--d);font-size:2rem;line-height:1.2;margin-bottom:14px}
 
-/* الرسم التوضيحي للتمرين */
+/* الصورة الحقيقية للتمرين */
 .ex-fig{
-  width:150px;height:130px;margin:0 auto 10px;
+  width:100%;max-width:280px;margin:0 auto 12px;
+  border-radius:18px;overflow:hidden;
+  position:relative;aspect-ratio:4/3;
+  background:var(--sf3);border:1px solid var(--line);
+}
+.ex-fig img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;display:block;
+  transition:opacity .5s ease-in-out;
+}
+.ex-fig img.hide{opacity:0}
+.ex-fig .ex-badge{
+  position:absolute;bottom:8px;right:8px;
+  background:rgba(8,25,24,.82);color:var(--gd);
+  font-size:.6rem;padding:3px 9px;border-radius:10px;
+  backdrop-filter:blur(4px);
+}
+.ex-fig .ex-fallback{
+  position:absolute;inset:0;
   display:flex;align-items:center;justify-content:center;
-  background:radial-gradient(circle,var(--gd-s),transparent 70%);
-  border-radius:18px;
+  font-size:3rem;opacity:.3;
 }
 
 /* كلمة الكابتن */
@@ -885,6 +902,59 @@ const DB={
     ]}
 };
 
+// ══════════════════════════════════════
+// خريطة صور التمارين (free-exercise-db)
+// ══════════════════════════════════════
+const IMG_BASE='https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/';
+const EXIMG={
+  // صدر
+  'الضغط الحائطي':         'Wall_Push-Ups',
+  'الضغط المائل':          'Incline_Push-Up',
+  'الضغط الأرضي':          'Pushups',
+  'ضغط الصدر بالدامبل أرضاً':'Dumbbell_Flyes',
+  'الضغط على المتوازي':    'Dips_-_Chest_Version',
+  // ظهر
+  'السحب تحت الطاولة':     'Inverted_Row',
+  'التجديف بالدامبل':       'One-Arm_Dumbbell_Row',
+  'السحب الأفقي':           'Inverted_Row',
+  'العقلة الكاملة':         'Pullups',
+  // كتف
+  'رفعٌ جانبي بزجاجات':    'Side_Lateral_Raise',
+  'رفعٌ جانبي بالدامبل':   'Side_Lateral_Raise',
+  'ضغطُ الكتف جالساً':     'Dumbbell_Seated_Shoulder_Press',
+  'ضغطُ الكتف بالبار':     'Pike_Push-Ups',
+  // بايسبس
+  'ثنيٌ بقبضةٍ محايدة':    'Hammer_Curls',
+  'ثني البايسبس بالدامبل': 'Alternate_Dumbbell_Curl',
+  'ثني المطرقة':            'Hammer_Curls',
+  'سحبٌ ضيّقٌ بالمسكِ السفلي':'Chin-ups',
+  // ترايسبس
+  'الضغطُ الضيّق':         'Close-Grip_Push-Up',
+  'الغطسُ على الكرسي':     'Bench_Dips',
+  'مدُّ الترايسبس بالدامبل':'Dumbbell_Tricep_Kickback',
+  'الغطسُ على المتوازي':   'Dips_-_Triceps_Version',
+  // بطن
+  'الكرنش الأساسي':        'Crunches',
+  'الكرنش المعكوس':         'Reverse_Crunch',
+  'البلانك':               'Plank',
+  'الكرنش بالدامبل':       'Crunches',
+  // رباعية
+  'السكوات الأساسي':        'Bodyweight_Squat',
+  'الطعن الثابت':           'Lunge',
+  'السكوات بالدامبل':       'Dumbbell_Squat',
+  'السكوات البلغاري':       'Dumbbell_Bulgarian_Split_Squat',
+  // ظهر الفخذ
+  'الجسر الأرضي':           'Glute_Bridge',
+  'الجسر بساقٍ واحدة':     'Single_Leg_Hip_Thrust',
+  'رومانيانِ ديدلفت بالدامبل':'Romanian_Deadlift',
+  'ديدلفت بالدامبل':        'Romanian_Deadlift',
+  // ساق
+  'رفعُ السمانة واقفاً':   'Standing_Dumbbell_Calf_Raise',
+  'رفعُ السمانة بساقٍ واحدة':'Standing_Dumbbell_Calf_Raise',
+  'رفعُ السمانة بالدامبل': 'Standing_Dumbbell_Calf_Raise',
+  'رفعُ السمانة بالدامبل جالساً':'Dumbbell_Seated_One-Leg_Calf_Raise',
+};
+
 // برامج الأسابيع
 const SPLITS={
   2:[
@@ -999,8 +1069,8 @@ function renderEx(){
   SESS.reps=defaultReps(ex.reps);
   document.getElementById('repN').textContent=a(SESS.reps);
 
-  // رسم التمرين
-  document.getElementById('exFig').innerHTML=drawEx(item.muscleId,ex.df);
+  // صورة التمرين
+  renderExImg(ex.n, item.muscleId);
 
   // كلمة الكابتن
   const cw=captainWord(ex,SESS.sets.length,ex.sets);
@@ -1049,7 +1119,46 @@ function renderDots(total,done){
   }
 }
 
-// رسم التمرين بالـ SVG
+// ── صورة التمرين الحقيقية مع تبديل إطارين ──
+let imgTimer=null;
+function renderExImg(exName, muscleId){
+  clearInterval(imgTimer);
+  const key=EXIMG[exName];
+  const fig=document.getElementById('exFig');
+  const emoji=DB[muscleId]?.e||'💪';
+
+  if(!key){
+    fig.innerHTML=`<div class="ex-fallback">${emoji}</div>`;
+    return;
+  }
+
+  const u0=`${IMG_BASE}${key}/images/0.jpg`;
+  const u1=`${IMG_BASE}${key}/images/1.jpg`;
+
+  fig.innerHTML=`
+    <img id="exImg0" src="${u0}" alt="${exName}">
+    <img id="exImg1" src="${u1}" alt="${exName}" class="hide">
+    <div class="ex-badge">▶ طريقة الأداء</div>`;
+
+  // تحقق من تحميل الصورة
+  const img0=document.getElementById('exImg0');
+  img0.onerror=()=>{ fig.innerHTML=`<div class="ex-fallback">${emoji}</div>`; };
+
+  // بدء تبديل الإطارين بعد التحميل
+  img0.onload=()=>{
+    let frame=0;
+    imgTimer=setInterval(()=>{
+      const a=document.getElementById('exImg0');
+      const b=document.getElementById('exImg1');
+      if(!a||!b){clearInterval(imgTimer);return;}
+      frame=1-frame;
+      a.classList.toggle('hide',frame===1);
+      b.classList.toggle('hide',frame===0);
+    },900);
+  };
+}
+
+// رسم التمرين بالـ SVG (احتياطي)
 function drawEx(muscleId,df){
   const C='stroke:#B08D57;stroke-width:3;fill:none;stroke-linecap:round';
   const F='fill:#B08D57;opacity:.85';
@@ -1237,6 +1346,7 @@ function skipEx(){
 }
 
 function quitSess(){
+  clearInterval(imgTimer);
   if(SESS.done.length>0){
     clearInterval(SESS.restId);
     document.getElementById('restOv').classList.remove('on');
