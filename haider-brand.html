@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>هوية حيدر الحازم البصرية</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap');
+
+:root {
+  --emerald:   #0F4C45;
+  --emerald-l: #1a6b62;
+  --gold:      #B08D57;
+  --gold-l:    #c9a96e;
+  --gold-d:    #8a6a38;
+  --ivory:     #F5F1E8;
+  --ivory-d:   #e8e2d0;
+  --charcoal:  #1F1F1F;
+  --copper:    #8C5A3C;
+  --white:     #FFFFFF;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: #f0ebe0;
+  font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+  color: var(--charcoal);
+  direction: rtl;
+}
+
+/* ━━━ SECTION WRAPPER ━━━ */
+.section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 40px;
+}
+.section-title {
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  border-bottom: 1px solid var(--gold-d);
+  padding-bottom: 10px;
+  margin-bottom: 48px;
+  font-family: 'Amiri', serif;
+}
+
+/* ━━━ COVER ━━━ */
+.cover {
+  background: var(--emerald);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(176,141,87,.06) 60px),
+    repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(176,141,87,.06) 60px);
+}
+.cover-inner {
+  position: relative;
+  text-align: center;
+  padding: 60px;
+}
+.cover-label {
+  font-size: 10px;
+  letter-spacing: 6px;
+  color: var(--gold);
+  opacity: .7;
+  margin-bottom: 50px;
+  font-family: 'Amiri', serif;
+}
+.cover-name {
+  font-family: 'Amiri', serif;
+  font-size: 52px;
+  color: var(--ivory);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 20px 0 10px;
+}
+.cover-name-en {
+  font-size: 13px;
+  letter-spacing: 5px;
+  color: var(--gold);
+  opacity: .8;
+  margin-bottom: 40px;
+}
+.cover-tagline {
+  font-family: 'Amiri', serif;
+  font-size: 16px;
+  color: var(--gold-l);
+  letter-spacing: 2px;
+}
+.cover-tagline span { margin: 0 12px; opacity: .5; }
+
+/* ━━━ LOGO SHOWCASE ━━━ */
+.logo-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 2px;
+  background: var(--charcoal);
+}
+.logo-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+  gap: 20px;
+}
+.logo-cell .cell-label {
+  font-size: 10px;
+  letter-spacing: 3px;
+  opacity: .45;
+  font-family: 'Amiri', serif;
+}
+.bg-emerald  { background: var(--emerald); }
+.bg-ivory    { background: var(--ivory); }
+.bg-charcoal { background: var(--charcoal); }
+.bg-gold     { background: var(--gold); }
+.bg-white    { background: #fff; }
+
+/* ━━━ SVG LOGO ━━━ */
+.logo-svg { overflow: visible; }
+
+/* ━━━ COLOR PALETTE ━━━ */
+.palette-row {
+  display: flex;
+  gap: 0;
+  height: 120px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+.swatch {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 14px;
+  position: relative;
+}
+.swatch-name  { font-size: 11px; font-weight: 600; margin-bottom: 3px; }
+.swatch-hex   { font-size: 10px; opacity: .7; letter-spacing: 1px; font-family: monospace; }
+.swatch-role  { font-size: 10px; opacity: .55; }
+
+.color-specs {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  margin-top: 32px;
+}
+.color-spec-item {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.color-dot {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,.08);
+}
+.color-spec-item .name { font-size: 13px; font-weight: 700; }
+.color-spec-item .hex  { font-size: 11px; opacity: .6; font-family: monospace; }
+.color-spec-item .use  { font-size: 11px; opacity: .5; line-height: 1.5; }
+
+/* ━━━ TYPOGRAPHY ━━━ */
+.type-block { margin-bottom: 48px; border-bottom: 1px solid var(--ivory-d); padding-bottom: 48px; }
+.type-block:last-child { border-bottom: none; }
+.type-meta  { font-size: 10px; letter-spacing: 3px; color: var(--gold); margin-bottom: 16px; }
+.t-display  { font-family: 'Amiri', serif; font-size: 56px; font-weight: 700; line-height: 1.2; color: var(--emerald); }
+.t-headline { font-family: 'Amiri', serif; font-size: 32px; font-weight: 700; line-height: 1.4; color: var(--charcoal); }
+.t-subhead  { font-family: 'Amiri', serif; font-size: 20px; color: var(--copper); line-height: 1.6; }
+.t-body     { font-family: 'Noto Naskh Arabic', serif; font-size: 16px; line-height: 2.0; color: var(--charcoal); max-width: 620px; }
+.t-caption  { font-family: 'Noto Naskh Arabic', serif; font-size: 12px; line-height: 1.9; color: var(--charcoal); opacity: .6; letter-spacing: .5px; }
+.t-quote {
+  font-family: 'Amiri', serif;
+  font-size: 22px;
+  font-style: italic;
+  color: var(--emerald);
+  border-right: 3px solid var(--gold);
+  padding-right: 24px;
+  line-height: 1.8;
+  margin: 20px 0;
+}
+
+/* ━━━ PATTERN ━━━ */
+.pattern-showcase {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--charcoal);
+}
+.pattern-cell {
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ━━━ SEAL VERSIONS ━━━ */
+.seal-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  align-items: center;
+  justify-items: center;
+}
+.seal-item { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.seal-label { font-size: 10px; letter-spacing: 3px; opacity: .45; }
+
+/* ━━━ MOCKUPS ━━━ */
+.mockup-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+.mockup-full { grid-column: 1 / -1; }
+
+/* Business Card */
+.bcard {
+  width: 340px;
+  height: 190px;
+  background: var(--emerald);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(15,76,69,.35);
+}
+.bcard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(176,141,87,.04) 9px);
+}
+.bcard-inner { position: relative; text-align: center; }
+.bcard-name  { font-family: 'Amiri', serif; font-size: 22px; color: var(--ivory); font-weight: 700; }
+.bcard-role  { font-size: 10px; letter-spacing: 4px; color: var(--gold); margin-top: 6px; opacity: .8; }
+.bcard-line  { width: 40px; height: 1px; background: var(--gold); margin: 12px auto; opacity: .5; }
+.bcard-info  { font-size: 11px; color: var(--ivory); opacity: .6; letter-spacing: .5px; }
+
+.bcard-back {
+  background: var(--ivory);
+  border: 1px solid var(--ivory-d);
+  box-shadow: 0 12px 40px rgba(0,0,0,.08);
+}
+.bcard-back .bcard-name { color: var(--emerald); }
+.bcard-back .bcard-role { color: var(--gold-d); }
+.bcard-back .bcard-info { color: var(--charcoal); }
+
+/* Letterhead */
+.letterhead {
+  background: var(--white);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0,0,0,.1);
+  max-width: 480px;
+}
+.lh-header {
+  background: var(--emerald);
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.lh-name { font-family: 'Amiri', serif; font-size: 20px; color: var(--ivory); }
+.lh-role { font-size: 10px; color: var(--gold); letter-spacing: 2px; margin-top: 4px; }
+.lh-body  { padding: 32px; }
+.lh-date  { font-size: 11px; color: var(--copper); margin-bottom: 20px; }
+.lh-text  { font-size: 14px; line-height: 2.2; color: var(--charcoal); opacity: .8; }
+.lh-footer {
+  border-top: 1px solid var(--ivory-d);
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.lh-footer-text { font-size: 10px; color: var(--copper); letter-spacing: 1px; }
+
+/* Book spine */
+.book-spine {
+  width: 60px;
+  height: 240px;
+  background: var(--emerald);
+  border-radius: 2px 6px 6px 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 8px;
+  box-shadow: -4px 4px 16px rgba(0,0,0,.25), inset -2px 0 6px rgba(0,0,0,.2);
+  writing-mode: vertical-rl;
+  position: relative;
+  overflow: hidden;
+}
+.book-spine::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 6px;
+  background: rgba(0,0,0,.15);
+}
+
+/* Social Avatar */
+.avatar-frame {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--emerald);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 8px 24px rgba(15,76,69,.4);
+}
+.avatar-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  opacity: .6;
+}
+
+/* Watermark */
+.watermark-demo {
+  background: var(--ivory);
+  padding: 40px;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  min-height: 220px;
+}
+.watermark-demo .wm-text {
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 13px;
+  line-height: 2.4;
+  color: var(--charcoal);
+  opacity: .8;
+  position: relative;
+  z-index: 2;
+}
+
+/* ━━━ USAGE RULES ━━━ */
+.rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.rule-card {
+  padding: 28px;
+  border-radius: 4px;
+  border: 1px solid var(--ivory-d);
+  background: var(--white);
+}
+.rule-ok  { border-right: 4px solid var(--emerald); }
+.rule-no  { border-right: 4px solid #c0392b; }
+.rule-title { font-size: 12px; font-weight: 700; margin-bottom: 12px; letter-spacing: 1px; }
+.rule-ok .rule-title { color: var(--emerald); }
+.rule-no .rule-title { color: #c0392b; }
+.rule-list { list-style: none; }
+.rule-list li { font-size: 12px; padding: 5px 0; opacity: .7; border-bottom: 1px solid var(--ivory-d); }
+.rule-list li:last-child { border-bottom: none; }
+.rule-list li::before { content: '← '; opacity: .4; }
+
+/* spacing */
+.mt8 { margin-top: 8px; }
+.mt16 { margin-top: 16px; }
+.mt32 { margin-top: 32px; }
+.flex-row { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     COVER
+══════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-label">دليل الهوية البصرية · النسخة الأولى</div>
+
+    <!-- MAIN LOGO SVG -->
+    <svg viewBox="0 0 160 200" width="120" height="150" class="logo-svg">
+      <!-- outer arch -->
+      <path d="M80 8 L148 70 L148 180 Q148 192 136 192 L24 192 Q12 192 12 180 L12 70 Z"
+            fill="none" stroke="#B08D57" stroke-width="2.5"/>
+      <!-- inner arch -->
+      <path d="M80 22 L136 72 L136 176 Q136 184 128 184 L32 184 Q24 184 24 176 L24 72 Z"
+            fill="none" stroke="#B08D57" stroke-width="1" opacity=".55"/>
+      <!-- arch fill subtle -->
+      <path d="M80 8 L148 70 L148 180 Q148 192 136 192 L24 192 Q12 192 12 180 L12 70 Z"
+            fill="rgba(176,141,87,0.06)"/>
+      <!-- pen nib -->
+      <g transform="translate(80,88) scale(1)">
+        <!-- nib body -->
+        <path d="M0,-34 L14,-10 L0,34 L-14,-10 Z" fill="#B08D57" opacity=".9"/>
+        <!-- nib split line -->
+        <line x1="0" y1="-10" x2="0" y2="34" stroke="#0F4C45" stroke-width="1.5"/>
+        <!-- nib highlight -->
+        <path d="M0,-34 L14,-10 L0,0 L-14,-10 Z" fill="#c9a96e" opacity=".6"/>
+        <!-- ink drop -->
+        <ellipse cx="0" cy="38" rx="3.5" ry="5" fill="#B08D57" opacity=".7"/>
+      </g>
+      <!-- horizontal rule lines -->
+      <line x1="32" y1="155" x2="128" y2="155" stroke="#B08D57" stroke-width=".8" opacity=".4"/>
+      <line x1="40" y1="162" x2="120" y2="162" stroke="#B08D57" stroke-width=".5" opacity=".25"/>
+      <!-- corner ornaments -->
+      <g opacity=".5" stroke="#B08D57" stroke-width=".8" fill="none">
+        <path d="M24 70 L24 80 M24 70 L34 70"/>
+        <path d="M136 70 L136 80 M136 70 L126 70"/>
+        <path d="M24 180 L24 170 M24 180 L34 180"/>
+        <path d="M136 180 L136 170 M136 180 L126 180"/>
+      </g>
+    </svg>
+
+    <div class="cover-name">حيدر الحازم</div>
+    <div class="cover-name-en">HAIDER AL-HAZIM</div>
+    <div class="cover-tagline">
+      البحث <span>·</span> التحقيق <span>·</span> المعرفة
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     1. LOGO SHOWCASE
+══════════════════════════════════════════ -->
+<div style="background: var(--charcoal);">
+  <div class="section">
+    <div class="section-title" style="color:var(--gold); border-color:rgba(176,141,87,.3);">١ · الشعار</div>
+    <div class="logo-grid">
+
+      <!-- PRIMARY — dark bg -->
+      <div class="logo-cell bg-emerald" style="padding:80px;">
+        <svg viewBox="0 0 160 200" width="140" height="175" class="logo-svg">
+          <path d="M80 8 L148 70 L148 180 Q148 192 136 192 L24 192 Q12 192 12 180 L12 70 Z"
+                fill="none" stroke="#B08D57" stroke-width="2.5"/>
+          <path d="M80 22 L136 72 L136 176 Q136 184 128 184 L32 184 Q24 184 24 176 L24 72 Z"
+                fill="none" stroke="#B08D57" stroke-width="1" opacity=".55"/>
+          <path d="M80 8 L148 70 L148 180 Q148 192 136 192 L24 192 Q12 192 12 180 L12 70 Z"
+                fill="rgba(176,141,87,0.07)"/>
+          <g transform="translate(80,88)">
+            <path d="M0,-34 L14,-10 L0,34 L-14,-10 Z" fill="#B08D57" opacity=".92"/>
+            <line x1="0" y1="-10" x2="0" y2="34" stroke="#0F4C45" stroke-width="1.5"/>
+            <path d="M0,-34 L14,-10 L0,0 L-14,-10 Z" fill="#c9a96e" opacity=".6"/>
+            <ellipse cx="0" cy="38" rx="3.5" ry="5" fill="#B08D57" opacity=".7"/>
+          </g>
+          <line x1="32" y1="155" x2="128" y2="155" stroke="#B08D57" stroke-width=".8" opacity=".4"/>
+          <line x1="40" y1="162" x2="120" y2="162" stroke="#B08D57" stroke-width=".5" opacity=".25"/>
+          <g opacity=".5" stroke="#B08D57" stroke-width=".8" fill="none">
+            <path d="M24 70 L24 80 M24 70 L34 70"/>
+            <path d="M136 70 L136 80 M136 70 L126 70"/>
+            <path d="M24 180 L24 170 M24 180 L34 180"/>
+            <path d="M136 180 L136 170 M136 180 L126 180"/>
+          </g>
+          <!-- name text -->
+          <text x="80" y="178" text-anchor="middle" font-family="Amiri,serif" font-size="13" fill="#B08D57" font-weight="700">حيدر الحازم</text>
+        </svg>
+        <div class="cell-label" style="color:rgba(176,141,87,.5);">النسخة الرئيسية</div>
+      </div>
+
+      <!-- WHITE BG -->
+      <div class="logo-cell bg-ivory">
+        <svg viewBox="0 0 160 200" width="100" height="125">
+          <path d="M80 8 L148 70 L148 180 Q148 192 136 192 L24 192 Q12 192 12 180 L12 70 Z"
+                fill="none" stroke="#0F4C45" stroke-width="2.5"/>
+          <path d="M80 22 L136 72 L136 176 Q136 184 128 184 L32 184 Q24 184 24 176 L24 72 Z"
+                fill="none" stroke="#0F4C45" stroke-width="1" opacity=".4"/>
+          <g transform="translate(80,88)">
+            <path d="M0,-34 L14,-10 L0,34 L-14,-10 Z" fill="#0F4C45"/>
+            <line x1="0" y1="-10" x2="0" y2="34" stroke="#F5F1E8" stroke-width="1.5"/>
+            <path d="M0,-34 L14,-10 L0,0 L-14,-10 Z" fill="#1a6b62" opacity=".7"/>
+            <ellipse cx="0" cy="38" rx="3.5" ry="5" fill="#0F4C45"/>
+          </g>
+          <line x1="32" y1="155" x2="128" y2="155" stroke="#0F4C45" stroke-width=".8" opacity=".3"/>
+          <line x1="40" y1="162" x2="120" y2="162" stroke="#0F4C45" stroke-width=".5" opacity=".2"/>
+          <text x="80" y="178" text-anchor="middle" font-family="Amiri,serif" font-size="13" fill="#0F4C45" font-weight="700">حيدر الحازم</text>
+        </svg>
+        <div class="cell-label" style="color:var(--copper);">على الفاتح</div>
+      </div>
+
+      <!-- BLACK -->
+      <div class="logo-cell bg-charcoal">
+        <svg viewBox="0 0 160 200" width="100" height="125">
+          <path d="M80 8 L148 70 L148 180 Q148 192 136 192 L24 192 Q12 192 12 180 L12 70 Z"
+                fill="none" stroke="#fff" stroke-width="2.5"/>
+          <path d="M80 22 L136 72 L136 176 Q136 184 128 184 L32 184 Q24 184 24 176 L24 72 Z"
+                fill="none" stroke="#fff" stroke-width="1" opacity=".4"/>
+          <g transform="translate(80,88)">
+            <path d="M0,-34 L14,-10 L0,34 L-14,-10 Z" fill="#fff"/>
+            <line x1="0" y1="-10" x2="0" y2="34" stroke="#1F1F1F" stroke-width="1.5"/>
+            <path d="M0,-34 L14,-10 L0,0 L-14,-10 Z" fill="rgba(255,255,255,.7)"/>
+            <ellipse cx="0" cy="38" rx="3.5" ry="5" fill="#fff"/>
+          </g>
+          <line x1="32" y1="155" x2="128" y2="155" stroke="#fff" stroke-width=".8" opacity=".3"/>
+          <text x="80" y="178" text-anchor="middle" font-family="Amiri,serif" font-size="13" fill="#fff" font-weight="700">حيدر الحازم</text>
+        </svg>
+        <div class="cell-label" style="color:rgba(255,255,255,.35);">أحادي اللون</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     2. SEAL VERSIONS
+══════════════════════════════════════════ -->
+<div style="background: var(--ivory);">
+  <div class="section">
+    <div class="section-title">٢ · نسخ الختم</div>
+
+    <div class="seal-grid">
+
+      <!-- Circular seal -->
+      <div class="seal-item">
+        <svg viewBox="0 0 200 200" width="150" height="150">
+          <circle cx="100" cy="100" r="94" fill="none" stroke="#0F4C45" stroke-width="2.5"/>
+          <circle cx="100" cy="100" r="84" fill="none" stroke="#0F4C45" stroke-width=".8" opacity=".4"/>
+          <!-- circular text path -->
+          <defs>
+            <path id="circ1" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/>
+          </defs>
+          <text font-family="Amiri,serif" font-size="10" fill="#0F4C45" letter-spacing="4">
+            <textPath href="#circ1" startOffset="8%">
+              حيدر الحازم · باحث ومحقق · البحث والتحقيق والمعرفة ·
+            </textPath>
+          </text>
+          <!-- center logo mark -->
+          <g transform="translate(100,98) scale(0.48)">
+            <path d="M0,-60 L50,-15 L50,52 Q50,64 38,64 L-38,64 Q-50,64 -50,52 L-50,-15 Z"
+                  fill="none" stroke="#0F4C45" stroke-width="3"/>
+            <path d="M0,-46 L40,-10 L40,48 Q40,56 32,56 L-32,56 Q-40,56 -40,48 L-40,-10 Z"
+                  fill="none" stroke="#0F4C45" stroke-width="1.2" opacity=".4"/>
+            <g>
+              <path d="M0,-36 L14,-12 L0,32 L-14,-12 Z" fill="#0F4C45"/>
+              <line x1="0" y1="-12" x2="0" y2="32" stroke="#F5F1E8" stroke-width="1.5"/>
+              <ellipse cx="0" cy="36" rx="3" ry="4.5" fill="#0F4C45"/>
+            </g>
+          </g>
+          <!-- decorative dots -->
+          <g fill="#0F4C45" opacity=".3">
+            <circle cx="100" cy="12" r="2.5"/>
+            <circle cx="100" cy="188" r="2.5"/>
+            <circle cx="12" cy="100" r="2.5"/>
+            <circle cx="188" cy="100" r="2.5"/>
+          </g>
+        </svg>
+        <div class="seal-label">الختم الدائري</div>
+      </div>
+
+      <!-- Octagonal seal -->
+      <div class="seal-item">
+        <svg viewBox="0 0 200 200" width="150" height="150">
+          <polygon points="100,8 163,37 192,100 163,163 100,192 37,163 8,100 37,37"
+                   fill="none" stroke="#0F4C45" stroke-width="2.5"/>
+          <polygon points="100,18 155,44 182,100 155,156 100,182 45,156 18,100 45,44"
+                   fill="none" stroke="#0F4C45" stroke-width=".8" opacity=".4"/>
+          <!-- center mark -->
+          <g transform="translate(100,100) scale(0.44)">
+            <path d="M0,-60 L50,-15 L50,52 Q50,64 38,64 L-38,64 Q-50,64 -50,52 L-50,-15 Z"
+                  fill="none" stroke="#0F4C45" stroke-width="3"/>
+            <g>
+              <path d="M0,-36 L14,-12 L0,32 L-14,-12 Z" fill="#0F4C45"/>
+              <line x1="0" y1="-12" x2="0" y2="32" stroke="#F5F1E8" stroke-width="1.5"/>
+              <ellipse cx="0" cy="36" rx="3" ry="4.5" fill="#0F4C45"/>
+            </g>
+          </g>
+          <text x="100" y="160" text-anchor="middle" font-family="Amiri,serif" font-size="11" fill="#0F4C45" font-weight="700">حيدر الحازم</text>
+          <text x="100" y="172" text-anchor="middle" font-family="Amiri,serif" font-size="8" fill="#0F4C45" opacity=".55">باحث ومحقق</text>
+        </svg>
+        <div class="seal-label">الختم الثماني</div>
+      </div>
+
+      <!-- Wax seal effect -->
+      <div class="seal-item">
+        <svg viewBox="0 0 180 180" width="150" height="150">
+          <defs>
+            <radialGradient id="wax" cx="40%" cy="35%">
+              <stop offset="0%" stop-color="#1a6b62"/>
+              <stop offset="60%" stop-color="#0F4C45"/>
+              <stop offset="100%" stop-color="#0a3530"/>
+            </radialGradient>
+            <filter id="wf">
+              <feTurbulence type="turbulence" baseFrequency=".04" numOctaves="4" result="noise"/>
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+          </defs>
+          <circle cx="90" cy="90" r="80" fill="url(#wax)" filter="url(#wf)"/>
+          <circle cx="90" cy="90" r="76" fill="none" stroke="rgba(176,141,87,.5)" stroke-width="1.5"/>
+          <circle cx="90" cy="90" r="66" fill="none" stroke="rgba(176,141,87,.3)" stroke-width="1"/>
+          <!-- logo in gold on wax -->
+          <g transform="translate(90,88) scale(0.44)">
+            <path d="M0,-60 L50,-15 L50,52 Q50,64 38,64 L-38,64 Q-50,64 -50,52 L-50,-15 Z"
+                  fill="none" stroke="#B08D57" stroke-width="3"/>
+            <path d="M0,-36 L14,-12 L0,32 L-14,-12 Z" fill="#B08D57"/>
+            <line x1="0" y1="-12" x2="0" y2="32" stroke="#0F4C45" stroke-width="1.5"/>
+            <ellipse cx="0" cy="36" rx="3" ry="4.5" fill="#B08D57"/>
+          </g>
+          <text x="90" y="148" text-anchor="middle" font-family="Amiri,serif" font-size="11" fill="#B08D57">حيدر الحازم</text>
+        </svg>
+        <div class="seal-label">ختم الشمع</div>
+      </div>
+
+      <!-- Minimal mark only -->
+      <div class="seal-item">
+        <svg viewBox="0 0 120 150" width="100" height="125">
+          <path d="M60 6 L110 52 L110 134 Q110 144 100 144 L20 144 Q10 144 10 134 L10 52 Z"
+                fill="none" stroke="#0F4C45" stroke-width="2"/>
+          <path d="M60 18 L100 54 L100 130 Q100 138 92 138 L28 138 Q20 138 20 130 L20 54 Z"
+                fill="none" stroke="#0F4C45" stroke-width=".8" opacity=".4"/>
+          <g transform="translate(60,72) scale(0.85)">
+            <path d="M0,-34 L14,-10 L0,34 L-14,-10 Z" fill="#0F4C45"/>
+            <line x1="0" y1="-10" x2="0" y2="34" stroke="#F5F1E8" stroke-width="1.5"/>
+            <ellipse cx="0" cy="38" rx="3.5" ry="5" fill="#0F4C45"/>
+          </g>
+        </svg>
+        <div class="seal-label">الرمز المجرد</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     3. COLOR PALETTE
+══════════════════════════════════════════ -->
+<div style="background: var(--white);">
+  <div class="section">
+    <div class="section-title">٣ · لوحة الألوان</div>
+
+    <div class="palette-row">
+      <div class="swatch" style="background:#0F4C45; flex:2;">
+        <div class="swatch-name" style="color:#F5F1E8;">الزمردي العميق</div>
+        <div class="swatch-hex"  style="color:rgba(245,241,232,.6);">#0F4C45</div>
+        <div class="swatch-role" style="color:rgba(245,241,232,.5);">اللون الرئيسي</div>
+      </div>
+      <div class="swatch" style="background:#B08D57;">
+        <div class="swatch-name" style="color:#1F1F1F;">الذهب العتيق</div>
+        <div class="swatch-hex"  style="color:rgba(31,31,31,.6);">#B08D57</div>
+        <div class="swatch-role" style="color:rgba(31,31,31,.5);">لون التمييز</div>
+      </div>
+      <div class="swatch" style="background:#F5F1E8; border:1px solid #e8e2d0;">
+        <div class="swatch-name" style="color:#1F1F1F;">العاجي الدافئ</div>
+        <div class="swatch-hex"  style="color:rgba(31,31,31,.5);">#F5F1E8</div>
+        <div class="swatch-role" style="color:rgba(31,31,31,.4);">الخلفية</div>
+      </div>
+      <div class="swatch" style="background:#1F1F1F;">
+        <div class="swatch-name" style="color:#F5F1E8;">الأسود الفحمي</div>
+        <div class="swatch-hex"  style="color:rgba(245,241,232,.6);">#1F1F1F</div>
+        <div class="swatch-role" style="color:rgba(245,241,232,.5);">النصوص</div>
+      </div>
+      <div class="swatch" style="background:#8C5A3C;">
+        <div class="swatch-name" style="color:#F5F1E8;">النحاسي العتيق</div>
+        <div class="swatch-hex"  style="color:rgba(245,241,232,.6);">#8C5A3C</div>
+        <div class="swatch-role" style="color:rgba(245,241,232,.5);">النبرة الثانوية</div>
+      </div>
+    </div>
+
+    <div class="color-specs">
+      <div class="color-spec-item">
+        <div class="color-dot" style="background:#0F4C45;"></div>
+        <div class="name">الزمردي العميق</div>
+        <div class="hex">#0F4C45</div>
+        <div class="use">الشعار، الترويسات، المساحات الرئيسية</div>
+      </div>
+      <div class="color-spec-item">
+        <div class="color-dot" style="background:#B08D57;"></div>
+        <div class="name">الذهب العتيق</div>
+        <div class="hex">#B08D57</div>
+        <div class="use">الزخارف، الإطارات، العناصر التمييزية</div>
+      </div>
+      <div class="color-spec-item">
+        <div class="color-dot" style="background:#F5F1E8; border:1px solid #ddd;"></div>
+        <div class="name">العاجي الدافئ</div>
+        <div class="hex">#F5F1E8</div>
+        <div class="use">الخلفيات، الأوراق، المساحات الهادئة</div>
+      </div>
+      <div class="color-spec-item">
+        <div class="color-dot" style="background:#1F1F1F;"></div>
+        <div class="name">الفحمي</div>
+        <div class="hex">#1F1F1F</div>
+        <div class="use">نصوص المتن، الهوامش، التسميات</div>
+      </div>
+      <div class="color-spec-item">
+        <div class="color-dot" style="background:#8C5A3C;"></div>
+        <div class="name">النحاسي</div>
+        <div class="hex">#8C5A3C</div>
+        <div class="use">الاقتباسات، المصادر، الهوامش</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     4. TYPOGRAPHY
+══════════════════════════════════════════ -->
+<div style="background: var(--ivory);">
+  <div class="section">
+    <div class="section-title">٤ · المنظومة الطباعية</div>
+
+    <div class="type-block">
+      <div class="type-meta">DISPLAY · الشعار والعناوين الكبرى</div>
+      <div class="t-display">حيدر الحازم</div>
+      <div class="mt8" style="font-size:11px; opacity:.5;">Amiri — Bold 700 · 56px</div>
+    </div>
+
+    <div class="type-block">
+      <div class="type-meta">HEADLINE · عناوين الأبحاث والدراسات</div>
+      <div class="t-headline">تحقيق في مصادر التاريخ الإسلامي</div>
+      <div class="mt8" style="font-size:11px; opacity:.5;">Amiri — Bold 700 · 32px</div>
+    </div>
+
+    <div class="type-block">
+      <div class="type-meta">SUBHEADING · العناوين الفرعية والأقسام</div>
+      <div class="t-subhead">منهجية النقد والتحقق من المصادر الأولية</div>
+      <div class="mt8" style="font-size:11px; opacity:.5;">Amiri — Regular 400 · 20px · النحاسي</div>
+    </div>
+
+    <div class="type-block">
+      <div class="type-meta">BODY · متن النص والمحتوى البحثي</div>
+      <div class="t-body">
+        يُعدّ التحقيق في المصادر الأولية منهجاً علمياً أثبت جدارته عبر قرون من الكتابة التاريخية؛ إذ لا يكفي الاستناد إلى الرواية المتداولة ما لم تُعضَّد بالنص الأصلي المحقَّق. وقد تبنّى المؤلف هذا المنهج في سائر أعماله، مُحكِماً دائرة التمحيص قبل إطلاق أيّ حكم أو استنتاج.
+      </div>
+      <div class="mt8" style="font-size:11px; opacity:.5;">Noto Naskh Arabic — Regular 400 · 16px · تباعد سطور ×2.0</div>
+    </div>
+
+    <div class="type-block">
+      <div class="type-meta">QUOTE · الاقتباسات والشواهد النصية</div>
+      <div class="t-quote">«وإنّما يُعرَف الرجلُ بتحقيقه لا بادّعائه؛ والعلمُ لمن صبر على تقليب المصادر حتى انجلى له الغامض»</div>
+      <div class="mt8" style="font-size:11px; opacity:.5;">Amiri — Italic · 22px · الزمردي · حدٌّ ذهبي</div>
+    </div>
+
+    <div class="type-block">
+      <div class="type-meta">CAPTION · التسميات التوضيحية والهوامش</div>
+      <div class="t-caption">المصدر: مخطوطة رقم ٢٤١ / دار الكتب المصرية / القاهرة · نُسخت سنة ٨٤٢ هـ</div>
+      <div class="mt8" style="font-size:11px; opacity:.5;">Noto Naskh Arabic — Regular · 12px · ٦٠% شفافية</div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     5. GEOMETRIC PATTERN
+══════════════════════════════════════════ -->
+<div style="background: var(--charcoal);">
+  <div class="section">
+    <div class="section-title" style="color:var(--gold); border-color:rgba(176,141,87,.3);">٥ · الزخرفة الهندسية</div>
+
+    <div class="pattern-showcase">
+      <!-- Dark pattern on emerald -->
+      <div class="pattern-cell" style="background: var(--emerald);">
+        <svg viewBox="0 0 120 120" width="280" height="280" style="opacity:.5; position:absolute;">
+          <defs>
+            <pattern id="p1" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+              <!-- 8-pointed star -->
+              <g fill="none" stroke="#B08D57" stroke-width=".8">
+                <rect x="15" y="15" width="30" height="30" transform="rotate(45 30 30)"/>
+                <rect x="12" y="12" width="36" height="36"/>
+                <!-- diagonals -->
+                <line x1="0"  y1="0"  x2="60" y2="60"/>
+                <line x1="60" y1="0"  x2="0"  y2="60"/>
+                <line x1="30" y1="0"  x2="30" y2="60"/>
+                <line x1="0"  y1="30" x2="60" y2="30"/>
+                <!-- small diamonds at intersections -->
+                <polygon points="30,4 34,8 30,12 26,8"/>
+                <polygon points="30,48 34,52 30,56 26,52"/>
+                <polygon points="4,30 8,26 12,30 8,34"/>
+                <polygon points="48,30 52,26 56,30 52,34"/>
+              </g>
+            </pattern>
+          </defs>
+          <rect width="120" height="120" fill="url(#p1)"/>
+        </svg>
+        <div style="position:relative; z-index:2; text-align:center;">
+          <div style="font-family:Amiri,serif; font-size:28px; color:var(--gold); line-height:1.3;">البحث<br/>التحقيق<br/>المعرفة</div>
+        </div>
+      </div>
+
+      <!-- Light pattern on ivory -->
+      <div class="pattern-cell" style="background: var(--ivory);">
+        <svg style="position:absolute; inset:0; width:100%; height:100%; opacity:.25;">
+          <defs>
+            <pattern id="p2" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+              <g fill="none" stroke="#0F4C45" stroke-width=".7">
+                <rect x="10" y="10" width="30" height="30" transform="rotate(45 25 25)"/>
+                <rect x="8"  y="8"  width="34" height="34"/>
+                <line x1="0" y1="0" x2="50" y2="50"/>
+                <line x1="50" y1="0" x2="0" y2="50"/>
+                <line x1="25" y1="0" x2="25" y2="50"/>
+                <line x1="0" y1="25" x2="50" y2="25"/>
+              </g>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#p2)"/>
+        </svg>
+        <!-- Letterhead preview -->
+        <div style="position:relative; background:white; width:200px; padding:20px; border-radius:3px; box-shadow:0 8px 24px rgba(0,0,0,.12);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding-bottom:12px; border-bottom:1px solid var(--ivory-d);">
+            <svg viewBox="0 0 80 100" width="28" height="35">
+              <path d="M40 4 L74 35 L74 90 Q74 96 68 96 L12 96 Q6 96 6 90 L6 35 Z" fill="none" stroke="#0F4C45" stroke-width="2"/>
+              <g transform="translate(40,55)">
+                <path d="M0,-20 L8,-6 L0,20 L-8,-6 Z" fill="#0F4C45"/>
+                <line x1="0" y1="-6" x2="0" y2="20" stroke="#F5F1E8" stroke-width="1"/>
+              </g>
+            </svg>
+            <div style="text-align:left;">
+              <div style="font-family:Amiri,serif; font-size:11px; color:var(--emerald); font-weight:700;">حيدر الحازم</div>
+              <div style="font-size:8px; color:var(--copper); letter-spacing:1px;">باحث ومحقق</div>
+            </div>
+          </div>
+          <div style="height:8px; background:var(--ivory-d); border-radius:4px; margin-bottom:6px;"></div>
+          <div style="height:6px; background:var(--ivory-d); border-radius:4px; margin-bottom:6px; width:80%;"></div>
+          <div style="height:6px; background:var(--ivory-d); border-radius:4px; margin-bottom:6px;"></div>
+          <div style="height:6px; background:var(--ivory-d); border-radius:4px; width:60%;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     6. APPLICATIONS / MOCKUPS
+══════════════════════════════════════════ -->
+<div style="background: var(--white);">
+  <div class="section">
+    <div class="section-title">٦ · التطبيقات العملية</div>
+
+    <!-- Business cards -->
+    <div style="margin-bottom:56px;">
+      <div style="font-size:11px; letter-spacing:2px; opacity:.4; margin-bottom:24px;">بطاقة العمل</div>
+      <div class="flex-row" style="align-items:center; gap:32px;">
+
+        <!-- Front -->
+        <div class="bcard">
+          <svg viewBox="0 0 80 100" width="36" height="45" style="position:absolute; left:20px; top:50%; transform:translateY(-50%); opacity:.15;">
+            <path d="M40 4 L74 35 L74 90 Q74 96 68 96 L12 96 Q6 96 6 90 L6 35 Z" fill="#B08D57"/>
+          </svg>
+          <div class="bcard-inner">
+            <div style="margin-bottom:8px;">
+              <svg viewBox="0 0 80 100" width="30" height="37">
+                <path d="M40 4 L74 35 L74 90 Q74 96 68 96 L12 96 Q6 96 6 90 L6 35 Z" fill="none" stroke="#B08D57" stroke-width="2.5"/>
+                <g transform="translate(40,55)">
+                  <path d="M0,-20 L8,-6 L0,20 L-8,-6 Z" fill="#B08D57"/>
+                  <line x1="0" y1="-6" x2="0" y2="20" stroke="#0F4C45" stroke-width="1"/>
+                  <ellipse cx="0" cy="23" rx="2" ry="3" fill="#B08D57"/>
+                </g>
+              </svg>
+            </div>
+            <div class="bcard-name">حيدر الحازم</div>
+            <div class="bcard-role">HAIDER AL-HAZIM</div>
+            <div class="bcard-line"></div>
+            <div class="bcard-info" style="font-size:10px; letter-spacing:2px;">باحث · محقق · مؤلف</div>
+          </div>
+        </div>
+
+        <!-- Back -->
+        <div class="bcard bcard-back">
+          <div class="bcard-inner">
+            <svg viewBox="0 0 200 200" width="70" height="70" style="opacity:.12; position:absolute;">
+              <circle cx="100" cy="100" r="90" fill="none" stroke="#0F4C45" stroke-width="2"/>
+              <circle cx="100" cy="100" r="78" fill="none" stroke="#0F4C45" stroke-width="1"/>
+              <g transform="translate(100,100) scale(0.5)">
+                <path d="M0,-60 L50,-15 L50,52 Q50,64 38,64 L-38,64 Q-50,64 -50,52 L-50,-15 Z" fill="none" stroke="#0F4C45" stroke-width="3"/>
+                <path d="M0,-36 L14,-12 L0,32 L-14,-12 Z" fill="#0F4C45"/>
+              </g>
+            </svg>
+            <div class="bcard-name" style="font-size:16px;">حيدر الحازم</div>
+            <div class="bcard-role" style="margin-top:8px;">البحث · التحقيق · المعرفة</div>
+            <div class="bcard-line"></div>
+            <div class="bcard-info">haider@alhazim.com</div>
+            <div class="bcard-info" style="margin-top:4px; opacity:.5;">@HaiderAlHazim</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Letterhead -->
+    <div style="margin-bottom:56px;">
+      <div style="font-size:11px; letter-spacing:2px; opacity:.4; margin-bottom:24px;">ورقة الرأسية</div>
+      <div class="letterhead">
+        <div class="lh-header">
+          <div>
+            <div class="lh-name">حيدر الحازم</div>
+            <div class="lh-role">RESEARCHER · INVESTIGATOR · SCHOLAR</div>
+          </div>
+          <svg viewBox="0 0 80 100" width="42" height="52">
+            <path d="M40 4 L74 35 L74 90 Q74 96 68 96 L12 96 Q6 96 6 90 L6 35 Z" fill="none" stroke="#B08D57" stroke-width="2.5"/>
+            <path d="M40 14 L66 37 L66 86 Q66 92 60 92 L20 92 Q14 92 14 86 L14 37 Z" fill="none" stroke="#B08D57" stroke-width="1" opacity=".45"/>
+            <g transform="translate(40,55)">
+              <path d="M0,-22 L9,-7 L0,22 L-9,-7 Z" fill="#B08D57"/>
+              <line x1="0" y1="-7" x2="0" y2="22" stroke="#0F4C45" stroke-width="1.2"/>
+              <ellipse cx="0" cy="26" rx="2.5" ry="3.5" fill="#B08D57"/>
+            </g>
+          </svg>
+        </div>
+        <div class="lh-body">
+          <div class="lh-date">١٥ ذو القعدة ١٤٤٧ هـ · مايو ٢٠٢٦</div>
+          <div class="lh-text">
+            بسم الله الرحمن الرحيم، يسعدني تقديم هذه الدراسة التحقيقية حول المصادر الأولية للتأريخ الإسلامي في العصر العباسي، وقد اعتمدت فيها منهج النقد الداخلي والمقارنة بين المخطوطات...
+          </div>
+        </div>
+        <div class="lh-footer">
+          <div class="lh-footer-text">البحث · التحقيق · المعرفة</div>
+          <svg viewBox="0 0 60 75" width="30" height="37" opacity=".15">
+            <path d="M30 3 L56 26 L56 68 Q56 72 52 72 L8 72 Q4 72 4 68 L4 26 Z" fill="#0F4C45"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Social + Avatar + Watermark -->
+    <div class="flex-row" style="gap:48px; align-items:flex-start;">
+
+      <!-- Social media avatar -->
+      <div>
+        <div style="font-size:11px; letter-spacing:2px; opacity:.4; margin-bottom:24px;">الصورة الشخصية</div>
+        <div class="flex-row" style="gap:16px; align-items:center;">
+          <div class="avatar-frame" style="width:100px; height:100px;">
+            <div class="avatar-ring"></div>
+            <svg viewBox="0 0 80 100" width="52" height="65">
+              <path d="M40 4 L74 35 L74 90 Q74 96 68 96 L12 96 Q6 96 6 90 L6 35 Z" fill="none" stroke="#B08D57" stroke-width="2.5"/>
+              <g transform="translate(40,55)">
+                <path d="M0,-22 L9,-7 L0,22 L-9,-7 Z" fill="#B08D57"/>
+                <line x1="0" y1="-7" x2="0" y2="22" stroke="#0F4C45" stroke-width="1"/>
+                <ellipse cx="0" cy="26" rx="2.5" ry="3.5" fill="#B08D57"/>
+              </g>
+            </svg>
+          </div>
+          <div class="avatar-frame" style="width:64px; height:64px;">
+            <div class="avatar-ring" style="inset:-3px; border-width:1.5px;"></div>
+            <svg viewBox="0 0 80 100" width="34" height="42">
+              <path d="M40 4 L74 35 L74 90 Q74 96 68 96 L12 96 Q6 96 6 90 L6 35 Z" fill="none" stroke="#B08D57" stroke-width="3"/>
+              <g transform="translate(40,55)">
+                <path d="M0,-22 L9,-7 L0,22 L-9,-7 Z" fill="#B08D57"/>
+                <line x1="0" y1="-7" x2="0" y2="22" stroke="#0F4C45" stroke-width="1"/>
+              </g>
+            </svg>
+          </div>
+          <div class="avatar-frame" style="width:40px; height:40px;">
+            <div class="avatar-ring" style="inset:-2px; border-width:1px;"></div>
+            <svg viewBox="0 0 80 100" width="22" height="27">
+              <path d="M40 4 L74 35 L74 90 Q74 96 68 96 L12 96 Q6 96 6 90 L6 35 Z" fill="none" stroke="#B08D57" stroke-width="4"/>
+              <g transform="translate(40,55)">
+                <path d="M0,-22 L9,-7 L0,22 L-9,-7 Z" fill="#B08D57"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <div style="font-size:10px; opacity:.4; margin-top:12px;">١٠٠px · ٦٤px · ٤٠px</div>
+      </div>
+
+      <!-- Watermark demo -->
+      <div style="flex:1;">
+        <div style="font-size:11px; letter-spacing:2px; opacity:.4; margin-bottom:24px;">العلامة المائية</div>
+        <div class="watermark-demo">
+          <!-- watermark logo -->
+          <svg viewBox="0 0 160 200" width="80" height="100"
+               style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) rotate(-15deg); opacity:.07;">
+            <path d="M80 8 L148 70 L148 180 Q148 192 136 192 L24 192 Q12 192 12 180 L12 70 Z" fill="#0F4C45"/>
+            <g transform="translate(80,110)">
+              <path d="M0,-44 L18,-14 L0,42 L-18,-14 Z" fill="#0F4C45"/>
+            </g>
+          </svg>
+          <div class="wm-text">
+            يُعدّ التحقيق في المصادر الأولية منهجاً علمياً راسخاً؛ إذ لا يكفي الاستناد إلى الرواية المتداولة ما لم تُعضَّد بالنص الأصلي المحقَّق. والمحقق الجاد هو من يصبر على تقليب المصادر حتى ينجلي له الغامض من الحقيقة.
+          </div>
+          <div style="margin-top:16px; display:flex; align-items:center; gap:8px; opacity:.5;">
+            <svg viewBox="0 0 40 50" width="14" height="17">
+              <path d="M20 2 L37 17 L37 45 Q37 48 34 48 L6 48 Q3 48 3 45 L3 17 Z" fill="none" stroke="#0F4C45" stroke-width="2"/>
+              <g transform="translate(20,28)"><path d="M0,-10 L4,-3 L0,10 L-4,-3 Z" fill="#0F4C45"/></g>
+            </svg>
+            <span style="font-size:11px; color:var(--emerald);">حيدر الحازم · جميع الحقوق محفوظة</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Book spines -->
+    <div style="margin-top:56px;">
+      <div style="font-size:11px; letter-spacing:2px; opacity:.4; margin-bottom:24px;">أغلفة الكتب (ظهر العطف)</div>
+      <div style="display:flex; gap:6px; align-items:flex-end;">
+        <div class="book-spine" style="height:260px; width:65px; background:#0F4C45;">
+          <svg viewBox="0 0 50 62" width="22" height="27" style="transform:rotate(90deg);">
+            <path d="M25 3 L46 22 L46 56 Q46 59 43 59 L7 59 Q4 59 4 56 L4 22 Z" fill="none" stroke="#B08D57" stroke-width="2"/>
+            <g transform="translate(25,34)"><path d="M0,-14 L6,-4 L0,14 L-6,-4 Z" fill="#B08D57"/></g>
+          </svg>
+          <div style="writing-mode:vertical-rl; transform:rotate(180deg); color:#B08D57; font-family:Amiri,serif; font-size:12px; text-align:center; letter-spacing:2px;">دراسات في التاريخ الإسلامي</div>
+          <div style="writing-mode:vertical-rl; transform:rotate(180deg); color:rgba(176,141,87,.6); font-size:9px; letter-spacing:1px;">حيدر الحازم</div>
+        </div>
+        <div class="book-spine" style="height:230px; width:48px; background:#1a6b62;">
+          <svg viewBox="0 0 40 50" width="18" height="22" style="transform:rotate(90deg);">
+            <path d="M20 2 L37 17 L37 45 Q37 48 34 48 L6 48 Q3 48 3 45 L3 17 Z" fill="none" stroke="#B08D57" stroke-width="2"/>
+            <g transform="translate(20,27)"><path d="M0,-11 L5,-3 L0,11 L-5,-3 Z" fill="#B08D57"/></g>
+          </svg>
+          <div style="writing-mode:vertical-rl; transform:rotate(180deg); color:#B08D57; font-family:Amiri,serif; font-size:11px; text-align:center; letter-spacing:2px;">تحقيق المصادر</div>
+          <div style="writing-mode:vertical-rl; transform:rotate(180deg); color:rgba(176,141,87,.6); font-size:9px; letter-spacing:1px;">حيدر الحازم</div>
+        </div>
+        <div class="book-spine" style="height:200px; width:40px; background:#0F4C45;">
+          <svg viewBox="0 0 35 44" width="15" height="19" style="transform:rotate(90deg);">
+            <path d="M17 2 L32 14 L32 40 Q32 42 30 42 L5 42 Q3 42 3 40 L3 14 Z" fill="none" stroke="#B08D57" stroke-width="2"/>
+            <g transform="translate(17,24)"><path d="M0,-10 L4,-3 L0,10 L-4,-3 Z" fill="#B08D57"/></g>
+          </svg>
+          <div style="writing-mode:vertical-rl; transform:rotate(180deg); color:#B08D57; font-family:Amiri,serif; font-size:10px; text-align:center; letter-spacing:2px;">مراجعات نقدية</div>
+          <div style="writing-mode:vertical-rl; transform:rotate(180deg); color:rgba(176,141,87,.6); font-size:8px; letter-spacing:1px;">الحازم</div>
+        </div>
+        <div class="book-spine" style="height:175px; width:32px; background:#1F1F1F;">
+          <svg viewBox="0 0 28 35" width="12" height="15" style="transform:rotate(90deg);">
+            <path d="M14 2 L25 12 L25 32 Q25 33 24 33 L4 33 Q3 33 3 32 L3 12 Z" fill="none" stroke="#B08D57" stroke-width="1.8"/>
+            <g transform="translate(14,19)"><path d="M0,-8 L3,-2 L0,8 L-3,-2 Z" fill="#B08D57"/></g>
+          </svg>
+          <div style="writing-mode:vertical-rl; transform:rotate(180deg); color:rgba(176,141,87,.8); font-family:Amiri,serif; font-size:9px; letter-spacing:1px;">المنهج</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     7. USAGE GUIDELINES
+══════════════════════════════════════════ -->
+<div style="background: var(--ivory);">
+  <div class="section">
+    <div class="section-title">٧ · قواعد الاستخدام</div>
+    <div class="rules-grid">
+      <div class="rule-card rule-ok">
+        <div class="rule-title">✓ مسموح به</div>
+        <ul class="rule-list">
+          <li>الشعار كاملاً على الخلفيات الداكنة بالذهبي</li>
+          <li>الشعار كاملاً على الخلفيات الفاتحة بالزمردي</li>
+          <li>الرمز المجرد للحجم الصغير (٢٤px فما فوق)</li>
+          <li>الختم الدائري للتوقيع والشهادات</li>
+          <li>ختم الشمع للإصدارات الخاصة والنسخ المحدودة</li>
+          <li>العلامة المائية بشفافية ٥-١٠٪ على الوثائق</li>
+        </ul>
+      </div>
+      <div class="rule-card rule-no">
+        <div class="rule-title">✗ ممنوع</div>
+        <ul class="rule-list">
+          <li>تغيير نسب الشعار أو تشويهه</li>
+          <li>استخدام ألوان خارج المنظومة المعتمدة</li>
+          <li>إضافة تأثيرات (ظل، توهج، تدرج لوني)</li>
+          <li>وضع الشعار على خلفيات مزدحمة بالصور</li>
+          <li>تحريف الخط الكوفي أو تركيب خطوط أجنبية</li>
+          <li>استخدام الشعار في سياق ترفيهي أو إعلاني</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     8. MINIMUM SIZES & CLEAR SPACE
+══════════════════════════════════════════ -->
+<div style="background: var(--white);">
+  <div class="section">
+    <div class="section-title">٨ · المساحة الحرة والحجم الأدنى</div>
+
+    <div class="flex-row" style="gap:48px; align-items:flex-end;">
+
+      <!-- Clear space demo -->
+      <div>
+        <div style="font-size:11px; letter-spacing:2px; opacity:.4; margin-bottom:20px;">المساحة الحرة = X (ارتفاع الرمز)</div>
+        <div style="position:relative; display:inline-block; padding:30px; border:1px dashed rgba(176,141,87,.5);">
+          <!-- X markers -->
+          <div style="position:absolute; top:0; left:0; right:0; height:30px; display:flex; align-items:center; justify-content:center;">
+            <div style="font-size:9px; color:var(--gold); letter-spacing:1px;">X</div>
+          </div>
+          <div style="position:absolute; bottom:0; left:0; right:0; height:30px; display:flex; align-items:center; justify-content:center;">
+            <div style="font-size:9px; color:var(--gold); letter-spacing:1px;">X</div>
+          </div>
+          <svg viewBox="0 0 80 100" width="50" height="62">
+            <path d="M40 4 L74 35 L74 90 Q74 96 68 96 L12 96 Q6 96 6 90 L6 35 Z" fill="none" stroke="#0F4C45" stroke-width="2.5"/>
+            <g transform="translate(40,55)">
+              <path d="M0,-22 L9,-7 L0,22 L-9,-7 Z" fill="#0F4C45"/>
+              <line x1="0" y1="-7" x2="0" y2="22" stroke="#F5F1E8" stroke-width="1"/>
+              <ellipse cx="0" cy="26" rx="2.5" ry="3.5" fill="#0F4C45"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Minimum sizes -->
+      <div>
+        <div style="font-size:11px; letter-spacing:2px; opacity:.4; margin-bottom:20px;">الحجم الأدنى للاستخدام</div>
+        <div class="flex-row" style="gap:24px; align-items:flex-end;">
+          <div style="text-align:center;">
+            <svg viewBox="0 0 80 100" width="48" height="60" style="display:block; margin:0 auto;">
+              <path d="M40 4 L74 35 L74 90 Q74 96 68 96 L12 96 Q6 96 6 90 L6 35 Z" fill="none" stroke="#0F4C45" stroke-width="2.5"/>
+              <g transform="translate(40,55)"><path d="M0,-22 L9,-7 L0,22 L-9,-7 Z" fill="#0F4C45"/></g>
+            </svg>
+            <div style="font-size:10px; margin-top:8px; opacity:.5;">رقمي ٤٨px</div>
+          </div>
+          <div style="text-align:center;">
+            <svg viewBox="0 0 80 100" width="32" height="40" style="display:block; margin:0 auto;">
+              <path d="M40 4 L74 35 L74 90 Q74 96 68 96 L12 96 Q6 96 6 90 L6 35 Z" fill="none" stroke="#0F4C45" stroke-width="3"/>
+              <g transform="translate(40,55)"><path d="M0,-22 L9,-7 L0,22 L-9,-7 Z" fill="#0F4C45"/></g>
+            </svg>
+            <div style="font-size:10px; margin-top:8px; opacity:.5;">طباعة ١٢mm</div>
+          </div>
+          <div style="text-align:center;">
+            <svg viewBox="0 0 80 100" width="24" height="30" style="display:block; margin:0 auto;">
+              <path d="M40 4 L74 35 L74 90 Q74 96 68 96 L12 96 Q6 96 6 90 L6 35 Z" fill="none" stroke="#0F4C45" stroke-width="4"/>
+              <g transform="translate(40,55)"><path d="M0,-22 L9,-7 L0,22 L-9,-7 Z" fill="#0F4C45"/></g>
+            </svg>
+            <div style="font-size:10px; margin-top:8px; opacity:.5; color:#c0392b;">أدنى حد</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+<div style="background: var(--emerald); padding: 60px 40px; text-align:center;">
+  <svg viewBox="0 0 160 200" width="60" height="75" style="margin-bottom:20px;">
+    <path d="M80 8 L148 70 L148 180 Q148 192 136 192 L24 192 Q12 192 12 180 L12 70 Z" fill="none" stroke="#B08D57" stroke-width="2.5"/>
+    <path d="M80 22 L136 72 L136 176 Q136 184 128 184 L32 184 Q24 184 24 176 L24 72 Z" fill="none" stroke="#B08D57" stroke-width="1" opacity=".45"/>
+    <g transform="translate(80,105)">
+      <path d="M0,-34 L14,-10 L0,34 L-14,-10 Z" fill="#B08D57"/>
+      <line x1="0" y1="-10" x2="0" y2="34" stroke="#0F4C45" stroke-width="1.5"/>
+      <ellipse cx="0" cy="38" rx="3.5" ry="5" fill="#B08D57"/>
+    </g>
+  </svg>
+  <div style="font-family:Amiri,serif; font-size:28px; color:var(--ivory); font-weight:700;">حيدر الحازم</div>
+  <div style="font-size:10px; color:var(--gold); letter-spacing:4px; margin-top:8px; opacity:.8;">البحث · التحقيق · المعرفة</div>
+  <div style="margin-top:32px; font-size:10px; color:rgba(245,241,232,.35); letter-spacing:2px;">
+    دليل الهوية البصرية · النسخة الأولى · ١٤٤٧ هـ
+  </div>
+</div>
+
+</body>
+</html>

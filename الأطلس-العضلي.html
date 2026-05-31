@@ -557,8 +557,9 @@ function renderMacroBar(){
   const el=document.getElementById('macroBar');
   if(!el||!user.macros)return;
   const {protG,fatG,carbG}=user.macros;
+  const perMeal=Math.round(protG/4);
   el.innerHTML=`<span class="mb-tag cal">⚡ ${ar(user.target)} ك.س</span>`
-    +`<span class="mb-tag prot">🥩 ${ar(protG)}جم بروتين</span>`
+    +`<span class="mb-tag prot">🥩 ${ar(protG)}جم بروتين (${ar(perMeal)}جم/وجبة)</span>`
     +`<span class="mb-tag fat">🫒 ${ar(fatG)}جم دهون</span>`
     +`<span class="mb-tag carb">🌾 ${ar(carbG)}جم كارب</span>`;
 }
@@ -854,9 +855,11 @@ function renderMusclePanel(){
 
 /* ====== شاشة ٣: قائمة التمارين ====== */
 function recIndex(ex){const s=[...ex].sort((a,b)=>a.df-b.df);
-  if(level===1){const e=s.filter(x=>x.df<=2);return(e.length?e[e.length-1]:s[0]).n;}
-  if(level===2){const e=s.filter(x=>x.df<=3);return(e.length?e[e.length-1]:s[0]).n;}
-  return s[s.length-1].n;}
+  // للوزن الزائد جداً (≥35): سقف df:2 حتى مع مستوى متوسط
+  const cap=user.bmi>=35?2:user.bmi>=27&&level<=1?2:99;
+  if(level===1){const e=s.filter(x=>x.df<=Math.min(2,cap));return(e.length?e[e.length-1]:s[0]).n;}
+  if(level===2){const e=s.filter(x=>x.df<=Math.min(3,cap));return(e.length?e[e.length-1]:s[0]).n;}
+  const e=s.filter(x=>x.df<=cap);return(e.length?e[e.length-1]:s[s.length-1]).n;}
 function openExList(){currentExList=true;pushNav('exlist');renderExListPanel();}
 function renderExListPanel(){
   const d=DB[currentMuscle];const recN=recIndex(d.ex);const dz=DOSE[goal];
@@ -872,7 +875,8 @@ function renderExListPanel(){
     <div class="scr-title">تمارينُ ${d.name}</div>
     <div class="scr-sub">هدفُك: ${GOALNAME[goal]} — اضغطْ تمريناً لدخولِ وضعِ الكابتن</div>
     ${rows}
-    <div class="dose-note">💡 <b>${GOALNAME[goal]}:</b> ${dz.note}. ولا حاجةَ للوصولِ للفشلِ التام — يكفي تركُ ٢–٣ تكراراتٍ في الاحتياط <i>(ACSM ٢٠٢٦)</i>.</div>`);
+    <div class="dose-note">💡 <b>${GOALNAME[goal]}:</b> ${dz.note}. ولا حاجةَ للوصولِ للفشلِ التام — يكفي تركُ ٢–٣ تكراراتٍ في الاحتياط <i>(ACSM ٢٠٢٦)</i>.</div>
+    ${user.bmi>=27?`<div class="coach-word tip"><span class="cw-ic">💡</span><span>بوزنِك الحالي، الأولويةُ للإتقانِ لا للثقل — ابدأ بالتمرينِ الموصى بهِ (<b style="color:var(--gr)">✓</b>) وأتقنْ شكلَه قبلَ الانتقالِ للأصعب. المفاصلُ أهمُّ من الرقم.</span></div>`:''}`);
 }
 
 /* ====== شاشة ٤: الكابتن (تنفيذ كامل) ====== */
@@ -1030,21 +1034,32 @@ function openLog(){
       <div style="font-size:2.4rem;margin-bottom:10px">📋</div>
       سجلُّك فارغٌ بعد.<br>أكمِلْ تمريناً في وضعِ الكابتنِ ليُسجَّلَ هنا تلقائياً.</div>`;
   }else{
+    // فصل مقاومة عن كارديو
+    const resistLogs=workoutLog.filter(e=>!e.cardio);
+    const cardioLogs=workoutLog.filter(e=>e.cardio);
     // المجموعات المدرَّبة وأبكر وقت جاهزية لكلٍّ منها
     const trained={};
     workoutLog.forEach(e=>{
       if(!trained[e.group]||e.recReadyTime>trained[e.group])trained[e.group]=e.recReadyTime;
     });
-    const muscles=[...new Set(workoutLog.map(e=>e.muscle))];
+    const muscles=[...new Set(resistLogs.map(e=>e.muscle))];
 
     // قائمة الإنجاز
-    let list=workoutLog.map(e=>`
-      <div class="ex-row" style="cursor:default">
+    let list=workoutLog.map(e=>{
+      if(e.cardio){
+        return `<div class="ex-row" style="cursor:default;border-color:var(--co)">
+          <div class="er-l">
+            <div class="er-top"><span class="er-name">${e.ex}</span><span class="diff d3" style="font-size:.6rem;margin-right:8px">كارديو</span></div>
+            <div class="er-meta" style="color:var(--co)">${ar(e.mins||0)} دقيقة · ~${ar(e.cal||0)} سعرة · ${fmt(e.time)}</div>
+          </div>
+        </div>`;
+      }
+      return `<div class="ex-row" style="cursor:default">
         <div class="er-l">
           <div class="er-top"><span class="er-name">${e.ex}</span></div>
           <div class="er-meta">${e.muscle} · ${e.reps&&e.reps.length?e.reps.map(r=>ar(r)).join('+')+' تكرار · ':(e.sets?ar(e.sets)+' مجموعات · ':'')}${fmt(e.time)} · استشفاء ${ar(e.recHours)}س</div>
         </div>
-      </div>`).join('');
+      </div>`;}).join('');
 
     // حالة الاستشفاء لكل عضلة مدرَّبة
     let recovList=Object.keys(trained).map(g=>{
@@ -1072,8 +1087,9 @@ function openLog(){
     }
 
     body=`
-      <div class="calc-grid" style="grid-template-columns:1fr 1fr">
-        <div class="calc-cell"><b>${ar(workoutLog.length)}</b><small>تمريناً أنجزت</small></div>
+      <div class="calc-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="calc-cell"><b>${ar(resistLogs.length)}</b><small>تمرينَ مقاومة</small></div>
+        <div class="calc-cell" style="border-color:var(--co-soft)"><b style="color:var(--co)">${ar(cardioLogs.length)}</b><small>جلسةَ كارديو</small></div>
         <div class="calc-cell"><b>${ar(muscles.length)}</b><small>عضلةً دربت</small></div>
       </div>
       <div class="scr-sub" style="margin:14px 0 8px;color:var(--cy)">📋 ما أنجزتَه</div>
@@ -1492,10 +1508,43 @@ function openWeeklyPlan(){
 function buildToday(){
   beep('select');
   const now=Date.now();
-  // المجموعات المرتاحة
+  const todayDay=new Date().getDay();
+  // نوع اليوم من الخطة الأسبوعية
+  const isRecomp=user.bmi>=27;
+  const planTypes=isRecomp
+    ?{0:'rest',1:'resist',2:'cardio',3:'resist',4:'cardio',5:'resist',6:'rest'}
+    :{0:'rest',1:'resist',2:'cardio',3:'resist',4:'rest',5:'resist',6:'cardio'};
+  const todayType=planTypes[todayDay]||'resist';
+
+  if(todayType==='rest'){
+    renderPanel(`<div class="scr-title">تمرينُ اليوم</div>
+      <div class="scr-sub">اقتراحٌ بناءً على خطّتِك الأسبوعية</div>
+      <div class="coach-word tip"><span class="cw-ic">😴</span><span>يومُ راحةٍ في خطّتِك — الجسمُ يبني العضلَ أثناءَها. يمكنُك المشيُ الخفيف أو الإطالة اختيارياً.</span></div>
+      <button class="navcard" onclick="openCardioList()" style="border-color:var(--co)">
+        <div class="nc-l"><span class="nc-ic">🚶</span><div><div class="nc-t" style="color:var(--co)">نشاطٌ خفيف اختياري</div>
+        <div class="nc-d">مشيٌ هادئ أو إطالة — لا إجهاد</div></div></div><span class="nc-arrow">‹</span>
+      </button>
+      <button class="btn btn-ghost" style="margin-top:14px" onclick="showWelcome()">↩ رجوع</button>`);
+    if(nav[nav.length-1]!=='today')pushNav('today');
+    return;
+  }
+
+  if(todayType==='cardio'){
+    renderPanel(`<div class="scr-title">تمرينُ اليوم</div>
+      <div class="scr-sub">اقتراحٌ بناءً على خطّتِك الأسبوعية</div>
+      <div class="coach-word go"><span class="cw-ic">🚶</span><span>يومُ كارديو في خطّتِك — ركّزْ على حرقِ الدهنِ وصحةِ القلب. المشيُ السريعُ هوَ الأمثلُ للوزنِ الزائد.</span></div>
+      <button class="navcard" onclick="openCardioList()" style="border-color:var(--co)">
+        <div class="nc-l"><span class="nc-ic">🚴</span><div><div class="nc-t" style="color:var(--co)">اختَرْ نشاطَ الكارديو</div>
+        <div class="nc-d">مشي · دراجة · سباحة · حبل</div></div></div><span class="nc-arrow">‹</span>
+      </button>
+      <button class="btn btn-ghost" style="margin-top:14px" onclick="showWelcome()">↩ رجوع</button>`);
+    if(nav[nav.length-1]!=='today')pushNav('today');
+    return;
+  }
+
+  // يوم مقاومة
   const restingGroups=new Set();
   workoutLog.forEach(e=>{if(new Date(e.recReadyTime).getTime()>now)restingGroups.add(e.group);});
-  // اختر عضلة من كل نمط (دفع/سحب/أرجل) ليست مستشفية
   const push=['chest','delt_a','triceps'],pull=['lats','biceps','traps'],legs=['quads','glutes','hams'];
   const pick=arr=>arr.filter(id=>!restingGroups.has(GROUPMAP[id])&&!(workoutLog.some(e=>e.id===id&&new Date(e.recReadyTime).getTime()>now)));
   const sel=[];
