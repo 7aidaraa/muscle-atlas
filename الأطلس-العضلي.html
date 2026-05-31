@@ -267,6 +267,52 @@ body{background:
   .minibtn{padding:5px 8px;font-size:.72rem}
   .musc-btns{grid-template-columns:1fr}
 }
+
+/* === الماكرو === */
+.macro-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.macro-cell{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:12px;padding:11px 8px;text-align:center}
+.macro-cell b{display:block;font-size:1.15rem;font-weight:700;font-family:var(--display)}
+.macro-cell.prot b{color:var(--cy)}.macro-cell.fat b{color:var(--co)}.macro-cell.carb b{color:var(--vi)}
+.macro-cell small{font-size:.65rem;color:var(--mut)}
+.macro-bar{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;padding:3px 0 10px;font-size:.69rem}
+.mb-tag{padding:3px 9px;border-radius:20px;font-weight:700}
+.mb-tag.prot{background:var(--cy-soft);color:var(--cy)}.mb-tag.fat{background:var(--co-soft);color:var(--co)}
+.mb-tag.carb{background:rgba(155,140,255,.14);color:var(--vi)}.mb-tag.cal{background:var(--gr-soft);color:var(--gr)}
+
+/* === التقدم التدريجي === */
+.overload-hint{background:rgba(155,140,255,.12);border:1px solid rgba(155,140,255,.3);border-radius:12px;padding:11px 14px;margin-bottom:12px;font-size:.82rem;color:var(--vi);line-height:1.6}
+.overload-hint b{color:#d4ceff}
+
+/* === الكارديو === */
+.cardio-row{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:13px;padding:14px 16px;margin-bottom:9px;cursor:pointer;transition:.22s;width:100%;text-align:right;font-family:var(--body);color:var(--txt)}
+.cardio-row:hover{border-color:var(--co);transform:translateX(-3px)}
+.cr-meta{font-size:.74rem;color:var(--mut);margin-top:3px}
+.cr-cal{font-size:.66rem;color:var(--co);font-weight:700;margin-top:2px}
+
+/* === تتبع الوزن === */
+.wt-entry{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:10px;margin-bottom:7px;font-size:.85rem}
+.wt-diff{font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:8px}
+.wt-diff.up{background:rgba(224,132,62,.14);color:var(--co)}.wt-diff.dn{background:var(--gr-soft);color:var(--gr)}.wt-diff.eq{background:var(--cy-soft);color:var(--cy)}
+.wt-input-row{display:flex;gap:8px;margin-bottom:14px}
+.wt-input-row input{flex:1;background:var(--panel2);color:var(--txt);border:1px solid var(--line);padding:11px 13px;border-radius:11px;font-family:var(--body);font-size:1rem;transition:.2s}
+.wt-input-row input:focus{border-color:var(--cy);outline:none}
+.wt-chart-wrap{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:14px}
+.wt-chart-wrap svg{width:100%;height:90px;display:block}
+
+/* === الإحماء === */
+.warmup-step{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-bottom:8px;display:flex;align-items:center;gap:12px}
+.wu-num{width:34px;height:34px;border-radius:50%;background:var(--cy-soft);color:var(--cy);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-family:var(--display);font-size:.9rem}
+.wu-dur{font-size:.7rem;color:var(--co);font-weight:700;white-space:nowrap}
+.wu-txt{flex:1;font-size:.88rem}
+
+/* === الخطة الأسبوعية === */
+.week-day{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:12px;padding:12px 15px;margin-bottom:8px;display:flex;align-items:center;gap:12px}
+.wd-dot{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.wd-dot.resist{background:var(--cy-soft)}.wd-dot.cardio{background:var(--co-soft)}.wd-dot.rest{background:rgba(135,148,160,.1)}.wd-dot.core{background:var(--gr-soft)}
+.wd-info{flex:1}.wd-name{font-weight:700;font-size:.92rem}.wd-detail{font-size:.72rem;color:var(--mut);margin-top:2px}
+.week-progress{display:flex;gap:3px;margin:8px 0 4px}
+.wp-s{height:5px;border-radius:3px;flex:1;transition:.3s}
+.wp-s.done{background:var(--gr)}.wp-s.today{background:var(--cy)}.wp-s.skip{background:var(--line)}
 </style>
 </head>
 <body>
@@ -334,6 +380,11 @@ body{background:
         <div class="calc-cell"><b id="rTarget">—</b><small>هدفُك السعري (سعرة)</small></div>
         <div class="calc-cell"><b id="rBMI">—</b><small>مؤشرُ الكتلة</small></div>
       </div>
+      <div class="macro-grid3" id="macroGrid" style="display:none">
+        <div class="macro-cell prot"><b id="rProt">—</b><small>بروتين (جم)</small></div>
+        <div class="macro-cell fat"><b id="rFat">—</b><small>دهون (جم)</small></div>
+        <div class="macro-cell carb"><b id="rCarb">—</b><small>كربوهيدرات (جم)</small></div>
+      </div>
       <div class="bmi-note" id="bmiNote"></div>
       <div class="verdict" id="verdict"></div>
       <div class="calc-src">
@@ -354,8 +405,10 @@ body{background:
     <div class="crumb" id="crumb"><b>الجسد</b></div>
     <button class="back" id="saveBtn" onclick="manualSave()" style="color:var(--gr)" title="احفظ تقدّمك">💾</button>
     <button class="back" id="logBtn" onclick="openLog()" style="color:var(--co)">📋</button>
+    <button class="back" id="wtBtn" onclick="openWeightTracker()" style="color:var(--vi)" title="تتبّع الوزن">⚖️</button>
   </div>
   <div id="saveTime" class="save-time"></div>
+  <div id="macroBar" class="macro-bar"></div>
 
   <!-- ===== حاوية التخطيط (جانبي على الشاشات الكبيرة) ===== -->
   <div class="main-layout">
@@ -404,7 +457,10 @@ const AR='٠١٢٣٤٥٦٧٨٩';
 const ar=n=>String(n).replace(/\d/g,d=>AR[d]);
 let level=1, goal='hyp', soundOn=true;
 let currentMuscle=null, currentEx=null, nav=[1];
-let user={sex:'male',lvl:1,gl:'hyp',age:0,ht:0,wt:0,act:1.55,bmr:0,tdee:0,bmi:0};
+let user={sex:'male',lvl:1,gl:'hyp',age:0,ht:0,wt:0,act:1.55,bmr:0,tdee:0,bmi:0,macros:null,target:0};
+let weightLog=[]; // [{date:ISO,wt:number}]
+let currentCardio=null;
+let curCardioMin=30;
 
 function pick(field,val,el){
   user[field]=val;
@@ -466,6 +522,21 @@ function runCalc(){
      سيعرضُ الأطلسُ التمارينَ الموصى بها لمستواك، وجرعةً مضبوطةً على هدفِك: <b>${focus}</b>.<br>
      <span style="font-size:.82rem;color:var(--mut)">خطتُك الغذائية: ${goalTxt}.</span>${safety}`;
 
+  // حساب الماكرو الثلاثي (بروتين + دهون + كربوهيدرات)
+  const protMul = bmi>=27 ? 1.8 : (user.gl==='hyp' ? 2.0 : user.gl==='str' ? 1.8 : 1.6);
+  const protG   = Math.round(wt * protMul);
+  const protCal = protG * 4;
+  const fatPct  = bmi>=27 ? 0.25 : (user.gl==='str' ? 0.30 : user.gl==='hyp' ? 0.28 : 0.22);
+  const fatCal  = Math.round(target * fatPct);
+  const fatG    = Math.round(fatCal / 9);
+  const carbCal = Math.max(0, Math.round(target - protCal - fatCal));
+  const carbG   = Math.round(carbCal / 4);
+  user.macros = {protG, fatG, carbG};
+  user.target  = Math.round(target);
+  document.getElementById('rProt').textContent = ar(protG);
+  document.getElementById('rFat').textContent  = ar(fatG);
+  document.getElementById('rCarb').textContent = ar(carbG);
+  document.getElementById('macroGrid').style.display = '';
   document.getElementById('calcOut').classList.add('on');
   document.getElementById('calcOut').scrollIntoView({behavior:'smooth',block:'start'});
   beep('set');
@@ -478,8 +549,18 @@ function enterApp(){
   syncControls();
   renderBodyMap();
   loadState();
+  renderMacroBar();
   showWelcome();
   beep('done');
+}
+function renderMacroBar(){
+  const el=document.getElementById('macroBar');
+  if(!el||!user.macros)return;
+  const {protG,fatG,carbG}=user.macros;
+  el.innerHTML=`<span class="mb-tag cal">⚡ ${ar(user.target)} ك.س</span>`
+    +`<span class="mb-tag prot">🥩 ${ar(protG)}جم بروتين</span>`
+    +`<span class="mb-tag fat">🫒 ${ar(fatG)}جم دهون</span>`
+    +`<span class="mb-tag carb">🌾 ${ar(carbG)}جم كارب</span>`;
 }
 function syncControls(){
   document.querySelectorAll('.minibtn.lv').forEach((b,i)=>b.classList.toggle('on',i+1===level));
@@ -641,7 +722,7 @@ function goBack(){
 }
 function updateBack(){document.getElementById('backBtn').disabled=(nav.length<=1);}
 function updateCrumb(){
-  const labelOf=x=>x===1?'الجسد':x==='muscle'?(currentMuscle?DB[currentMuscle].name:''):x==='exlist'?'التمارين':x==='captain'?(currentEx?currentEx.n:''):x==='log'?'سجلّي':'';
+  const labelOf=x=>x===1?'الجسد':x==='muscle'?(currentMuscle?DB[currentMuscle].name:''):x==='exlist'?'التمارين':x==='captain'?(currentEx?currentEx.n:''):x==='log'?'سجلّي':x==='cardio_list'?'الكارديو':x==='cardio_sess'?(currentCardio?currentCardio.name:''):x==='wt_tracker'?'الوزن':x==='warmup'?'الإحماء':x==='weekly_plan'?'الخطة الأسبوعية':x==='today'?'تمرينُ اليوم':'';
   let parts=nav.map(labelOf).filter(Boolean);
   document.getElementById('crumb').innerHTML=parts.map((p,i)=>i===parts.length-1?`<b>${p}</b>`:p).join(' ‹ ');
 }
@@ -651,7 +732,21 @@ function showWelcome(){
   renderPanel(`
     <div class="scr-title">تعلَّمْ جسدَك</div>
     <div class="scr-sub">اضغطْ على أيِّ عضلةٍ في الخريطةِ فوقُ لتفتحَ ملفَّها</div>
-    <div class="musc-cat">أو اختَرْ من القائمة:</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+      <button class="navcard" onclick="openWarmup('buildToday')" style="padding:12px 14px">
+        <div class="nc-l"><span class="nc-ic">🔥</span><div><div class="nc-t">إحماءٌ ثم تمرينُ اليوم</div><div class="nc-d">اقتراحٌ متوازن</div></div></div>
+      </button>
+      <button class="navcard" onclick="openCardioList()" style="padding:12px 14px;border-color:var(--co)">
+        <div class="nc-l"><span class="nc-ic">🚶</span><div><div class="nc-t" style="color:var(--co)">جلسةُ الكارديو</div><div class="nc-d">حرقُ الدهن</div></div></div>
+      </button>
+      <button class="navcard" onclick="openWeeklyPlan()" style="padding:12px 14px;border-color:var(--vi)">
+        <div class="nc-l"><span class="nc-ic">📅</span><div><div class="nc-t" style="color:var(--vi)">خطّةُ الأسبوع</div><div class="nc-d">${user.bmi>=27?'إعادةُ التشكيل':'بناء + قوة'}</div></div></div>
+      </button>
+      <button class="navcard" onclick="openWeightTracker()" style="padding:12px 14px;border-color:var(--vi)">
+        <div class="nc-l"><span class="nc-ic">⚖️</span><div><div class="nc-t" style="color:var(--vi)">تتبّعُ الوزن</div><div class="nc-d">${weightLog.length?ar(weightLog.length)+' قراءات':'ابدأ الآن'}</div></div></div>
+      </button>
+    </div>
+    <div class="musc-cat">أو اختَرْ عضلةً مباشرة:</div>
     <div class="musc-btns" id="muscBtns"></div>
     <div class="footnote">مرجعية علمية: <b>ACSM ٢٠٢٦</b> · <a class="src-link" href="https://acsm.org/resistance-training-guidelines-update-2026/" target="_blank">إرشادات المقاومة</a> · استشفاء <a class="src-link" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6015912/" target="_blank">Frontiers ٢٠١٨</a>.</div>`);
   buildMuscBtns();
@@ -848,10 +943,21 @@ function captainWord(id,e){
     4:'تمرينٌ جادّ — نفَسٌ ثابت، وتوقّفْ إن اختلَّ شكلُك.'};
   return {t:'go',m:lines[e.df]||lines[2]};
 }
+function getLastPerf(muscleId,exName){
+  const entries=workoutLog.filter(e=>e.id===muscleId&&e.ex===exName&&!e.cardio);
+  if(!entries.length)return null;
+  return entries.sort((a,b)=>b.time-a.time)[0];
+}
 function openCaptain(exIdx){
   const d=DB[currentMuscle];currentEx=d.ex[exIdx];const e=currentEx;const dz=DOSE[goal];
   loggedSets=[];
   const coach=captainWord(currentMuscle,e);
+  const lastP=getLastPerf(currentMuscle,e.n);
+  let overloadHtml='';
+  if(lastP&&lastP.reps&&lastP.reps.length){
+    const avgR=Math.round(lastP.reps.reduce((a,b)=>a+b,0)/lastP.reps.length);
+    overloadHtml=`<div class="overload-hint">📈 <b>التقدّمُ التدريجي:</b> آخرَ مرةٍ أنجزتَ ${ar(lastP.sets)} مجموعاتٍ × ${ar(avgR)} تكراراً في المتوسط — اليومَ حاوِلْ <b>${ar(avgR+1)} تكراراً</b> أو زِدِ الحِملَ قليلاً.</div>`;
+  }
   let steps=e.steps.map((s,i)=>`<div class="step"><div class="num">${ar(i+1)}</div><div class="stxt">${s}</div></div>`).join('');
   steps+=`<div class="step warn"><div class="num">⚠</div><div class="stxt"><b>الخطأ الذي يقعُ فيهِ الأغلب:</b> ${e.warn}</div></div>`;
   document.getElementById('panel').innerHTML=`
@@ -860,6 +966,7 @@ function openCaptain(exIdx){
       <span class="cm-tool">${e.t}</span>
       ${demoBlock(e.n)}
     </div>
+    ${overloadHtml}
     <div class="coach-word ${coach.t}">
       <span class="cw-ic">${coach.t==='warn'?'⚠':coach.t==='tip'?'🕓':'🎯'}</span>
       <span>${coach.m}</span>
@@ -1039,7 +1146,9 @@ function saveState(showToast){
   try{
     const data={
       log:workoutLog.map(e=>({id:e.id,muscle:e.muscle,ex:e.ex,reps:e.reps,sets:e.sets,group:e.group,
-        time:e.time.toISOString(),recReadyTime:e.recReadyTime.toISOString(),recHours:e.recHours})),
+        time:e.time.toISOString(),recReadyTime:e.recReadyTime.toISOString(),recHours:e.recHours,
+        cardio:e.cardio||false,mins:e.mins||0,cal:e.cal||0})),
+      weightLog,
       user, savedAt:new Date().toISOString()
     };
     localStorage.setItem(STORE_KEY,JSON.stringify(data));
@@ -1078,7 +1187,8 @@ function loadState(){
     if(!raw)return;
     const data=JSON.parse(raw);
     workoutLog=(data.log||[]).map(e=>({...e,time:new Date(e.time),recReadyTime:new Date(e.recReadyTime)}));
-
+    weightLog=data.weightLog||[];
+    if(data.user&&data.user.macros){user.macros=data.user.macros;user.target=data.user.target||0;renderMacroBar();}
     applyTrainedColors();updateTrainedCount();
     if(data.savedAt)updateSaveIndicator(new Date(data.savedAt));
   }catch(e){}
@@ -1087,6 +1197,298 @@ function loadState(){
 /* ===== وضع "ابنِ تمريني اليوم" ===== */
 const ANTAGONIST={chest:'lats',lats:'chest',biceps:'triceps',triceps:'biceps',
   delt_a:'delt_p',delt_p:'delt_a',quads:'hams',hams:'quads',abs:'lowerback',lowerback:'abs'};
+
+/* ====== قاعدة الكارديو ====== */
+const CARDIO_DB=[
+  {id:'walk',name:'المشي السريع',icon:'🚶',
+   baseMins:{1:20,2:30,3:40},calPerMin:4.5,
+   hr:'٥٠–٦٥٪ من أقصى نبض',
+   steps:['ابدأ بدقيقتَين مشيٍ عادي كإحماء','ارفعِ الوتيرةَ حتى يرتفعَ تنفّسُك لكنَّك تقدرُ على الكلام','حافظْ على خطوةٍ ثابتةٍ طوالَ الجلسة','أنهِ بدقيقتَين مشيٍ هادئٍ كتهدئة'],
+   note:'الأفضلُ للمبتدئِ ولأصحابِ الوزنِ الزائد — ضغطٌ منخفضٌ على المفاصل'},
+  {id:'jog',name:'الهرولة الخفيفة',icon:'🏃',
+   baseMins:{1:15,2:20,3:30},calPerMin:8,
+   hr:'٦٥–٧٥٪ من أقصى نبض',
+   steps:['ابدأ بدقيقتَين مشيٍ سريعٍ إحماء','انتقلْ للهرولةِ بخطواتٍ متوسطة، الشهيقُ من الأنف','إن تعبتَ تبادَلْ هرولةَ دقيقةٍ + مشيَ دقيقة','أنهِ بمشيٍ هادئ'],
+   note:'غيرُ مناسبةٍ عندَ BMI>٣٢ — استخدمِ المشي أو الدراجة أولاً'},
+  {id:'bike',name:'الدراجة الثابتة',icon:'🚴',
+   baseMins:{1:20,2:30,3:45},calPerMin:6,
+   hr:'٦٠–٧٥٪ من أقصى نبض',
+   steps:['اضبطِ ارتفاعَ المقعدِ حتى تكونَ ركبتُك شبهَ ممدودةٍ في أسفلِ الدوران','ابدأ بمقاومةٍ خفيفةٍ دقيقتَين','ارفعِ المقاومةَ حتى تشعرَ بجهدٍ معتدل','حافظْ على ٦٠–٨٠ دورةً في الدقيقة'],
+   note:'آمنٌ على المفاصل ومناسبٌ للأوزانِ الزائدة'},
+  {id:'swim',name:'السباحة',icon:'🏊',
+   baseMins:{1:20,2:30,3:40},calPerMin:7,
+   hr:'٦٠–٧٥٪ من أقصى نبض',
+   steps:['سخّنْ بالمشيِ في الماءِ دقيقتَين','استخدمْ أسلوباً مريحاً: حرةٌ أو ظهر','تبادَلْ شوطاً نشطاً وشوطاً أهدأ','أنهِ بالتعويمِ هادئاً'],
+   note:'الأفضلُ للمفاصل — يحرقُ سعراتٍ عاليةً بضغطٍ صفري'},
+  {id:'rope',name:'حبل القفز',icon:'🤸',
+   baseMins:{1:10,2:15,3:20},calPerMin:11,
+   hr:'٧٠–٨٥٪ من أقصى نبض',
+   steps:['أدِرِ الحبلَ من الرسغِ لا الذراع','ابدأ: ٢٠ ثانيةَ قفزٍ + ٤٠ راحة، ٦ جولات','تدرّجْ أسبوعياً في زيادةِ وقتِ القفز','توقّفْ فوراً عندَ ألمِ الركبة'],
+   note:'عالٍ التأثير — غيرُ مناسبٍ للوزنِ الزائدِ جداً'},
+];
+
+function cardioMins(c){
+  const base=c.baseMins[level]||c.baseMins[1];
+  // خفّض للوزن الزائد جداً في أول مرة
+  if(user.bmi>=35 && level===1) return Math.max(10,base-5);
+  return base;
+}
+
+function openCardioList(){
+  beep('select');
+  const maxHR=220-user.age;
+  let rows=CARDIO_DB.map(c=>{
+    const mins=cardioMins(c);
+    const cal=Math.round(c.calPerMin*mins*(user.wt/80));
+    const warn=(c.id==='jog'&&user.bmi>=32)||(c.id==='rope'&&user.bmi>=30);
+    return `<button class="cardio-row${warn?' ':' '}" onclick="openCardioSession('${c.id}')">
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
+          <span style="font-size:1.3rem">${c.icon}</span>
+          <span style="font-weight:700;font-size:1rem">${c.name}</span>
+          ${warn?'<span style="font-size:.64rem;background:rgba(224,132,62,.2);color:var(--co);padding:2px 7px;border-radius:8px">تحقّق أولاً</span>':''}
+        </div>
+        <div class="cr-meta">${ar(mins)} دقيقة · نبض ${c.hr}</div>
+        <div class="cr-cal">~${ar(cal)} سعرة (بوزنِك)</div>
+        <div style="font-size:.66rem;color:var(--mut);margin-top:3px">${c.note}</div>
+      </div>
+      <span style="color:var(--co);font-size:1.3rem">‹</span>
+    </button>`;}).join('');
+  renderPanel(`
+    <div class="scr-title">جلسةُ الكارديو</div>
+    <div class="scr-sub">اختَرْ نشاطاً — المدةُ موصى بها لمستواكَ ووزنِك</div>
+    ${rows}
+    <div class="dose-note">💡 للإنقاصِ المثالي: <b>٣ جلساتِ كارديو/أسبوع</b> بجانبِ تمارينِ المقاومة. المشيُ السريعُ يحرقُ الدهنَ بفعاليةٍ مع حفظِ العضل <i>(ACSM ٢٠٢٦)</i>.</div>
+    <button class="btn btn-ghost" style="margin-top:8px" onclick="showWelcome()">↩ رجوع</button>`);
+  if(nav[nav.length-1]!=='cardio_list')pushNav('cardio_list');
+}
+
+function openCardioSession(cardioId){
+  const c=CARDIO_DB.find(x=>x.id===cardioId);
+  currentCardio=c;
+  curCardioMin=cardioMins(c);
+  const maxHR=220-user.age;
+  const hrLow=Math.round(maxHR*0.5);
+  const hrHigh=Math.round(maxHR*0.75);
+  const cal=()=>Math.round(c.calPerMin*curCardioMin*(user.wt/80));
+  const steps=c.steps.map((s,i)=>`<div class="step"><div class="num">${ar(i+1)}</div><div class="stxt">${s}</div></div>`).join('');
+  document.getElementById('panel').innerHTML=`
+    <div class="cap-move">
+      <div class="cm-name">${c.icon} ${c.name}</div>
+      <div style="font-size:.76rem;color:var(--mut);margin-top:4px">${c.hr}</div>
+      <div class="cap-dose" style="margin-top:12px">
+        <div class="cell"><b id="cardioMinDisp">${ar(curCardioMin)}</b><small>دقيقة</small></div>
+        <div class="cell"><b id="cardioCal">${ar(cal())}</b><small>سعرة تقريباً</small></div>
+        <div class="cell"><b>${ar(hrLow)}–${ar(hrHigh)}</b><small>نبضة/دقيقة</small></div>
+      </div>
+    </div>
+    <div class="coach-word go"><span class="cw-ic">🎯</span>
+      <span>أقصى نبضٍ لعمرِك (${ar(user.age)}): <b>${ar(maxHR)}</b> نبضة/دقيقة. ابقَ في المنطقةِ الموصى بها.</span></div>
+    <div class="steps-box"><h4>🎯 خطواتُ الجلسة</h4>${steps}</div>
+    <div class="live-counter">
+      <div class="lc-lbl">عدّلِ المدةَ ثم سجّلْ بعدَ الانتهاء</div>
+      <div class="set-input">
+        <button class="rep-step" onclick="adjustCardioMin(-5)">−</button>
+        <div class="rep-box"><span id="cardioMinVal">${ar(curCardioMin)}</span><small>دقيقة</small></div>
+        <button class="rep-step" onclick="adjustCardioMin(5)">+</button>
+      </div>
+      <button class="btn btn-gr" onclick="logCardio()">🏁 سجّلِ الجلسة</button>
+    </div>`;
+  pushNav('cardio_sess');
+}
+
+function adjustCardioMin(d){
+  curCardioMin=Math.max(5,Math.min(120,curCardioMin+d));
+  const c=currentCardio;
+  const v=document.getElementById('cardioMinVal');
+  const disp=document.getElementById('cardioMinDisp');
+  const calEl=document.getElementById('cardioCal');
+  if(v)v.textContent=ar(curCardioMin);
+  if(disp)disp.textContent=ar(curCardioMin);
+  if(calEl&&c)calEl.textContent=ar(Math.round(c.calPerMin*curCardioMin*(user.wt/80)));
+  beep('tick');
+}
+
+function logCardio(){
+  beep('done');
+  const c=currentCardio;
+  const cal=Math.round(c.calPerMin*curCardioMin*(user.wt/80));
+  workoutLog.push({id:'cardio_'+c.id,muscle:'كارديو',ex:c.name,reps:[],sets:1,
+    group:'كارديو',time:new Date(),
+    recReadyTime:new Date(Date.now()+8*3600000),recHours:8,
+    cardio:true,mins:curCardioMin,cal});
+  saveState();
+  document.getElementById('panel').querySelector('.live-counter').innerHTML=`
+    <div class="cap-done">
+      <h3>🎉 أحسنتَ! ${c.icon} ${ar(curCardioMin)} دقيقة</h3>
+      <p style="color:var(--gr);font-weight:700">~${ar(cal)} سعرةٍ محروقة</p>
+      <p style="font-size:.82rem;color:var(--mut);margin-top:8px">✓ جلسةٌ مسجّلة. الاسترداحُ المنصوحُ به: ٨ ساعاتٍ قبلَ جلسةٍ أخرى.</p>
+      <button class="btn btn-gr" style="margin-top:14px" onclick="openLog()">📋 سجلّي</button>
+      <button class="btn btn-ghost" style="margin-top:8px" onclick="openCardioList()">↩ عُدْ للكارديو</button>
+    </div>`;
+}
+
+/* ====== تتبّع الوزن ====== */
+function openWeightTracker(){
+  beep('select');
+  const entries=[...weightLog].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  let listHtml='';
+  if(entries.length===0){
+    listHtml='<div style="text-align:center;color:var(--mut);padding:20px 0">لم تُسجّلْ وزناً بعد. سجّلْ أوّلَ قراءة!</div>';
+  }else{
+    listHtml=entries.slice(0,10).map((e,i)=>{
+      const prev=entries[i+1];
+      let diffHtml='';
+      if(prev){
+        const d=(e.wt-prev.wt).toFixed(1);
+        const cls=d>0?'up':d<0?'dn':'eq';
+        diffHtml=`<span class="wt-diff ${cls}">${d>0?'+':''}${d} كجم</span>`;
+      }
+      const dt=new Date(e.date);
+      const dateStr=`${ar(dt.getDate())}/${ar(dt.getMonth()+1)}`;
+      return `<div class="wt-entry"><span>${dateStr}</span><b>${ar(e.wt)} كجم</b>${diffHtml}</div>`;
+    }).join('');
+    // رسم SVG بسيط
+    if(entries.length>=2){
+      const vals=entries.slice(0,8).reverse().map(e=>e.wt);
+      const min=Math.min(...vals)-1, max=Math.max(...vals)+1;
+      const W=300,H=70,pad=10;
+      const px=(i)=>pad+(i/(vals.length-1))*(W-2*pad);
+      const py=(v)=>H-pad-((v-min)/(max-min))*(H-2*pad);
+      const pts=vals.map((v,i)=>`${px(i)},${py(v)}`).join(' ');
+      listHtml=`<div class="wt-chart-wrap">
+        <div style="font-size:.74rem;color:var(--mut);margin-bottom:6px">منحنى الوزن (آخر ${ar(vals.length)} قراءات)</div>
+        <svg viewBox="0 0 ${W} ${H}">
+          <polyline points="${pts}" fill="none" stroke="var(--cy)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          ${vals.map((v,i)=>`<circle cx="${px(i)}" cy="${py(v)}" r="4" fill="var(--cy)"/>`).join('')}
+        </svg>
+      </div>`+listHtml;
+    }
+  }
+  // هل سجّل هذا الأسبوع؟
+  const now=new Date();
+  const weekAgo=new Date(now-7*24*3600000);
+  const recentEntry=weightLog.find(e=>new Date(e.date)>weekAgo);
+  const inputSection=!recentEntry
+    ?`<div class="wt-input-row">
+        <input type="number" id="wtInput" placeholder="وزنُك اليومَ (كجم)" inputmode="decimal" step="0.1">
+        <button class="btn btn-gr" style="white-space:nowrap;padding:11px 16px" onclick="addWeightEntry()">سجّلْ</button>
+      </div>`
+    :'<div style="font-size:.8rem;color:var(--mut);margin-bottom:12px;text-align:center">✓ سجّلتَ وزنَك هذا الأسبوع — عُدْ الأسبوعَ القادم</div>';
+
+  let progress='';
+  if(weightLog.length>=2){
+    const first=weightLog.reduce((a,b)=>new Date(a.date)<new Date(b.date)?a:b);
+    const last=weightLog.reduce((a,b)=>new Date(a.date)>new Date(b.date)?a:b);
+    const diff=(last.wt-first.wt).toFixed(1);
+    const cls=diff<0?'var(--gr)':diff>0?'var(--co)':'var(--cy)';
+    progress=`<div class="verdict" style="margin-bottom:14px">
+      منذُ أوّلِ تسجيل: <b style="color:${cls}">${diff>0?'+':''}${diff} كجم</b>
+      (${ar(first.wt)} ← ${ar(last.wt)} كجم)</div>`;
+  }
+
+  renderPanel(`
+    <div class="scr-title">⚖️ تتبّعُ الوزن</div>
+    <div class="scr-sub">سجّلْ وزنَك أسبوعياً لمتابعةِ التقدّم</div>
+    ${progress}
+    ${inputSection}
+    ${listHtml}
+    <div class="footnote">سجّلِ الوزنَ صباحاً على معدةٍ خاليةٍ للحصولِ على قراءةٍ ثابتة.</div>
+    <button class="btn btn-ghost" style="margin-top:10px" onclick="showWelcome()">↩ رجوع</button>`);
+  if(nav[nav.length-1]!=='wt_tracker')pushNav('wt_tracker');
+}
+
+function addWeightEntry(){
+  const val=+document.getElementById('wtInput').value;
+  if(!val||val<20||val>400){alert('أدخِلْ وزناً صحيحاً');return;}
+  weightLog.push({date:new Date().toISOString(),wt:val});
+  beep('done');
+  saveState();
+  openWeightTracker();
+}
+
+/* ====== الإحماء ====== */
+const WARMUP_BASE=[
+  {name:'دوران الكتفين',dur:'٣٠ث',desc:'يدانِ على الكتفين، دوّرْ للأمامِ ثم للخلف'},
+  {name:'ثنيُ الركبة الواقف',dur:'٣٠ث',desc:'ارفعِ الركبةَ نحوَ صدرِك بالتبادل'},
+  {name:'دوران الوركين',dur:'٣٠ث',desc:'يدانِ على الخاصرة، دوّرِ الوركَ دائرةً واسعة'},
+  {name:'تمدّدُ عضلاتِ الصدر',dur:'٣٠ث',desc:'ضمَّ أصابعَك خلفَ ظهرِك وافردِ الصدرَ للأمام'},
+  {name:'قفزاتُ الجاك خفيفة',dur:'٣٠ث',desc:'ببطءٍ — يدانِ للأعلى وقدمانِ للجانب بالتزامن'},
+];
+function openWarmup(afterFn){
+  beep('select');
+  const steps=WARMUP_BASE.map((s,i)=>`
+    <div class="warmup-step">
+      <div class="wu-num">${ar(i+1)}</div>
+      <div class="wu-txt"><b>${s.name}</b><br><span style="font-size:.8rem;color:var(--mut)">${s.desc}</span></div>
+      <div class="wu-dur">${s.dur}</div>
+    </div>`).join('');
+  renderPanel(`
+    <div class="scr-title">🔥 إحماءٌ قبلَ التمرين</div>
+    <div class="scr-sub">٥ تمريناتٍ × ٣٠ ثانية = دقيقتانِ ونصف</div>
+    <div class="coach-word go"><span class="cw-ic">🎯</span>
+      <span>الإحماءُ يرفعُ حرارةَ العضلِ ويمنعُ الإصابة — لا تتخطَّه خاصةً عندَ الوزنِ الزائد.</span></div>
+    ${steps}
+    <button class="btn btn-gr" style="margin-top:14px" onclick="${afterFn}()">🏋 ابدأِ التمرينَ الآن</button>
+    <button class="btn btn-ghost" style="margin-top:8px" onclick="showWelcome()">↩ تخطَّ (غيرُ موصى به)</button>`);
+  if(nav[nav.length-1]!=='warmup')pushNav('warmup');
+}
+
+/* ====== الخطة الأسبوعية ====== */
+function openWeeklyPlan(){
+  beep('select');
+  const isRecomp=user.bmi>=27;
+  // يوم الأسبوع الحالي (0=أحد)
+  const today=new Date().getDay();
+  // خطة إعادة التشكيل للوزن الزائد | أو بناء عضلي للوزن الطبيعي
+  const plan=isRecomp
+    ?[ // إعادة التشكيل الجسدي (Recomposition)
+        {day:0,label:'الأحد',   type:'rest',    icon:'😴',name:'راحة تامة', detail:'النوم الجيد وأكلُ بروتينٍ كافٍ يبنيانِ العضلَ أثناءَ الراحة'},
+        {day:1,label:'الاثنين',type:'resist',  icon:'💪',name:'مقاومة: جذع + أرجل', detail:'بطن + أرداف + فخذ أمامي — تمارينُ مشددةٌ على الحرق'},
+        {day:2,label:'الثلاثاء',type:'cardio', icon:'🚶',name:'كارديو: مشي سريع', detail:`${ar(cardioMins(CARDIO_DB[0]))} دقيقة — منطقةُ الحرقِ الدهني`},
+        {day:3,label:'الأربعاء',type:'resist', icon:'💪',name:'مقاومة: صدر + ذراع', detail:'صدر + ترايسبس + بايسبس + كتف أمامي'},
+        {day:4,label:'الخميس', type:'cardio',  icon:'🚴',name:'كارديو: دراجة / مشي', detail:`${ar(cardioMins(CARDIO_DB[2]))} دقيقة — أو المشي بديلاً`},
+        {day:5,label:'الجمعة', type:'resist',  icon:'💪',name:'مقاومة: ظهر + كتف', detail:'ظهر عريض + ترابيس + كتف خلفي — السحب أساس الشكل'},
+        {day:6,label:'السبت',  type:'rest',    icon:'🚶',name:'نشاط خفيف اختياري', detail:'إطالةٌ أو مشيٌ هادئ — لا ضغطَ على العضل'},
+      ]
+    :[
+        {day:0,label:'الأحد',   type:'rest',   icon:'😴',name:'راحة تامة',detail:'الجسمُ يبني العضلَ أثناءَ الراحة'},
+        {day:1,label:'الاثنين',type:'resist', icon:'💪',name:'دفع: صدر + كتف + ترايسبس',detail:'مجموعةُ الدفع الأمامي — الحجمُ الأسبوعي'},
+        {day:2,label:'الثلاثاء',type:'cardio',icon:'🏃',name:'كارديو خفيف',detail:'٢٠–٣٠ دقيقةً هرولةً خفيفةً أو مشي'},
+        {day:3,label:'الأربعاء',type:'resist',icon:'💪',name:'سحب: ظهر + بايسبس + ترابيس',detail:'مجموعةُ السحب — عرضُ الظهر وعمقُه'},
+        {day:4,label:'الخميس', type:'rest',   icon:'😴',name:'راحة',detail:''},
+        {day:5,label:'الجمعة', type:'resist', icon:'💪',name:'أرجل + جذع',detail:'فخذ + أرداف + بطن + أسفل ظهر'},
+        {day:6,label:'السبت',  type:'cardio', icon:'🚴',name:'كارديو متوسط',detail:'٣٠–٤٠ دقيقةً دراجةً أو مشياً سريعاً'},
+      ];
+  const days=plan.map(d=>{
+    const isToday=d.day===today;
+    const dotCls=d.type;
+    const dotIcon=d.icon;
+    return `<div class="week-day" style="${isToday?'border-color:var(--cy);box-shadow:0 0 0 1px var(--cy-soft)':''}">
+      <div class="wd-dot ${dotCls}">${dotIcon}</div>
+      <div class="wd-info">
+        <div class="wd-name">${d.label}${isToday?' <span style="font-size:.64rem;background:var(--cy-soft);color:var(--cy);padding:2px 7px;border-radius:8px">اليوم</span>':''}</div>
+        <div style="font-size:.86rem;font-weight:700;color:${d.type==='resist'?'var(--cy)':d.type==='cardio'?'var(--co)':'var(--mut)'};margin:2px 0">${d.name}</div>
+        ${d.detail?`<div class="wd-detail">${d.detail}</div>`:''}
+      </div>
+    </div>`;}).join('');
+
+  const label=isRecomp?'إعادةُ التشكيلِ الجسدي (Recomposition)':'بناءُ العضل + القوة';
+  renderPanel(`
+    <div class="scr-title">📅 خطّةُ الأسبوع</div>
+    <div class="scr-sub">${label} — بناءً على بياناتِك</div>
+    <div class="coach-word ${isRecomp?'tip':'go'}">
+      <span class="cw-ic">${isRecomp?'🎯':'💪'}</span>
+      <span>${isRecomp
+        ?'خطّةُ إعادةِ التشكيل: عجزٌ سعريٌّ (−٥٠٠) + مقاومةٌ ٣ أيام + كارديو يومَين = أفضلُ طريقٍ لخسارةِ الدهنِ وبناءِ العضلِ معاً.'
+        :'تدريبٌ متوازنٌ ٣ أيام مقاومة + يومَا كارديو + راحةٌ كافية = نموٌّ عضليٌّ أمثل.'}</span>
+    </div>
+    ${days}
+    <div class="dose-note" style="margin-top:14px">💡 <b>التزامُ البروتين اليومي (${ar(user.macros?user.macros.protG:Math.round(user.wt*1.8))} جم)</b> هوَ المتغيّرُ الأهمُّ — التمرينُ يُنشّطُ، والبروتينُ يبني.</div>
+    <button class="btn btn-ghost" style="margin-top:14px" onclick="showWelcome()">↩ رجوع</button>`);
+  if(nav[nav.length-1]!=='weekly_plan')pushNav('weekly_plan');
+}
+
 function buildToday(){
   beep('select');
   const now=Date.now();
