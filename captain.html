@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#081918">
+<title>الكابتن</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Amiri:ital,wght@0,400;0,700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   نظام التصميم — الكابتن
+   ذهبي عتيق × زمردي عميق  ← لونان حقيقيان
+═══════════════════════════════════════════════ */
+:root{
+  /* ── خلفيات زمردية عميقة ── */
+  --bg:    #081918;
+  --sf:    #0e2422;
+  --sf2:   #132e2b;
+  --sf3:   #1a3c38;
+  --line:  rgba(176,141,87,.16);
+
+  /* ── الذهبي ── */
+  --gd:    #B08D57;
+  --gd-l:  #D4AF7A;
+  --gd-s:  rgba(176,141,87,.12);
+  --gd-m:  rgba(176,141,87,.28);
+
+  /* ── النحاسي ── */
+  --cp:    #C17A3E;
+  --cp-s:  rgba(193,122,62,.14);
+
+  /* ── نصوص ── */
+  --tx:    #EDE8D8;
+  --tx2:   #7FA89E;
+  --tx3:   #4A706A;
+
+  /* ── دلالية ── */
+  --ok:    #52B788;
+  --ok-s:  rgba(82,183,136,.14);
+  --rest:  #4A9AAD;
+  --rst-s: rgba(74,154,173,.14);
+  --red:   #E05A5A;
+
+  --r:14px; --r2:20px; --r3:26px;
+  --d:'Amiri',serif;
+  --b:'Cairo',sans-serif;
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{height:100%;overscroll-behavior:none}
+body{
+  font-family:var(--b);
+  background:
+    radial-gradient(700px 500px at 100% -5%,rgba(176,141,87,.07),transparent 60%),
+    radial-gradient(600px 500px at -5% 100%,rgba(193,122,62,.05),transparent 60%),
+    var(--bg);
+  color:var(--tx);
+  min-height:100vh;min-height:100dvh;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+#app{max-width:430px;margin:0 auto;min-height:100dvh;position:relative}
+
+.screen{display:none;flex-direction:column;min-height:100dvh}
+.screen.on{display:flex}
+
+/* ═══════════ COMPONENTS ═══════════ */
+
+/* زر رئيسي ذهبي */
+.btn-gold{
+  background:linear-gradient(170deg,#cda96a,var(--gd));
+  color:#14090a;border:none;border-radius:var(--r2);
+  padding:16px;font-size:1.05rem;font-weight:900;
+  font-family:var(--b);cursor:pointer;width:100%;
+  transition:.18s;letter-spacing:.3px;
+}
+.btn-gold:active{transform:scale(.97);filter:brightness(.88)}
+.btn-gold:disabled{opacity:.35;cursor:default}
+
+/* زر ثانوي */
+.btn-ghost{
+  background:transparent;border:1px solid var(--line);
+  border-radius:var(--r2);padding:13px;
+  font-size:.9rem;font-weight:700;font-family:var(--b);
+  color:var(--tx2);cursor:pointer;width:100%;transition:.18s;
+}
+.btn-ghost:hover{border-color:var(--gd);color:var(--gd)}
+
+/* حقل إدخال */
+.field{margin-bottom:16px}
+.field label{display:block;font-size:.78rem;color:var(--tx2);margin-bottom:8px}
+.field input,.field select{
+  width:100%;background:var(--sf);color:var(--tx);
+  border:1.5px solid var(--line);padding:13px 15px;
+  border-radius:var(--r);font-family:var(--b);font-size:1rem;transition:.2s;
+  -webkit-appearance:none;
+}
+.field input:focus,.field select:focus{outline:none;border-color:var(--gd);box-shadow:0 0 0 3px var(--gd-s)}
+
+/* شبكة اختيار */
+.choice-grid{display:grid;gap:10px;margin-bottom:16px}
+.cg2{grid-template-columns:1fr 1fr}
+.cg3{grid-template-columns:1fr 1fr 1fr}
+.cg4{grid-template-columns:repeat(4,1fr)}
+
+.ch{
+  background:var(--sf);border:1.5px solid var(--line);
+  border-radius:var(--r);padding:13px 8px;
+  cursor:pointer;font-family:var(--b);font-weight:700;
+  font-size:.86rem;color:var(--tx2);transition:.2s;text-align:center;
+}
+.ch .ci{font-size:1.3rem;display:block;margin-bottom:3px}
+.ch .cs{font-size:.64rem;font-weight:400;color:var(--tx3);display:block;margin-top:2px}
+.ch:hover,.ch.on{border-color:var(--gd);color:var(--gd);background:var(--gd-s)}
+.ch.gon{border-color:var(--cp);color:var(--cp);background:var(--cp-s)}
+
+/* بطاقة */
+.card{
+  background:linear-gradient(150deg,var(--sf2),var(--sf));
+  border:1px solid var(--line);border-radius:var(--r3);
+  padding:20px;
+}
+
+/* شريط التنقل */
+.nav{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:430px;
+  background:rgba(8,25,24,.96);backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border-top:1px solid var(--line);
+  display:flex;justify-content:space-around;
+  padding:10px 0 max(12px,env(safe-area-inset-bottom));
+  z-index:100;
+}
+.nb{display:flex;flex-direction:column;align-items:center;gap:3px;
+  background:none;border:none;cursor:pointer;padding:4px 18px;
+  border-radius:12px;transition:.2s;
+}
+.nb .ni{font-size:1.25rem;line-height:1}
+.nb .nl{font-size:.59rem;color:var(--tx3);font-family:var(--b)}
+.nb.on .nl{color:var(--gd)}
+
+/* توست */
+.toast{
+  position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(10px);
+  background:var(--ok);color:#042212;font-weight:700;font-size:.86rem;
+  padding:11px 22px;border-radius:22px;z-index:400;
+  opacity:0;pointer-events:none;transition:.3s;
+  white-space:nowrap;
+}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.pb{padding-bottom:88px}
+.safe-top{height:env(safe-area-inset-top,0)}
+.scroll{overflow-y:auto;flex:1}
+
+@keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.anim{animation:up .35s cubic-bezier(.2,.7,.3,1) both}
+
+/* ═══════════ ONBOARDING ═══════════ */
+.ob-wrap{flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:28px 22px 36px}
+.ob-logo{display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:24px}
+.ob-brand{font-size:.7rem;letter-spacing:4px;color:var(--gd);opacity:.7}
+.ob-dots{display:flex;gap:6px;justify-content:center;margin-bottom:22px}
+.od{width:6px;height:6px;border-radius:50%;background:var(--sf3);transition:.3s}
+.od.on{background:var(--gd);width:22px;border-radius:3px}
+.ob-h{font-family:var(--d);font-size:2.3rem;line-height:1.2;margin-bottom:6px;
+  background:linear-gradient(170deg,var(--tx),var(--gd-l));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.ob-p{font-size:.88rem;color:var(--tx2);line-height:1.65;margin-bottom:22px}
+
+/* ═══════════ HOME ═══════════ */
+.home-top{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 20px 14px;
+}
+.greet-time{font-size:.7rem;color:var(--tx3);letter-spacing:1px;margin-bottom:2px}
+.greet-name{font-family:var(--d);font-size:1.7rem;line-height:1.1}
+
+.streak{
+  background:var(--sf);border:1px solid var(--line);
+  border-radius:16px;padding:10px 16px;text-align:center;
+}
+.streak-n{font-family:var(--d);font-size:1.5rem;color:var(--gd);line-height:1}
+.streak-l{font-size:.58rem;color:var(--tx3);margin-top:1px}
+
+/* بطاقة المهمة */
+.mission{
+  margin:0 14px 14px;
+  background:linear-gradient(148deg,var(--sf3),var(--sf));
+  border:1px solid var(--gd-m);border-radius:var(--r3);
+  padding:22px 20px 20px;position:relative;overflow:hidden;
+}
+.mission::before{
+  content:'';position:absolute;top:-50px;right:-50px;
+  width:200px;height:200px;
+  background:radial-gradient(circle,var(--gd-s),transparent 70%);
+  pointer-events:none;
+}
+.ms-tag{font-size:.66rem;letter-spacing:2.5px;color:var(--gd);margin-bottom:6px}
+.ms-title{font-family:var(--d);font-size:1.55rem;margin-bottom:10px;line-height:1.3}
+.ms-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.chip{
+  font-size:.74rem;padding:4px 12px;border-radius:18px;
+  background:var(--gd-s);border:1px solid var(--gd-m);
+  color:var(--gd-l);font-weight:700;
+}
+.chip.rest{background:var(--rst-s);border-color:rgba(74,154,173,.22);color:var(--rest)}
+.ms-meta{font-size:.77rem;color:var(--tx2);margin-bottom:16px;display:flex;gap:14px;flex-wrap:wrap}
+
+/* إحصاء */
+.stats-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 14px 14px}
+.stat-card{
+  background:var(--sf);border:1px solid var(--line);
+  border-radius:var(--r2);padding:16px 14px;
+}
+.stat-v{font-family:var(--d);font-size:1.5rem;color:var(--gd);display:block;line-height:1}
+.stat-l{font-size:.66rem;color:var(--tx3);margin-top:3px}
+
+/* آخر الجلسات */
+.sec-head{padding:0 20px 10px;font-size:.7rem;letter-spacing:2.5px;color:var(--tx3)}
+.log-item{
+  display:flex;align-items:center;gap:12px;
+  background:var(--sf);border:1px solid var(--line);
+  border-radius:var(--r);padding:13px 16px;margin:0 14px 8px;
+}
+.li-dot{
+  width:38px;height:38px;border-radius:50%;
+  background:var(--gd-s);border:1px solid var(--gd-m);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.95rem;flex-shrink:0;
+}
+.li-name{font-weight:700;font-size:.9rem}
+.li-meta{font-size:.7rem;color:var(--tx2);margin-top:2px}
+
+/* ═══════════ SESSION ═══════════ */
+.sess-top{
+  display:flex;align-items:center;gap:12px;
+  padding:16px 18px 10px;
+}
+.s-back{
+  width:42px;height:42px;border-radius:13px;
+  border:1px solid var(--line);background:var(--sf);
+  color:var(--tx2);font-size:1.1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.s-info{flex:1}
+.s-title{font-weight:700;font-size:.95rem}
+.s-prog{font-size:.7rem;color:var(--tx2);margin-top:2px}
+
+/* شريط تقدم */
+.pbar{height:3px;background:var(--sf3);margin:0 18px 16px;border-radius:2px}
+.pfill{height:100%;background:linear-gradient(90deg,var(--gd),var(--gd-l));border-radius:2px;transition:width .5s}
+
+/* بطاقة التمرين الحالي */
+.ex-now{
+  margin:0 14px 14px;
+  background:linear-gradient(150deg,var(--sf2),var(--sf));
+  border:1px solid var(--gd-m);border-radius:var(--r3);
+  padding:22px 20px 18px;text-align:center;
+}
+.ex-tool{
+  font-size:.68rem;background:var(--gd-s);color:var(--gd);
+  padding:4px 12px;border-radius:12px;display:inline-block;margin-bottom:10px;
+}
+.ex-name{font-family:var(--d);font-size:2rem;line-height:1.2;margin-bottom:14px}
+
+/* الرسم التوضيحي للتمرين */
+.ex-fig{
+  width:150px;height:130px;margin:0 auto 10px;
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle,var(--gd-s),transparent 70%);
+  border-radius:18px;
+}
+
+/* كلمة الكابتن */
+.captain{
+  display:flex;gap:10px;align-items:flex-start;
+  margin:0 14px 12px;
+  background:var(--sf);border:1px solid var(--line);
+  border-radius:var(--r2);padding:14px 16px;
+}
+.captain .c-ic{font-size:1.25rem;flex-shrink:0;margin-top:1px}
+.captain .c-tx{font-size:.88rem;line-height:1.65;color:var(--tx)}
+.captain.fire{border-color:rgba(193,122,62,.28);background:var(--cp-s)}
+.captain.fire .c-tx{color:#f2d4a8}
+.captain.ok{border-color:rgba(82,183,136,.25);background:var(--ok-s)}
+.captain.ok .c-tx{color:#b0e8c8}
+
+/* مؤشرات المجموعات */
+.set-track{display:flex;justify-content:center;gap:10px;margin:0 0 16px}
+.st-dot{
+  width:44px;height:44px;border-radius:50%;
+  border:2px solid var(--sf3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;font-weight:700;color:var(--tx3);transition:.3s;
+}
+.st-dot.done{background:var(--ok-s);border-color:var(--ok);color:var(--ok)}
+.st-dot.now{
+  background:var(--gd-s);border-color:var(--gd);color:var(--gd);
+  box-shadow:0 0 0 5px var(--gd-s);
+}
+
+/* عداد التكرار */
+.rep-row{
+  display:flex;align-items:center;justify-content:center;gap:18px;
+  margin:0 14px 8px;
+  background:var(--sf);border-radius:var(--r2);padding:18px 20px;
+}
+.adj{
+  width:52px;height:52px;border-radius:50%;
+  border:2px solid var(--gd-m);background:var(--gd-s);
+  color:var(--gd);font-size:1.65rem;font-weight:700;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;
+}
+.adj:active{transform:scale(.86);background:var(--gd-m)}
+.rep-val{text-align:center;min-width:80px}
+.rv-n{font-family:var(--d);font-size:3.2rem;color:var(--tx);line-height:1}
+.rv-l{font-size:.68rem;color:var(--tx3)}
+.rep-hint{font-size:.72rem;color:var(--tx2);text-align:center;margin:-4px 14px 14px}
+
+/* زر تسجيل */
+.btn-log{
+  margin:0 14px 10px;
+  background:linear-gradient(170deg,#cda96a,var(--gd));
+  color:#14090a;border:none;border-radius:var(--r2);
+  padding:18px;font-size:1.1rem;font-weight:900;
+  font-family:var(--b);cursor:pointer;
+  width:calc(100% - 28px);transition:.18s;
+}
+.btn-log:active{transform:scale(.97)}
+
+/* ═══════════ مؤقت الراحة ═══════════ */
+.rest-ov{
+  display:none;position:fixed;inset:0;
+  background:rgba(8,25,24,.97);z-index:200;
+  flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:28px;
+}
+.rest-ov.on{display:flex}
+.rest-lbl{font-size:.72rem;letter-spacing:3px;color:var(--tx3);margin-bottom:20px}
+
+.ring-wrap{position:relative;width:188px;height:188px;margin-bottom:24px}
+.ring-wrap svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:var(--sf3);stroke-width:9}
+.ring-f{
+  fill:none;stroke:var(--rest);stroke-width:9;stroke-linecap:round;
+  transition:stroke-dashoffset 1s linear;
+}
+.ring-cnt{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.ring-n{font-family:var(--d);font-size:3.4rem;color:var(--tx);line-height:1}
+.ring-s{font-size:.7rem;color:var(--tx3)}
+
+.rest-word{font-family:var(--d);font-size:1.3rem;margin-bottom:6px;line-height:1.4;color:var(--tx)}
+.rest-next{font-size:.8rem;color:var(--tx2);margin-bottom:30px}
+.btn-skip{
+  background:var(--sf);border:1px solid var(--line);
+  border-radius:var(--r2);padding:12px 30px;
+  color:var(--tx2);font-size:.88rem;font-family:var(--b);cursor:pointer;
+}
+
+/* ═══════════ SESSION DONE ═══════════ */
+.done-wrap{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;padding:36px 22px 40px;text-align:center;
+}
+.done-emoji{font-size:4rem;margin-bottom:12px}
+.done-h{
+  font-family:var(--d);font-size:2.2rem;margin-bottom:6px;
+  background:linear-gradient(170deg,var(--tx),var(--gd-l));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.done-p{font-size:.9rem;color:var(--tx2);line-height:1.65;margin-bottom:26px}
+.done-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;width:100%;margin-bottom:24px}
+.ds{background:var(--sf);border:1px solid var(--line);border-radius:var(--r);padding:14px 6px}
+.ds-v{font-family:var(--d);font-size:1.4rem;color:var(--gd);display:block}
+.ds-l{font-size:.62rem;color:var(--tx3)}
+.cap-close{
+  background:var(--sf);border:1px solid var(--gd-m);
+  border-radius:var(--r2);padding:16px 18px;width:100%;margin-bottom:20px;text-align:right;
+}
+.cc-top{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:.75rem;color:var(--gd)}
+.cc-txt{font-size:.9rem;line-height:1.7;color:var(--tx)}
+.pr-box{
+  background:var(--ok-s);border:1px solid rgba(82,183,136,.22);
+  border-radius:var(--r2);padding:13px 16px;width:100%;margin-bottom:16px;
+  font-size:.86rem;color:var(--ok);text-align:center;display:none;
+}
+
+/* ═══════════ HISTORY ═══════════ */
+.hist-wrap{padding:20px 14px 90px}
+.hist-h{font-family:var(--d);font-size:1.5rem;padding:0 6px 16px}
+.cal-lbl{display:flex;justify-content:space-around;margin-bottom:5px}
+.cal-lbl span{font-size:.58rem;color:var(--tx3);text-align:center;flex:1}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:20px}
+.cal-d{
+  aspect-ratio:1;border-radius:7px;background:var(--sf);
+  border:1px solid transparent;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.6rem;color:var(--tx3);
+}
+.cal-d.t{background:var(--gd-s);border-color:var(--gd-m);color:var(--gd);font-weight:700}
+.cal-d.done{background:var(--ok-s);border-color:rgba(82,183,136,.2);color:var(--ok)}
+
+.sess-row{
+  background:var(--sf);border:1px solid var(--line);
+  border-radius:var(--r2);padding:15px 16px;margin-bottom:9px;
+}
+.sr-date{font-size:.68rem;color:var(--tx3);margin-bottom:6px}
+.sr-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.sr-chip{
+  font-size:.7rem;padding:3px 10px;border-radius:10px;
+  background:var(--gd-s);color:var(--gd-l);
+}
+.sr-meta{font-size:.73rem;color:var(--tx2)}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- ══════════════ ONBOARDING 1 ══════════════ -->
+<div class="screen on" id="s-ob1">
+  <div class="safe-top"></div>
+  <div class="ob-wrap">
+    <div>
+      <div class="ob-logo">
+        <svg viewBox="0 0 120 158" width="50" height="67" style="filter:drop-shadow(0 3px 14px rgba(176,141,87,.3))">
+          <path d="M8,84 C9,38 60,14 60,8 C60,14 111,38 112,84 L112,150 Q112,158 103,158 L17,158 Q8,158 8,150 Z" fill="#B08D57"/>
+          <path d="M12,84 C13,43 60,18 60,13 C60,18 107,43 108,84 L108,147 Q108,153 101,153 L19,153 Q12,153 12,147 Z" fill="#0F4C45"/>
+          <path d="M60,34 L73,84 L60,130 L47,84 Z" fill="#B08D57"/>
+          <line x1="60" y1="52" x2="60" y2="130" stroke="#0F4C45" stroke-width="3"/>
+        </svg>
+        <span class="ob-brand">حيدر الهزيم</span>
+      </div>
+      <div class="ob-dots"><div class="od on"></div><div class="od"></div><div class="od"></div></div>
+      <h1 class="ob-h">كابتنُك<br>في المنزل</h1>
+      <p class="ob-p">برنامجٌ يُصمَّم خصيصاً لك، ويقودك تمريناً تمريناً، على مدار الساعة.</p>
+      <div class="field">
+        <label>ما اسمُك؟</label>
+        <input type="text" id="inName" placeholder="اكتب اسمك" autocomplete="given-name">
+      </div>
+      <div class="field">
+        <label>الجنس</label>
+        <div class="choice-grid cg2">
+          <button class="ch on" id="sxM" onclick="pick('sx','m',this)"><span class="ci">🧔</span>ذكر</button>
+          <button class="ch"    id="sxF" onclick="pick('sx','f',this)"><span class="ci">👩</span>أنثى</button>
+        </div>
+      </div>
+    </div>
+    <button class="btn-gold" onclick="ob2()">التالي ←</button>
+  </div>
+</div>
+
+<!-- ══════════════ ONBOARDING 2 ══════════════ -->
+<div class="screen" id="s-ob2">
+  <div class="safe-top"></div>
+  <div class="ob-wrap">
+    <div>
+      <div class="ob-dots"><div class="od"></div><div class="od on"></div><div class="od"></div></div>
+      <h2 class="ob-h" style="font-size:1.9rem">مستواك<br>وأدواتك</h2>
+      <p class="ob-p">سنختار التمارينَ المناسبة بناءً على هذا.</p>
+      <div class="field">
+        <label>خبرتُك التدريبية</label>
+        <div class="choice-grid cg3">
+          <button class="ch on" id="lv1" onclick="pick('lv',1,this)"><span class="ci">🌱</span>مبتدئ<span class="cs">أقل من سنة</span></button>
+          <button class="ch"    id="lv2" onclick="pick('lv',2,this)"><span class="ci">⚡</span>متوسط<span class="cs">١–٣ سنوات</span></button>
+          <button class="ch"    id="lv3" onclick="pick('lv',3,this)"><span class="ci">🔥</span>متقدم<span class="cs">+٣ سنوات</span></button>
+        </div>
+      </div>
+      <div class="field">
+        <label>الأدوات المتوفرة لديك</label>
+        <div class="choice-grid cg3">
+          <button class="ch on" id="eq1" onclick="pick('eq',1,this)"><span class="ci">🤸</span>وزن الجسم<span class="cs">بلا أدوات</span></button>
+          <button class="ch"    id="eq2" onclick="pick('eq',2,this)"><span class="ci">🏋️</span>دامبل<span class="cs">+ جسم</span></button>
+          <button class="ch"    id="eq3" onclick="pick('eq',3,this)"><span class="ci">🗼</span>برج قوة<span class="cs">+ دامبل</span></button>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <button class="btn-gold" onclick="ob3()">التالي ←</button>
+      <button class="btn-ghost" onclick="show('s-ob1')">→ رجوع</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ ONBOARDING 3 ══════════════ -->
+<div class="screen" id="s-ob3">
+  <div class="safe-top"></div>
+  <div class="ob-wrap">
+    <div>
+      <div class="ob-dots"><div class="od"></div><div class="od"></div><div class="od on"></div></div>
+      <h2 class="ob-h" style="font-size:1.9rem">هدفُك<br>وأيامُك</h2>
+      <p class="ob-p">سيُبنى برنامجُك الأسبوعيُّ على هذا.</p>
+      <div class="field">
+        <label>هدفُك الأساسي</label>
+        <div class="choice-grid cg3">
+          <button class="ch"    id="gs" onclick="pickG('str',this)"><span class="ci">💪</span>قوة</button>
+          <button class="ch gon" id="gh" onclick="pickG('hyp',this)"><span class="ci">🏆</span>تضخيم</button>
+          <button class="ch"    id="ge" onclick="pickG('end',this)"><span class="ci">🌊</span>تحمّل</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>كم يومًا في الأسبوع؟</label>
+        <div class="choice-grid cg4">
+          <button class="ch"    id="dy2" onclick="pick('days',2,this)">٢</button>
+          <button class="ch gon" id="dy3" onclick="pick('days',3,this)">٣</button>
+          <button class="ch"    id="dy4" onclick="pick('days',4,this)">٤</button>
+          <button class="ch"    id="dy5" onclick="pick('days',5,this)">٥</button>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <button class="btn-gold" onclick="finishOB()">ابدأ البرنامج 🚀</button>
+      <button class="btn-ghost" onclick="show('s-ob2')">→ رجوع</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ HOME ══════════════ -->
+<div class="screen" id="s-home">
+  <div class="safe-top"></div>
+  <div class="scroll pb">
+    <div class="home-top">
+      <div>
+        <div class="greet-time" id="gTime"></div>
+        <div class="greet-name" id="gName">أهلاً</div>
+      </div>
+      <div class="streak"><div class="streak-n" id="strkN">٠</div><div class="streak-l">يوم 🔥</div></div>
+    </div>
+
+    <!-- مهمة اليوم -->
+    <div class="mission anim" id="missionBox">
+      <div class="ms-tag">تمرينُ اليوم</div>
+      <div class="ms-title" id="msTitle">جاهزٌ للبدء</div>
+      <div class="ms-chips" id="msChips"></div>
+      <div class="ms-meta" id="msMeta"></div>
+      <button class="btn-gold" id="msBtn" onclick="startSession()">ابدأ الجلسة ▶</button>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card"><span class="stat-v" id="stWk">٠</span><span class="stat-l">جلسات هذا الأسبوع</span></div>
+      <div class="stat-card"><span class="stat-v" id="stMo">٠</span><span class="stat-l">مجموعات هذا الشهر</span></div>
+    </div>
+
+    <div class="sec-head">آخرُ الجلسات</div>
+    <div id="recentLog"></div>
+  </div>
+</div>
+
+<!-- ══════════════ SESSION ══════════════ -->
+<div class="screen" id="s-sess">
+  <div class="safe-top"></div>
+  <div class="sess-top">
+    <button class="s-back" onclick="quitSess()">→</button>
+    <div class="s-info">
+      <div class="s-title" id="sTitle">الجلسة</div>
+      <div class="s-prog" id="sProg">تمرين ١ من ١</div>
+    </div>
+  </div>
+  <div class="pbar"><div class="pfill" id="pFill" style="width:0%"></div></div>
+
+  <div class="scroll">
+    <div class="ex-now anim">
+      <div class="ex-tool" id="exTool">—</div>
+      <div class="ex-name" id="exName">—</div>
+      <div class="ex-fig" id="exFig"></div>
+    </div>
+
+    <div class="captain" id="capWord">
+      <div class="c-ic">🎯</div>
+      <div class="c-tx" id="capTxt">—</div>
+    </div>
+
+    <div class="set-track" id="setTrack"></div>
+    <div class="rep-hint" id="repHint">المستهدف: ١٠–١٢ تكرار</div>
+
+    <div class="rep-row">
+      <button class="adj" onclick="adjR(-1)">−</button>
+      <div class="rep-val"><span class="rv-n" id="repN">١٠</span><span class="rv-l">تكرار</span></div>
+      <button class="adj" onclick="adjR(1)">+</button>
+    </div>
+
+    <button class="btn-log" onclick="logSet()">+ سجِّل المجموعة</button>
+    <div style="padding:0 14px 36px">
+      <button class="btn-ghost" onclick="skipEx()" style="font-size:.83rem;padding:11px">تخطَّ هذا التمرين</button>
+    </div>
+  </div>
+
+  <!-- مؤقت الراحة -->
+  <div class="rest-ov" id="restOv">
+    <div class="rest-lbl">وقتُ الاستشفاء</div>
+    <div class="ring-wrap">
+      <svg viewBox="0 0 188 188">
+        <circle class="ring-bg" cx="94" cy="94" r="82"/>
+        <circle class="ring-f" id="ringF" cx="94" cy="94" r="82"
+          stroke-dasharray="515" stroke-dashoffset="0"/>
+      </svg>
+      <div class="ring-cnt">
+        <span class="ring-n" id="restN">٦٠</span>
+        <span class="ring-s">ثانية</span>
+      </div>
+    </div>
+    <div class="rest-word" id="rstWord">أنفسْ واستعدّ</div>
+    <div class="rest-next" id="rstNext"></div>
+    <button class="btn-skip" onclick="skipRest()">تخطَّ الراحة ◀</button>
+  </div>
+</div>
+
+<!-- ══════════════ SESSION DONE ══════════════ -->
+<div class="screen" id="s-done">
+  <div class="safe-top"></div>
+  <div class="done-wrap anim">
+    <div class="done-emoji">🏆</div>
+    <h2 class="done-h" id="doneH">أحسنتَ!</h2>
+    <p class="done-p" id="doneP">الجلسة انتهت. استشفِ جيداً.</p>
+    <div class="done-stats">
+      <div class="ds"><span class="ds-v" id="dEx">٠</span><span class="ds-l">تمارين</span></div>
+      <div class="ds"><span class="ds-v" id="dSets">٠</span><span class="ds-l">مجموعات</span></div>
+      <div class="ds"><span class="ds-v" id="dTime">٠</span><span class="ds-l">دقيقة</span></div>
+    </div>
+    <div class="cap-close">
+      <div class="cc-top">🎯 الكابتن يقول</div>
+      <div class="cc-txt" id="capClose">—</div>
+    </div>
+    <div class="pr-box" id="prBox"></div>
+    <button class="btn-gold" onclick="goHome()" style="margin-top:auto">العودة للرئيسية 🏠</button>
+  </div>
+</div>
+
+<!-- ══════════════ HISTORY ══════════════ -->
+<div class="screen" id="s-hist">
+  <div class="safe-top"></div>
+  <div class="scroll hist-wrap">
+    <h2 class="hist-h">سجلُّ التقدم</h2>
+    <div class="sec-head" style="padding-bottom:8px">الأيامُ المدرَّبة</div>
+    <div class="cal-lbl" id="calLbl"></div>
+    <div class="cal" id="calGrid"></div>
+    <div class="sec-head" style="padding-bottom:8px">الجلساتُ الأخيرة</div>
+    <div id="histLog"></div>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<!-- شريط التنقل -->
+<nav class="nav" id="navBar" style="display:none">
+  <button class="nb on" id="nb-h" onclick="goHome()"><span class="ni">🏠</span><span class="nl">الرئيسية</span></button>
+  <button class="nb" id="nb-s" onclick="startSession()"><span class="ni">▶️</span><span class="nl">ابدأ</span></button>
+  <button class="nb" id="nb-g" onclick="goHist()"><span class="ni">📊</span><span class="nl">التقدم</span></button>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══════════════════════════════════════
+   الكابتن — المنطق الكامل
+   حيدر الهزيم © 2026
+══════════════════════════════════════ */
+
+// ─── عربي ───
+const A='٠١٢٣٤٥٦٧٨٩';
+const a=n=>String(Math.round(n)).replace(/\d/g,d=>A[d]);
+
+// ─── الحالة ───
+const KEY='captain_v2';
+let S={};
+
+function ld(){
+  try{S=JSON.parse(localStorage.getItem(KEY))||{};}catch{S={};}
+  if(!S.log)S.log=[];
+  if(!S.streak)S.streak={n:0,last:null};
+}
+function sv(){localStorage.setItem(KEY,JSON.stringify(S));}
+
+// ─── اختيارات الإعداد ───
+let OB={sx:'m',lv:1,eq:1,goal:'hyp',days:3};
+
+function pick(k,v,el){
+  OB[k]=v;
+  const grp={
+    sx:['sxM','sxF'],
+    lv:['lv1','lv2','lv3'],
+    eq:['eq1','eq2','eq3'],
+    days:['dy2','dy3','dy4','dy5']
+  }[k];
+  if(!grp)return;
+  grp.forEach(id=>{
+    const b=document.getElementById(id);
+    if(!b)return;
+    b.classList.remove('on','gon');
+    if(b===el)b.classList.add('on');
+  });
+}
+function pickG(v,el){
+  OB.goal=v;
+  ['gs','gh','ge'].forEach(id=>{
+    document.getElementById(id).classList.remove('on','gon');
+  });
+  el.classList.add('gon');
+}
+
+// ─── التنقل ───
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+}
+function setNb(id){
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.getElementById(id)?.classList.add('on');
+}
+function goHome(){show('s-home');setNb('nb-h');renderHome();}
+function goHist(){show('s-hist');setNb('nb-g');renderHist();}
+
+// ─── الإعداد ───
+function ob2(){
+  const nm=(document.getElementById('inName').value||'').trim();
+  if(!nm){document.getElementById('inName').focus();return;}
+  OB.name=nm;show('s-ob2');
+}
+function ob3(){show('s-ob3');}
+function finishOB(){
+  S.user={name:OB.name,sx:OB.sx,lv:OB.lv,eq:OB.eq,goal:OB.goal,days:OB.days,since:Date.now()};
+  S.log=[];S.streak={n:0,last:null};
+  sv();
+  document.getElementById('navBar').style.display='flex';
+  goHome();
+}
+
+// ══════════════════════════════════════
+// قاعدة التمارين
+// ══════════════════════════════════════
+const DB={
+  chest:{n:'الصدر',e:'🫁',g:'أمامي',rec:48,
+    ex:[
+      {n:'الضغط الحائطي',t:'وزن الجسم',df:1,reps:'١٥–٢٠',sets:3,
+        steps:['قِفْ أمامَ الحائط، يدانِ على مستوى الصدرِ بعرضِ الكتف','الجسمُ خطٌّ مستقيم — شُدَّ البطن','انثنِ المرفقانِ واقتربْ من الحائط','ادفعْ بالصدرِ حتى تعود'],
+        warn:'لا ترفعْ كتفيكَ نحوَ الأذنين'},
+      {n:'الضغط المائل',t:'وزن الجسم',df:2,reps:'١٠–١٥',sets:3,
+        steps:['يدانِ على سطحٍ مرتفع (٨٠سم)، أوسعَ من الكتف','الجسمُ خطٌّ من الكعبِ للرأس','انزلْ بتحكُّمٍ — الكوعُ ٤٥° فقط','ادفعْ من الصدرِ لا من الكتف'],
+        warn:'لا تدعِ الوركَ يهبط'},
+      {n:'الضغط الأرضي',t:'وزن الجسم',df:2,reps:'٨–١٢',sets:4,
+        steps:['استلقِ بطنياً، يدانِ تحتَ الصدرِ بعرضٍ أوسع','الجسمُ لوحٌ واحد من الرأسِ للكعب','انزلْ حتى يقتربَ الصدرُ من الأرض','ادفعْ بقوةٍ وزفرة'],
+        warn:'لا تقوِّسْ أسفلَ الظهر'},
+      {n:'ضغط الصدر بالدامبل أرضاً',t:'دامبل',df:3,reps:'٨–١٢',sets:4,
+        steps:['استلقِ ظهراً، الدامبلانِ بمحاذاةِ الصدر — مرفق ٤٥°','ادفعْ للأعلى حتى تمتدَّ الذراعان','أنزِلْ ببطءٍ حتى يلمسَ المرفقُ الأرض','ركّزْ على عصرِ الصدر في القمّة'],
+        warn:'المدى محدودٌ بالأرض — ركّزْ على الشعورِ لا المدى'},
+      {n:'الضغط على المتوازي',t:'برج قوة',df:4,reps:'٦–١٠',sets:4,
+        steps:['أمسكِ المقبضينِ وارفعْ جسمك','مِلْ بجذعِك أماماً لاستهدافِ الصدرِ السفلي','انزلْ بتحكُّمٍ حتى تشعرَ بتمدّدِ الصدر','ادفعْ للأعلى'],
+        warn:'لا تنزلْ أعمقَ من راحةِ كتفك'}
+    ]},
+
+  lats:{n:'الظهر العريض',e:'🔙',g:'خلفي',rec:72,
+    ex:[
+      {n:'السحب تحت الطاولة',t:'وزن الجسم',df:1,reps:'١٠–١٥',sets:3,
+        steps:['استلقِ تحتَ طاولةٍ ثابتة، أمسكْ حافتَها','الجسمُ لوحٌ مستقيم من الكعبِ للرأس','اسحبْ صدرَك للأعلى نحوَ الطاولة بدفعِ المرفقينِ خلفاً','اعصرِ الظهرَ في القمّة، انزلْ ببطء'],
+        warn:'تأكّدْ أن الطاولةَ ثابتةٌ تماماً'},
+      {n:'التجديف بالدامبل',t:'دامبل',df:2,reps:'١٠–١٢',sets:4,
+        steps:['يدٌ وركبةٌ على كرسيٍّ ثابت، ظهرٌ مستوٍ','أمسكِ الدامبلَ بيدِك الحرّة وامتدَّ للأسفل','اسحبِ الدامبلَ نحوَ خصرِك بقيادةِ المرفق','انزلْ ببطءٍ كامل، غيّرِ الجهة'],
+        warn:'لا تلتوِ بالجذعِ لرفعِ الوزن'},
+      {n:'السحب الأفقي',t:'برج قوة',df:3,reps:'٨–١٢',sets:4,
+        steps:['أمسكِ العارضةَ والجسمُ مائلٌ تحتَها','شُدَّ الجذعَ — الجسمُ لوحٌ مستقيم','اسحبْ صدرَك نحوَ العارضةِ بالمرفقينِ خلفاً','انزلْ بتحكُّمٍ كامل'],
+        warn:'ابدأِ السحبَ بالظهرِ لا بالبايسبس'},
+      {n:'العقلة الكاملة',t:'برج قوة',df:4,reps:'٥–٨',sets:4,
+        steps:['أمسكِ العارضةَ بعرضِ الكتفين أو أوسع','شُدَّ لوحَيِ الكتفِ قبلَ البدء','اسحبْ نفسَك للأعلى حتى يتجاوزَ ذقنُك العارضة','انزلْ ببطءٍ تامٍّ مع امتدادِ الذراعين'],
+        warn:'لا تتأرجحْ — كلُّ التكرارِ بتحكُّم'}
+    ]},
+
+  delt:{n:'الكتف',e:'💪',g:'الكتف',rec:48,
+    ex:[
+      {n:'رفعٌ جانبي بزجاجات',t:'وزن الجسم',df:1,reps:'١٥–٢٠',sets:3,
+        steps:['قِفْ مستقيماً، زجاجتانِ مملوءتانِ بماء بجانبِ الفخذين','ارفعِ الذراعينِ جانباً حتى محاذاةِ الكتف','توقّفْ ثانيةً في الأعلى','أنزِلْ ببطءٍ وتحكُّم'],
+        warn:'لا تتأرجحْ بجذعِك'},
+      {n:'رفعٌ جانبي بالدامبل',t:'دامبل',df:2,reps:'١٢–١٥',sets:3,
+        steps:['الوزنانِ بجانبِ الفخذين، راحتانِ للداخل','ارفعْ جانباً بمرفقٍ طفيفِ الانحناء','لا ترفعْ أعلى من الكتف','أنزِلْ ببطءٍ مقاوماً'],
+        warn:'الحركةُ من الكتفِ لا من الرسغ'},
+      {n:'ضغطُ الكتف جالساً',t:'دامبل',df:3,reps:'٨–١٢',sets:4,
+        steps:['اجلسْ بظهرٍ مسنود، الوزنانِ بمحاذاةِ الأذنين','ادفعِ الوزنينِ للأعلى حتى تقتربا','لا تقفلِ المرفقَ تماماً','أنزِلْ ببطءٍ'],
+        warn:'لا تقوّسْ أسفلَ الظهر'},
+      {n:'ضغطُ الكتف بالبار',t:'برج قوة',df:4,reps:'٦–١٠',sets:4,
+        steps:['أمسكِ العارضةَ العلويةَ بعرضِ الكتف','ادفعْ للأعلى حتى تقتربَ الذراعان','تحكُّمٌ في النزول','المرفقانِ أمامَ الجسمِ قليلاً'],
+        warn:'ابدأِ الحركةَ من الكتفِ لا من الترايسبس'}
+    ]},
+
+  biceps:{n:'البايسبس',e:'💪',g:'ذراع',rec:48,
+    ex:[
+      {n:'ثنيٌ بقبضةٍ محايدة',t:'وزن الجسم',df:1,reps:'١٢–١٥',sets:3,
+        steps:['استخدمْ أي عمودٍ أو حافة عمودية في المنزل','أمسكْ بقبضةٍ محايدة (إبهامٌ للأمام)','اثنِ المرفقَ واسحبْ نفسَك','انزلْ ببطءٍ'],
+        warn:'الكوعُ ثابتٌ لا يتحرّك'},
+      {n:'ثني البايسبس بالدامبل',t:'دامبل',df:2,reps:'١٠–١٢',sets:3,
+        steps:['الوزنانِ بجانبَي الجسم، قبضةٌ للأمام','اثنِ المرفقَ ورفعِ الدامبلَ نحوَ الكتف','دوِّرِ الرسغَ قليلاً في الأعلى','انزلْ ببطءٍ تامٍّ حتى يمتدَّ المرفق'],
+        warn:'لا تتأرجحْ بالكوع — ثبِّتِ الكوعَ بجانبِ الجسم'},
+      {n:'ثني المطرقة',t:'دامبل',df:2,reps:'١٠–١٢',sets:3,
+        steps:['الوزنانِ بجانبِ الجسم، إبهامٌ للأمام (محايد)','ارفعِ الدامبلَ للأعلى بدونِ دورانِ الرسغ','حافظْ على القبضةِ المحايدة طوالَ الحركة','انزلْ ببطء'],
+        warn:'هذا الثنيُ يستهدفُ أيضاً البراكياليس'},
+      {n:'سحبٌ ضيّقٌ بالمسكِ السفلي',t:'برج قوة',df:3,reps:'٦–١٠',sets:4,
+        steps:['أمسكِ العارضةَ بمسكٍ سفليٍّ (راحتانِ للأمام) بعرضِ الكتف','شُدَّ الكتفينِ للخلفِ والأسفل','اسحبْ نفسَك للأعلى — ذقنٌ فوقَ العارضة','انزلْ ببطءٍ'],
+        warn:'مسكٌ سفليٌّ — يزيدُ استهدافَ البايسبس'}
+    ]},
+
+  triceps:{n:'الترايسبس',e:'💪',g:'ذراع',rec:48,
+    ex:[
+      {n:'الضغطُ الضيّق',t:'وزن الجسم',df:1,reps:'١٢–١٥',sets:3,
+        steps:['وضعيةُ الضغطِ العادية لكنَّ اليدينِ بعرضٍ ضيّق (كتف)','الكوعانِ بجانبِ الجسمِ لا للخارج','انزلْ حتى يقتربَ الصدرُ من اليدين','ادفعْ وركّزْ على الترايسبس'],
+        warn:'الكوعانِ للداخلِ دائماً'},
+      {n:'الغطسُ على الكرسي',t:'وزن الجسم',df:1,reps:'١٠–١٥',sets:3,
+        steps:['يدانِ على حافةِ كرسيٍّ خلفَك، أرجلٌ أمامَك','انزلْ بثنيِ المرفقين — الكوعانِ للخلف','توقّفْ عندَ زاويةِ ٩٠° أو أعمق قليلاً','ادفعْ للأعلى بالترايسبس'],
+        warn:'لا تبتعدِ الأرداف عن الكرسي'},
+      {n:'مدُّ الترايسبس بالدامبل',t:'دامبل',df:2,reps:'١٢–١٥',sets:3,
+        steps:['أمسكْ دامبلاً بكلتا يديك ورفعه فوقَ الرأس','ثنِّ المرفقينِ خلفَ الرأسِ ببطء','الكوعانِ ثابتانِ لا يتحركان','ادفعِ الدامبلَ للأعلى بقوّة الترايسبس'],
+        warn:'الكوعانِ ثابتانِ — لا تفتحهما للخارج'},
+      {n:'الغطسُ على المتوازي',t:'برج قوة',df:4,reps:'٦–١٠',sets:4,
+        steps:['أمسكِ المقبضينِ وارفعْ الجسم','الجذعُ مستقيمٌ — لا تمِلْ للأمام','انزلْ بتحكُّمٍ حتى تشعرَ بشدٍّ في الترايسبس','ادفعْ للأعلى بالترايسبس'],
+        warn:'الميلُ للأمامِ يحوّلُ الحملَ للصدر'}
+    ]},
+
+  abs:{n:'البطن',e:'🎯',g:'جذع',rec:24,
+    ex:[
+      {n:'الكرنش الأساسي',t:'وزن الجسم',df:1,reps:'٢٠–٢٥',sets:3,
+        steps:['استلقِ ظهراً، ركبتانِ منحنيتان، يدانِ خلفَ الرأس','شُدَّ البطنَ وارفعِ الأكتافَ عن الأرض','لا ترفعِ الظهرَ كاملاً — فقطِ الأكتاف','أنزِلْ ببطءٍ'],
+        warn:'لا تسحبِ الرأسَ بيديك'},
+      {n:'الكرنش المعكوس',t:'وزن الجسم',df:1,reps:'١٥–٢٠',sets:3,
+        steps:['استلقِ ظهراً، ساقانِ مرفوعتانِ للأعلى (عموديتان)','يدانِ بجانبِ الجسم على الأرض','ارفعِ الوركَ للأعلى واضغطِ البطنَ','أنزِلْ ببطءٍ'],
+        warn:'الحركةُ من البطنِ لا من الزخم'},
+      {n:'البلانك',t:'وزن الجسم',df:1,reps:'٣٠–٦٠ ث',sets:3,
+        steps:['استنِدْ على الساعدينِ والأصابع','الجسمُ لوحٌ واحد — بطنٌ مشدودٌ وأرداف مشدودة','النظرةُ للأسفل — الرقبةُ محايدة','تنفّسْ بانتظام'],
+        warn:'لا تدعِ الوركَ يهبطَ أو يرتفع'},
+      {n:'الكرنش بالدامبل',t:'دامبل',df:2,reps:'١٥–٢٠',sets:3,
+        steps:['استلقِ ظهراً، ركبتانِ منحنيتان، دامبلٌ على الصدر','شُدَّ البطنَ وارفعِ الأكتافَ كالكرنش العادي','الوزنُ يزيدُ المقاومة — لا ترفعِ الظهرَ كاملاً','أنزِلْ ببطء'],
+        warn:'حافظْ على الوزنِ ملاصقاً للصدر'}
+    ]},
+
+  quads:{n:'الرباعية',e:'🦵',g:'أرجل',rec:72,
+    ex:[
+      {n:'السكوات الأساسي',t:'وزن الجسم',df:1,reps:'١٥–٢٠',sets:3,
+        steps:['قِفْ بعرضِ الكتفين، أصابعُ القدمِ للخارجِ قليلاً','انزلْ ببطءٍ كأنَّكَ تجلسُ على كرسيٍّ خلفَك','الركبتانِ تتبعانِ اتجاهَ الأصابع','ادفعِ الأرضَ وارفعْ'],
+        warn:'الركبةُ لا تتجاوزُ أصابعَ القدم بكثير'},
+      {n:'الطعن الثابت',t:'وزن الجسم',df:1,reps:'١٢–١٥ لكلٍّ',sets:3,
+        steps:['خطوةٌ كبيرةٌ للأمام — الساقانِ في وضعِ الطعن','انزلْ بالركبةِ الخلفيةِ نحوَ الأرض','الجذعُ مستقيمٌ — لا تميلْ','ارفعْ وكرّرِ الجهة'],
+        warn:'الركبةُ الأماميةُ لا تتجاوزُ القدمَ للأمام'},
+      {n:'السكوات بالدامبل',t:'دامبل',df:2,reps:'١٢–١٥',sets:4,
+        steps:['أمسكِ الدامبلانِ بجانبَيكَ أو على الأكتاف','نفسُ تقنيةِ السكوات الأساسي','الوزنُ يزيدُ المقاومة','حافظْ على ظهرٍ مستقيم'],
+        warn:'الوزنُ المنتشرٌ على القدمِ كاملة — لا على الأصابع فقط'},
+      {n:'السكوات البلغاري',t:'دامبل',df:3,reps:'٨–١٢ لكلٍّ',sets:4,
+        steps:['قدمٌ خلفيةٌ على كرسيٍّ أو حافة مرتفعة','القدمُ الأماميةُ بعيدةٌ كفايةً للأمام','انزلْ بالركبةِ الخلفيةِ نحوَ الأرض','الدامبلانِ بيديك للثقل'],
+        warn:'اختبرِ التوازنَ أولاً بدونِ وزن'}
+    ]},
+
+  hams:{n:'الظهر والأرداف',e:'🍑',g:'أرجل',rec:72,
+    ex:[
+      {n:'الجسر الأرضي',t:'وزن الجسم',df:1,reps:'١٥–٢٠',sets:3,
+        steps:['استلقِ ظهراً، ركبتانِ منحنيتانِ وقدمانِ على الأرض','ادفعِ الوركَ للأعلى واعصرِ الأرداف في القمّة','الجسمُ خطٌّ من الكتفِ للركبة','أنزِلْ ببطء'],
+        warn:'لا تدعِ الركبةَ تتجه للداخل'},
+      {n:'الجسر بساقٍ واحدة',t:'وزن الجسم',df:2,reps:'١٢–١٥ لكلٍّ',sets:3,
+        steps:['نفسُ وضعيةِ الجسر لكنَّ ساقٌ واحدةٌ مرفوعة','ادفعِ الوركَ للأعلى بالساقِ الموضوعة','عصرُ الأردافِ في القمّة مهمٌّ جداً','أنزِلْ ببطء وغيّرِ الجهة'],
+        warn:'حافظْ على الوركِ مستوياً — لا ميلَ للجانب'},
+      {n:'رومانيانِ ديدلفت بالدامبل',t:'دامبل',df:2,reps:'١٠–١٢',sets:4,
+        steps:['قِفْ مستقيماً بالدامبلانِ أمامَ الفخذين','انحنِ للأمامِ من الوركِ — ليسَ من الظهر','أنزِلِ الدامبلانِ على طولِ الساقين','ارفعْ بالأوتار الخلفيةِ وعصرِ الأرداف في القمّة'],
+        warn:'الظهرُ مستقيمٌ دائماً — لا انحناءَ للظهر السفلي'},
+      {n:'ديدلفت بالدامبل',t:'دامبل',df:3,reps:'٨–١٠',sets:4,
+        steps:['دامبلانِ أمامَ القدمين، قدمانِ بعرضِ الكتف','انزلْ وأمسكِ الدامبلانِ بإبقاءِ الظهرِ مستقيماً','ارفعْ بدفعِ الأرضِ بالقدمين — ليسَ بشدِّ الظهر','الدامبلانِ قريبانِ من الجسمِ طوالَ الوقت'],
+        warn:'ابدأِ الحركةَ بدفعِ الأرضِ لا برفعِ الظهر'}
+    ]},
+
+  calves:{n:'السمانة',e:'🦵',g:'أرجل',rec:48,
+    ex:[
+      {n:'رفعُ السمانة واقفاً',t:'وزن الجسم',df:1,reps:'٢٠–٣٠',sets:3,
+        steps:['قِفْ بالأصابعِ على حافةٍ مرتفعة (درجة سلّم)','الكعبانِ للأسفل أولاً (تمدُّد كامل)','ارفعِ الكعبينِ للأعلى بأقصى ارتفاع','تحكُّمٌ في الإنزال'],
+        warn:'حركةٌ كاملةُ المدى — تمدُّدٌ في الأسفلِ مهم'},
+      {n:'رفعُ السمانة بساقٍ واحدة',t:'وزن الجسم',df:2,reps:'١٥–٢٠ لكلٍّ',sets:3,
+        steps:['ساقٌ واحدةٌ على حافةٍ مرتفعة','استندْ بيدٍ لحفظِ التوازن','ارفعِ الكعبَ بأقصى ارتفاع','تمدُّدٌ كاملٌ في الأسفل'],
+        warn:'وزنُ الجسمِ على ساقٍ واحدةٍ مقاومةٌ كافية'},
+      {n:'رفعُ السمانة بالدامبل',t:'دامبل',df:2,reps:'١٥–٢٠',sets:4,
+        steps:['أمسكِ الدامبلانِ بيديك، قِفْ بالأصابع على حافة','الوزنُ يزيدُ المقاومة','ارفعِ الكعبينِ بأقصى ارتفاع','أنزِلْ ببطءٍ حتى التمدُّدِ الكامل'],
+        warn:'ابدأِ الحركةَ من وضعِ التمدُّدِ الكامل'},
+      {n:'رفعُ السمانة بالدامبل جالساً',t:'دامبل',df:3,reps:'٢٠–٢٥',sets:3,
+        steps:['اجلسْ، دامبلٌ على ركبتيك','أصابعُ قدمَيكَ على الأرض','ارفعِ الكعبينِ بدفعِ الأصابع','هذا يستهدفُ السمانةَ السفلية (السولياس)'],
+        warn:'هذا وضعٌ مختلفٌ — يستهدفُ عضلةً مختلفة'}
+    ]}
+};
+
+// برامج الأسابيع
+const SPLITS={
+  2:[
+    ['chest','delt','triceps','abs'],
+    ['lats','biceps','hams','calves']
+  ],
+  3:[
+    ['chest','triceps','delt'],
+    ['lats','biceps'],
+    ['quads','hams','abs','calves']
+  ],
+  4:[
+    ['chest','triceps'],
+    ['lats','biceps'],
+    ['quads','hams','calves'],
+    ['delt','abs']
+  ],
+  5:[
+    ['chest','triceps'],
+    ['lats','biceps'],
+    ['quads','hams','calves'],
+    ['delt','abs'],
+    ['chest','lats']
+  ]
+};
+
+// ══════════════════════════════════════
+// محرك البرنامج
+// ══════════════════════════════════════
+
+function todayMuscles(){
+  const u=S.user;
+  if(!u)return[];
+  const split=SPLITS[u.days]||SPLITS[3];
+  const dow=new Date().getDay(); // 0=أحد
+  const idx=dow%split.length;
+  const plan=split[idx];
+  return plan.filter(m=>{
+    const last=lastTrainedDate(m);
+    if(!last)return true;
+    const rec=DB[m]?.rec||48;
+    const hrs=(Date.now()-new Date(last).getTime())/3600000;
+    return hrs>=rec;
+  });
+}
+
+function lastTrainedDate(muscleId){
+  for(const sess of S.log){
+    if(sess.muscles?.includes(muscleId))return sess.date;
+  }
+  return null;
+}
+
+function getExForMuscle(muscleId){
+  const u=S.user;
+  const d=DB[muscleId];
+  if(!d)return null;
+  const maxDf=u.eq===1?2:u.eq===2?3:4;
+  const minDf=u.lv===1?1:u.lv===2?2:3;
+  const pool=d.ex.filter(e=>e.df<=maxDf&&e.df>=minDf);
+  if(!pool.length)return d.ex[0];
+  return pool[Math.min(u.lv-1,pool.length-1)];
+}
+
+// ══════════════════════════════════════
+// محرك الجلسة
+// ══════════════════════════════════════
+
+let SESS={
+  list:[],  // [{muscleId,ex}]
+  idx:0,
+  sets:[],  // تكرارات المجموعات للتمرين الحالي
+  allSets:0,
+  startMs:0,
+  reps:10,
+  restId:null,
+  restSec:0,
+  done:[]   // {muscleId,exName,sets:[]}
+};
+
+function startSession(){
+  const muscles=todayMuscles();
+  if(!muscles.length){
+    toast('كلُّ عضلاتِك تستشفي الآن — استرحْ اليوم 🛌');
+    return;
+  }
+  SESS={list:[],idx:0,sets:[],allSets:0,startMs:Date.now(),reps:10,restId:null,restSec:0,done:[]};
+  muscles.forEach(m=>{
+    const ex=getExForMuscle(m);
+    if(ex)SESS.list.push({muscleId:m,ex});
+  });
+  if(!SESS.list.length){toast('لا توجد تمارين مناسبة لمستواك');return;}
+  show('s-sess');
+  setNb('nb-s');
+  renderEx();
+}
+
+function renderEx(){
+  const item=SESS.list[SESS.idx];
+  if(!item)return;
+  const ex=item.ex;
+  const total=SESS.list.length;
+
+  document.getElementById('sTitle').textContent=DB[item.muscleId]?.n||'الجلسة';
+  document.getElementById('sProg').textContent=`تمرينٌ ${a(SESS.idx+1)} من ${a(total)}`;
+  document.getElementById('pFill').style.width=`${(SESS.idx/total)*100}%`;
+
+  document.getElementById('exTool').textContent=ex.t;
+  document.getElementById('exName').textContent=ex.n;
+  document.getElementById('repHint').textContent=`المستهدف: ${ex.reps} تكرار`;
+
+  SESS.reps=defaultReps(ex.reps);
+  document.getElementById('repN').textContent=a(SESS.reps);
+
+  // رسم التمرين
+  document.getElementById('exFig').innerHTML=drawEx(item.muscleId,ex.df);
+
+  // كلمة الكابتن
+  const cw=captainWord(ex,SESS.sets.length,ex.sets);
+  const el=document.getElementById('capWord');
+  el.className='captain '+cw.cls;
+  document.getElementById('capTxt').innerHTML=cw.txt;
+  document.querySelector('.captain .c-ic').textContent=cw.ic;
+
+  // مؤشرات المجموعات
+  renderDots(ex.sets,SESS.sets.length);
+}
+
+function defaultReps(rangeStr){
+  const m=rangeStr.match(/(\d+)/);
+  return m?parseInt(m[1]):10;
+}
+
+function captainWord(ex,setsDone,totalSets){
+  if(setsDone===0){
+    const starts=[
+      {txt:`<b>ركّزْ على الإحساسِ</b> لا على الرقم — أتقنِ الشكلَ أولاً.`,ic:'🎯',cls:''},
+      {txt:`<b>الشكلُ قبلَ الثقل</b> — تنفُّسٌ ثابتٌ في كلِّ تكرار.`,ic:'🎯',cls:''},
+      {txt:`<b>ابدأْ هادئاً</b> — الحرارةُ تأتي مع المجموعة الثانية.`,ic:'🎯',cls:''},
+    ];
+    return starts[Math.floor(Math.random()*starts.length)];
+  }
+  if(setsDone===totalSets-1){
+    return{txt:`<b>آخرُ مجموعة — أعطِها كلَّ ما عندَك!</b> أنتَ قريبٌ من الإنهاء.`,ic:'🔥',cls:'fire'};
+  }
+  const mids=[
+    {txt:`<b>ممتاز!</b> تحكُّمٌ في النزولِ يضاعفُ الفائدة.`,ic:'⚡',cls:''},
+    {txt:`<b>تقدُّمٌ رائع.</b> لا تتأرجحْ — كلُّ تكرارٍ بنيّة.`,ic:'⚡',cls:''},
+    {txt:`<b>أنتَ في المسار الصحيح.</b> الألمُ الخفيفُ علامةُ النموّ.`,ic:'💪',cls:''},
+  ];
+  return mids[Math.floor(Math.random()*mids.length)];
+}
+
+function renderDots(total,done){
+  const el=document.getElementById('setTrack');
+  el.innerHTML='';
+  for(let i=0;i<total;i++){
+    const d=document.createElement('div');
+    d.className='st-dot'+(i<done?' done':i===done?' now':'');
+    d.textContent=a(i+1);
+    el.appendChild(d);
+  }
+}
+
+// رسم التمرين بالـ SVG
+function drawEx(muscleId,df){
+  const C='stroke:#B08D57;stroke-width:3;fill:none;stroke-linecap:round';
+  const F='fill:#B08D57;opacity:.85';
+  const S2='stroke:#4A9AAD;stroke-width:2.5;fill:none;stroke-linecap:round';
+  const drawings={
+    chest:df<=2?`
+      <circle cx="60" cy="28" r="10" ${F} opacity=".4"/>
+      <line x1="60" y1="38" x2="60" y2="70" ${C}/>
+      <line x1="60" y1="50" x2="35" y2="65" ${C}/>
+      <line x1="60" y1="50" x2="85" y2="65" ${C}/>
+      <line x1="60" y1="70" x2="45" y2="95" ${C}/>
+      <line x1="60" y1="70" x2="75" y2="95" ${C}/>
+      <path d="M38 55 Q25 48 28 65 Q31 70 38 67" ${S2}/>
+      <path d="M82 55 Q95 48 92 65 Q89 70 82 67" ${S2}/>`:`
+      <circle cx="60" cy="25" r="10" ${F} opacity=".4"/>
+      <line x1="60" y1="35" x2="60" y2="65" ${C}/>
+      <line x1="60" y1="48" x2="30" y2="58" ${C}/>
+      <line x1="60" y1="48" x2="90" y2="58" ${C}/>
+      <line x1="60" y1="65" x2="45" y2="92" ${C}/>
+      <line x1="60" y1="65" x2="75" y2="92" ${C}/>
+      <path d="M32 55 L20 55 M20 55 L20 72 M20 72 L32 68" ${S2}/>
+      <path d="M88 55 L100 55 M100 55 L100 72 M100 72 L88 68" ${S2}/>`,
+
+    lats:`
+      <circle cx="60" cy="25" r="10" ${F} opacity=".4"/>
+      <line x1="60" y1="35" x2="60" y2="90" ${C}/>
+      <path d="M35 40 Q55 58 60 50" ${S2}/>
+      <path d="M85 40 Q65 58 60 50" ${S2}/>
+      <line x1="60" y1="90" x2="45" y2="115" ${C}/>
+      <line x1="60" y1="90" x2="75" y2="115" ${C}/>
+      <path d="M40 60 L38 80 Q55 72 60 68" ${S2} stroke-dasharray="3 2"/>
+      <path d="M80 60 L82 80 Q65 72 60 68" ${S2} stroke-dasharray="3 2"/>`,
+
+    delt:`
+      <circle cx="60" cy="28" r="10" ${F} opacity=".4"/>
+      <line x1="60" y1="38" x2="60" y2="72" ${C}/>
+      <line x1="60" y1="42" x2="38" y2="56" ${C}/>
+      <line x1="60" y1="42" x2="82" y2="56" ${C}/>
+      <path d="M40 40 Q28 52 32 65" ${S2}/>
+      <path d="M80 40 Q92 52 88 65" ${S2}/>
+      <line x1="28" y1="65" x2="40" y2="58" ${S2}/>
+      <line x1="92" y1="65" x2="80" y2="58" ${S2}/>`,
+
+    biceps:`
+      <circle cx="60" cy="28" r="10" ${F} opacity=".4"/>
+      <line x1="60" y1="38" x2="60" y2="70" ${C}/>
+      <line x1="60" y1="45" x2="40" y2="55" ${C}/>
+      <path d="M40 55 L35 78 Q40 88 46 82" ${S2}/>
+      <line x1="60" y1="45" x2="80" y2="55" ${C}/>
+      <path d="M80 55 L85 78 Q80 88 74 82" ${S2} opacity=".3"/>`,
+
+    triceps:`
+      <circle cx="60" cy="28" r="10" ${F} opacity=".4"/>
+      <line x1="60" y1="38" x2="60" y2="70" ${C}/>
+      <line x1="60" y1="45" x2="40" y2="55" ${C}/>
+      <path d="M40 55 Q36 68 36 82 Q40 88 46 82" ${S2}/>
+      <line x1="60" y1="45" x2="80" y2="55" ${C}/>
+      <path d="M80 55 Q84 68 84 82 Q80 88 74 82" ${S2} opacity=".3"/>`,
+
+    abs:`
+      <circle cx="60" cy="18" r="8" ${F} opacity=".4"/>
+      <line x1="60" y1="26" x2="60" y2="95" ${C}/>
+      <line x1="60" y1="38" x2="38" y2="48" ${C}/>
+      <line x1="60" y1="38" x2="82" y2="48" ${C}/>
+      <line x1="60" y1="95" x2="45" y2="115" ${C}/>
+      <line x1="60" y1="95" x2="75" y2="115" ${C}/>
+      <rect x="48" y="52" width="24" height="10" rx="3" ${S2}/>
+      <rect x="48" y="65" width="24" height="10" rx="3" ${S2}/>
+      <rect x="48" y="78" width="24" height="10" rx="3" ${S2}/>`,
+
+    quads:`
+      <circle cx="60" cy="18" r="8" ${F} opacity=".4"/>
+      <line x1="60" y1="26" x2="60" y2="60" ${C}/>
+      <line x1="60" y1="38" x2="38" y2="46" ${C}/>
+      <line x1="60" y1="38" x2="82" y2="46" ${C}/>
+      <line x1="60" y1="60" x2="45" y2="62" ${C}/>
+      <line x1="60" y1="60" x2="75" y2="62" ${C}/>
+      <path d="M45 62 Q40 82 42 105" ${S2}/>
+      <path d="M75 62 Q80 82 78 105" ${S2} opacity=".3"/>
+      <line x1="42" y1="105" x2="42" y2="118" ${C}/>
+      <line x1="78" y1="105" x2="78" y2="118" ${C}/>`,
+
+    hams:`
+      <circle cx="60" cy="18" r="8" ${F} opacity=".4"/>
+      <line x1="60" y1="26" x2="60" y2="60" ${C}/>
+      <line x1="60" y1="38" x2="38" y2="46" ${C}/>
+      <line x1="60" y1="38" x2="82" y2="46" ${C}/>
+      <line x1="60" y1="60" x2="45" y2="62" ${C}/>
+      <line x1="60" y1="60" x2="75" y2="62" ${C}/>
+      <path d="M45 62 Q42 82 44 105" ${S2}/>
+      <path d="M75 62 Q78 82 76 105" ${S2} opacity=".3"/>
+      <path d="M60 60 Q55 75 52 95" stroke="#B08D57" stroke-width="2" fill="none" stroke-dasharray="4 2"/>`,
+
+    calves:`
+      <circle cx="60" cy="18" r="8" ${F} opacity=".4"/>
+      <line x1="60" y1="26" x2="60" y2="55" ${C}/>
+      <line x1="60" y1="55" x2="45" y2="58" ${C}/>
+      <line x1="60" y1="55" x2="75" y2="58" ${C}/>
+      <line x1="45" y1="58" x2="44" y2="95" ${C}/>
+      <line x1="75" y1="58" x2="76" y2="95" ${C}/>
+      <path d="M44 95 Q42 108 44 115" ${S2}/>
+      <path d="M76 95 Q78 108 76 115" ${S2} opacity=".3"/>
+      <ellipse cx="44" cy="105" rx="6" ry="10" ${S2}/>`
+  };
+  const svg=drawings[muscleId]||drawings.chest;
+  return `<svg viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg">${svg}</svg>`;
+}
+
+function adjR(d){
+  SESS.reps=Math.max(1,Math.min(99,SESS.reps+d));
+  document.getElementById('repN').textContent=a(SESS.reps);
+}
+
+function logSet(){
+  const item=SESS.list[SESS.idx];
+  const ex=item.ex;
+  SESS.sets.push(SESS.reps);
+  SESS.allSets++;
+
+  if(SESS.sets.length>=ex.sets){
+    // انتهى من هذا التمرين
+    SESS.done.push({muscleId:item.muscleId,exName:ex.n,sets:[...SESS.sets]});
+    SESS.sets=[];
+    if(SESS.idx+1>=SESS.list.length){
+      finishSession();
+    }else{
+      SESS.idx++;
+      startRestThen(()=>{renderEx();});
+    }
+  }else{
+    renderDots(ex.sets,SESS.sets.length);
+    const nextSet=SESS.sets.length;
+    const cw=captainWord(ex,nextSet,ex.sets);
+    const el=document.getElementById('capWord');
+    el.className='captain '+cw.cls;
+    document.getElementById('capTxt').innerHTML=cw.txt;
+    document.querySelector('.captain .c-ic').textContent=cw.ic;
+    startRestThen(()=>{});
+  }
+}
+
+function startRestThen(cb){
+  const item=SESS.list[SESS.idx];
+  const df=item.ex.df;
+  const sec=df>=3?90:60;
+  const nextItem=SESS.idx+1<SESS.list.length?SESS.list[SESS.idx+1]:null;
+  const nextTxt=nextItem?`التمرينُ القادم: ${nextItem.ex.n}`:'الجلسةُ على وشكِ الانتهاء 🏁';
+  const words=['أنفسْ واستعدّ','خُذْ وقتَك — الجودةُ تتطلبُ استشفاء','الراحةُ جزءٌ من التدريب','ابتلعِ الريقَ وهيّئ نفسك'];
+
+  document.getElementById('rstWord').textContent=words[Math.floor(Math.random()*words.length)];
+  document.getElementById('rstNext').textContent=nextTxt;
+  document.getElementById('restOv').classList.add('on');
+
+  let left=sec;
+  const circ=2*Math.PI*82;
+  document.getElementById('ringF').style.strokeDashoffset='0';
+  document.getElementById('restN').textContent=a(left);
+
+  clearInterval(SESS.restId);
+  SESS.restId=setInterval(()=>{
+    left--;
+    document.getElementById('restN').textContent=a(left);
+    const off=circ*(1-left/sec);
+    document.getElementById('ringF').style.strokeDashoffset=String(off);
+    if(left<=0){
+      clearInterval(SESS.restId);
+      document.getElementById('restOv').classList.remove('on');
+      cb();
+    }
+  },1000);
+  SESS._afterRest=cb;
+}
+
+function skipRest(){
+  clearInterval(SESS.restId);
+  document.getElementById('restOv').classList.remove('on');
+  if(SESS._afterRest)SESS._afterRest();
+}
+
+function skipEx(){
+  SESS.idx++;
+  SESS.sets=[];
+  if(SESS.idx>=SESS.list.length){finishSession();return;}
+  renderEx();
+}
+
+function quitSess(){
+  if(SESS.done.length>0){
+    clearInterval(SESS.restId);
+    document.getElementById('restOv').classList.remove('on');
+    finishSession();
+  }else{
+    clearInterval(SESS.restId);
+    document.getElementById('restOv').classList.remove('on');
+    goHome();
+  }
+}
+
+function finishSession(){
+  clearInterval(SESS.restId);
+  document.getElementById('restOv').classList.remove('on');
+  const durMin=Math.round((Date.now()-SESS.startMs)/60000)||1;
+  const muscles=[...new Set(SESS.done.map(d=>d.muscleId))];
+  const totalSets=SESS.done.reduce((s,d)=>s+d.sets.length,0);
+
+  // حفظ في السجل
+  const sess={
+    date:new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'short',day:'numeric'}),
+    iso:new Date().toISOString().slice(0,10),
+    muscles,
+    exercises:SESS.done,
+    totalSets,
+    durMin
+  };
+  S.log.unshift(sess);
+  if(S.log.length>200)S.log=S.log.slice(0,200);
+
+  // الشريط
+  const today=new Date().toISOString().slice(0,10);
+  if(S.streak.last!==today){
+    const yest=new Date(Date.now()-86400000).toISOString().slice(0,10);
+    S.streak.n=S.streak.last===yest?S.streak.n+1:1;
+    S.streak.last=today;
+  }
+  sv();
+
+  // شاشة الانتهاء
+  const closes=[
+    'كلُّ عضلةٍ مررتَ بها اليومَ ستعودُ أقوى. هذه هي الصفقة مع الجسد.',
+    'الاستمراريةُ تبنيَ الجسدَ — ليسَ الجلسةُ الواحدة. عُدْ غداً.',
+    'الاستشفاءُ الآنَ بنيانُك. نَمْ جيداً وتغذَّ صح.',
+    'الفارقُ بينَ جسدٍ متغيّرٍ وغيرِه: العودةُ مرةً أخرى. احضرْ.',
+  ];
+  document.getElementById('doneH').textContent=`أحسنتَ، ${S.user?.name||'بطل'}!`;
+  document.getElementById('doneP').textContent=`${a(muscles.length)} عضلاتٍ، ${a(totalSets)} مجموعة.`;
+  document.getElementById('dEx').textContent=a(SESS.done.length);
+  document.getElementById('dSets').textContent=a(totalSets);
+  document.getElementById('dTime').textContent=a(durMin);
+  document.getElementById('capClose').textContent=closes[Math.floor(Math.random()*closes.length)];
+  show('s-done');
+  document.getElementById('navBar').style.display='flex';
+  setNb('nb-s');
+}
+
+// ══════════════════════════════════════
+// الرئيسية
+// ══════════════════════════════════════
+
+function renderHome(){
+  const u=S.user;
+  if(!u)return;
+
+  const hr=new Date().getHours();
+  const greet=hr<5?'🌙 ليلٌ طويل':hr<12?'☀️ صباحُ الخير':hr<17?'🌤 مساءُ النشاط':hr<21?'🌆 وقتُ التدريب':'🌙 المساء';
+  document.getElementById('gTime').textContent=greet;
+  document.getElementById('gName').textContent=u.name;
+  document.getElementById('strkN').textContent=a(S.streak?.n||0);
+
+  // اليوم
+  const muscles=todayMuscles();
+  const msBox=document.getElementById('missionBox');
+  const msTit=document.getElementById('msTitle');
+  const msChips=document.getElementById('msChips');
+  const msMeta=document.getElementById('msMeta');
+
+  if(muscles.length===0){
+    msTit.textContent='يومُ الراحة';
+    msChips.innerHTML=`<span class="chip rest">🛌 كلُّ العضلاتِ تستشفي</span>`;
+    msMeta.textContent='';
+    document.getElementById('msBtn').textContent='يومُ الراحة — استرحْ ✓';
+    document.getElementById('msBtn').disabled=true;
+  }else{
+    const exCount=muscles.length;
+    const sets=muscles.reduce((s,m)=>{const e=getExForMuscle(m);return s+(e?e.sets:3);},0);
+    const mins=Math.round(sets*2.5+muscles.length*3);
+    msTit.textContent=muscles.map(m=>DB[m]?.n||m).join(' + ');
+    msChips.innerHTML=muscles.map(m=>`<span class="chip">${DB[m]?.e||'💪'} ${DB[m]?.n||m}</span>`).join('');
+    msMeta.innerHTML=`<span>⏱ ~${a(mins)} دقيقة</span><span>🔢 ${a(exCount)} تمارين</span><span>📦 ~${a(sets)} مجموعات</span>`;
+    document.getElementById('msBtn').textContent='ابدأ الجلسة ▶';
+    document.getElementById('msBtn').disabled=false;
+  }
+
+  // الإحصاء
+  const now=new Date();
+  const weekStart=new Date(now);weekStart.setDate(now.getDate()-now.getDay());
+  const monthStart=new Date(now.getFullYear(),now.getMonth(),1);
+
+  let wkSess=0,moSets=0;
+  S.log.forEach(s=>{
+    const d=new Date(s.iso||s.date);
+    if(d>=weekStart)wkSess++;
+    if(d>=monthStart)moSets+=s.totalSets||0;
+  });
+  document.getElementById('stWk').textContent=a(wkSess);
+  document.getElementById('stMo').textContent=a(moSets);
+
+  // آخر الجلسات
+  const el=document.getElementById('recentLog');
+  el.innerHTML='';
+  if(!S.log.length){
+    el.innerHTML=`<div style="text-align:center;color:var(--tx3);font-size:.84rem;padding:20px">لا جلساتٍ بعد — ابدأ أولَ تمرينٍ لك!</div>`;
+    return;
+  }
+  S.log.slice(0,4).forEach(sess=>{
+    const names=sess.muscles.map(m=>DB[m]?.n||m).join('، ');
+    el.innerHTML+=`
+      <div class="log-item">
+        <div class="li-dot">${DB[sess.muscles[0]]?.e||'💪'}</div>
+        <div>
+          <div class="li-name">${names}</div>
+          <div class="li-meta">${sess.date} · ${a(sess.totalSets||0)} مجموعة · ${a(sess.durMin||0)} د</div>
+        </div>
+      </div>`;
+  });
+}
+
+// ══════════════════════════════════════
+// التاريخ
+// ══════════════════════════════════════
+
+function renderHist(){
+  // تقويم ٢٨ يوم
+  const calEl=document.getElementById('calGrid');
+  const lblEl=document.getElementById('calLbl');
+  const days=['أح','إث','ثل','أر','خم','جم','سب'];
+  lblEl.innerHTML=days.map(d=>`<span>${d}</span>`).join('');
+
+  const trainedDates=new Set(S.log.map(s=>s.iso));
+  const today=new Date().toISOString().slice(0,10);
+  const start=new Date();start.setDate(start.getDate()-27);
+
+  calEl.innerHTML='';
+  for(let i=0;i<28;i++){
+    const d=new Date(start);d.setDate(start.getDate()+i);
+    const iso=d.toISOString().slice(0,10);
+    const cls=iso===today?'t':trainedDates.has(iso)?'done':'';
+    calEl.innerHTML+=`<div class="cal-d ${cls}">${d.getDate()}</div>`;
+  }
+
+  // جلسات
+  const el=document.getElementById('histLog');
+  el.innerHTML='';
+  if(!S.log.length){
+    el.innerHTML=`<div style="text-align:center;color:var(--tx3);font-size:.84rem;padding:20px">لا سجلَّ بعد.</div>`;
+    return;
+  }
+  S.log.slice(0,12).forEach(sess=>{
+    const names=sess.muscles.map(m=>DB[m]?.n||m);
+    el.innerHTML+=`
+      <div class="sess-row">
+        <div class="sr-date">${sess.date}</div>
+        <div class="sr-chips">${names.map(n=>`<span class="sr-chip">${n}</span>`).join('')}</div>
+        <div class="sr-meta">${a(sess.totalSets||0)} مجموعة · ${a(sess.durMin||0)} دقيقة</div>
+      </div>`;
+  });
+}
+
+// ══════════════════════════════════════
+// مساعدات
+// ══════════════════════════════════════
+
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg;
+  el.classList.add('on');
+  setTimeout(()=>el.classList.remove('on'),3000);
+}
+
+// ══════════════════════════════════════
+// تشغيل
+// ══════════════════════════════════════
+
+ld();
+if(S.user){
+  document.getElementById('navBar').style.display='flex';
+  goHome();
+}else{
+  show('s-ob1');
+}
+</script>
+</body>
+</html>
