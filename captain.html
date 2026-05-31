@@ -568,6 +568,11 @@ body{
 
     <div class="sec-head">آخرُ الجلسات</div>
     <div id="recentLog"></div>
+    <div style="padding:8px 14px 4px;text-align:center">
+      <button onclick="resetData()" style="background:none;border:none;color:var(--tx3);font-size:.7rem;font-family:var(--b);cursor:pointer;padding:8px;text-decoration:underline">
+        إعادة ضبط البيانات وبدء من جديد
+      </button>
+    </div>
   </div>
 </div>
 
@@ -1003,7 +1008,7 @@ function todayMuscles(){
 
 function lastTrainedDate(muscleId){
   for(const sess of S.log){
-    if(sess.muscles?.includes(muscleId))return sess.date;
+    if(sess.muscles?.includes(muscleId))return sess.iso;
   }
   return null;
 }
@@ -1035,12 +1040,26 @@ let SESS={
   done:[]   // {muscleId,exName,sets:[]}
 };
 
+function forceSession(){
+  // ابدأ بكل العضلات المتاحة بغض النظر عن الاستشفاء
+  const u=S.user;
+  if(!u)return;
+  const split=SPLITS[u.days]||SPLITS[3];
+  const dow=new Date().getDay();
+  const idx=dow%split.length;
+  buildSession(split[idx]);
+}
+
 function startSession(){
   const muscles=todayMuscles();
   if(!muscles.length){
     toast('كلُّ عضلاتِك تستشفي الآن — استرحْ اليوم 🛌');
     return;
   }
+  buildSession(muscles);
+}
+
+function buildSession(muscles){
   SESS={list:[],idx:0,sets:[],allSets:0,startMs:Date.now(),reps:10,restId:null,restSec:0,done:[]};
   muscles.forEach(m=>{
     const ex=getExForMuscle(m);
@@ -1426,11 +1445,12 @@ function renderHome(){
   const msMeta=document.getElementById('msMeta');
 
   if(muscles.length===0){
-    msTit.textContent='يومُ الراحة';
-    msChips.innerHTML=`<span class="chip rest">🛌 كلُّ العضلاتِ تستشفي</span>`;
-    msMeta.textContent='';
-    document.getElementById('msBtn').textContent='يومُ الراحة — استرحْ ✓';
-    document.getElementById('msBtn').disabled=true;
+    msTit.textContent='يومُ استشفاء';
+    msChips.innerHTML=`<span class="chip rest">🛌 العضلاتُ تتعافى</span>`;
+    msMeta.innerHTML=`<span style="color:var(--tx2);font-size:.8rem">الاستشفاءُ جزءٌ من التدريب — لكنْ يمكنُك التدريبُ إن أردت</span>`;
+    document.getElementById('msBtn').textContent='ابدأ على أي حال ▶';
+    document.getElementById('msBtn').disabled=false;
+    document.getElementById('msBtn').onclick=()=>forceSession();
   }else{
     const exCount=muscles.length;
     const sets=muscles.reduce((s,m)=>{const e=getExForMuscle(m);return s+(e?e.sets:3);},0);
@@ -1520,6 +1540,14 @@ function renderHist(){
 // ══════════════════════════════════════
 // مساعدات
 // ══════════════════════════════════════
+
+function resetData(){
+  if(!confirm('سيُحذف كلُّ تاريخِ التدريب وتعود للإعداد من البداية — هل أنت متأكد؟'))return;
+  localStorage.removeItem(KEY);
+  S={};
+  document.getElementById('navBar').style.display='none';
+  show('s-ob1');
+}
 
 function toast(msg){
   const el=document.getElementById('toast');
