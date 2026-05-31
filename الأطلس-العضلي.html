@@ -1029,7 +1029,7 @@ function applyTrainedColors(){
     // مُمرَّنة وما زالت تستشفي ⇒ خضراء
     const rec=workoutLog.filter(e=>e.id===id).sort((a,b)=>b.recReadyTime-a.recReadyTime)[0];
     const resting=rec && new Date(rec.recReadyTime).getTime()>now;
-    p.classList.toggle('muscle-trained',resting);
+    p.classList.toggle('muscle-trained',!!resting);
   });
 }
 
