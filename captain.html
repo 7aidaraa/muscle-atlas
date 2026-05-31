@@ -913,7 +913,7 @@ const DB={
 const IMG_BASE='https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/';
 const EXIMG={
   // صدر
-  'الضغط الحائطي':         'Wall_Push-Ups',
+  'الضغط الحائطي':         'Incline_Push-Up',
   'الضغط المائل':          'Incline_Push-Up',
   'الضغط الأرضي':          'Pushups',
   'ضغط الصدر بالدامبل أرضاً':'Dumbbell_Flyes',
@@ -926,17 +926,17 @@ const EXIMG={
   // كتف
   'رفعٌ جانبي بزجاجات':    'Side_Lateral_Raise',
   'رفعٌ جانبي بالدامبل':   'Side_Lateral_Raise',
-  'ضغطُ الكتف جالساً':     'Dumbbell_Seated_Shoulder_Press',
-  'ضغطُ الكتف بالبار':     'Pike_Push-Ups',
+  'ضغطُ الكتف جالساً':     'Dumbbell_Shoulder_Press',
+  'ضغطُ الكتف بالبار':     'Handstand_Push-Ups',
   // بايسبس
   'ثنيٌ بقبضةٍ محايدة':    'Hammer_Curls',
-  'ثني البايسبس بالدامبل': 'Alternate_Dumbbell_Curl',
-  'ثني المطرقة':            'Hammer_Curls',
-  'سحبٌ ضيّقٌ بالمسكِ السفلي':'Chin-ups',
+  'ثني البايسبس بالدامبل': 'Dumbbell_Alternate_Bicep_Curl',
+  'ثني المطرقة':            'Alternate_Hammer_Curl',
+  'سحبٌ ضيّقٌ بالمسكِ السفلي':'Chin-Up',
   // ترايسبس
-  'الضغطُ الضيّق':         'Close-Grip_Push-Up',
+  'الضغطُ الضيّق':         'Push-Ups_-_Close_Triceps_Position',
   'الغطسُ على الكرسي':     'Bench_Dips',
-  'مدُّ الترايسبس بالدامبل':'Dumbbell_Tricep_Kickback',
+  'مدُّ الترايسبس بالدامبل':'Tricep_Dumbbell_Kickback',
   'الغطسُ على المتوازي':   'Dips_-_Triceps_Version',
   // بطن
   'الكرنش الأساسي':        'Crunches',
@@ -945,12 +945,12 @@ const EXIMG={
   'الكرنش بالدامبل':       'Crunches',
   // رباعية
   'السكوات الأساسي':        'Bodyweight_Squat',
-  'الطعن الثابت':           'Lunge',
+  'الطعن الثابت':           'Dumbbell_Lunges',
   'السكوات بالدامبل':       'Dumbbell_Squat',
-  'السكوات البلغاري':       'Dumbbell_Bulgarian_Split_Squat',
+  'السكوات البلغاري':       'Split_Squats',
   // ظهر الفخذ
-  'الجسر الأرضي':           'Glute_Bridge',
-  'الجسر بساقٍ واحدة':     'Single_Leg_Hip_Thrust',
+  'الجسر الأرضي':           'Single_Leg_Glute_Bridge',
+  'الجسر بساقٍ واحدة':     'Single_Leg_Glute_Bridge',
   'رومانيانِ ديدلفت بالدامبل':'Romanian_Deadlift',
   'ديدلفت بالدامبل':        'Romanian_Deadlift',
   // ساق
@@ -1151,8 +1151,8 @@ function renderExImg(exName, muscleId){
     return;
   }
 
-  const u0=`${IMG_BASE}${key}/images/0.jpg`;
-  const u1=`${IMG_BASE}${key}/images/1.jpg`;
+  const u0=`${IMG_BASE}${key}/0.jpg`;
+  const u1=`${IMG_BASE}${key}/1.jpg`;
 
   fig.innerHTML=`
     <img id="exImg0" src="${u0}" alt="${exName}">
