@@ -294,6 +294,71 @@ body{
   font-size:3rem;opacity:.3;
 }
 
+/* لوحة الشرح (كيف أؤدّيه) */
+.how-btn{
+  background:var(--gd-s);border:1px solid var(--gd-m);
+  color:var(--gd);border-radius:12px;
+  font-family:var(--b);font-size:.8rem;font-weight:700;
+  padding:9px 16px;cursor:pointer;margin-top:2px;transition:.18s;
+}
+.how-btn:active{transform:scale(.96)}
+.how-panel{
+  max-height:0;overflow:hidden;transition:max-height .35s ease;
+  text-align:right;
+}
+.how-panel.open{max-height:420px}
+.how-steps{
+  list-style:none;counter-reset:s;margin:14px 2px 0;padding:0;
+}
+.how-steps li{
+  counter-increment:s;position:relative;
+  padding:8px 38px 8px 4px;font-size:.84rem;line-height:1.6;
+  color:var(--tx);border-bottom:1px solid var(--line);
+}
+.how-steps li:last-child{border-bottom:none}
+.how-steps li::before{
+  content:counter(s,arabic-indic);
+  position:absolute;right:0;top:7px;
+  width:26px;height:26px;border-radius:50%;
+  background:var(--gd-s);border:1px solid var(--gd-m);
+  color:var(--gd);font-size:.78rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+.how-warn{
+  margin:12px 2px 2px;padding:10px 14px;
+  background:var(--cp-s);border:1px solid rgba(193,122,62,.28);
+  border-radius:12px;font-size:.8rem;line-height:1.55;color:#f2d4a8;
+}
+.how-warn::before{content:'⚠️ ';}
+
+/* آخر أداء مسجَّل */
+.last-perf{
+  margin:0 14px 12px;padding:10px 15px;
+  background:var(--rst-s);border:1px solid rgba(74,154,173,.28);
+  border-radius:14px;font-size:.82rem;color:#bfe3ec;
+  display:none;align-items:center;gap:8px;
+}
+.last-perf.on{display:flex}
+.last-perf b{color:#fff;font-weight:700}
+
+/* صف الوزن */
+.weight-row{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  margin:0 14px 12px;padding:11px 18px;
+  background:var(--sf);border-radius:var(--r2);
+}
+.weight-row.hide{display:none}
+.wr-lbl{font-size:.78rem;color:var(--tx2);margin-left:auto}
+.wr-n{font-family:var(--d);font-size:1.7rem;color:var(--tx);min-width:42px;text-align:center}
+.wr-u{font-size:.7rem;color:var(--tx3);margin-right:auto}
+.wadj{
+  width:38px;height:38px;border-radius:50%;
+  border:1.5px solid var(--gd-m);background:var(--gd-s);
+  color:var(--gd);font-size:1.3rem;font-weight:700;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;
+}
+.wadj:active{transform:scale(.86);background:var(--gd-m)}
+
 /* كلمة الكابتن */
 .captain{
   display:flex;gap:10px;align-items:flex-start;
@@ -408,8 +473,14 @@ body{
 .pr-box{
   background:var(--ok-s);border:1px solid rgba(82,183,136,.22);
   border-radius:var(--r2);padding:13px 16px;width:100%;margin-bottom:16px;
-  font-size:.86rem;color:var(--ok);text-align:center;display:none;
+  font-size:.86rem;color:var(--ok);text-align:right;display:none;
 }
+.pr-top{font-weight:700;margin-bottom:8px;text-align:center;color:#7fe0aa}
+.pr-row{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:6px 2px;border-top:1px solid rgba(82,183,136,.16);font-size:.82rem;
+}
+.pr-row b{color:#fff;font-weight:700;white-space:nowrap}
 
 /* ═══════════ HISTORY ═══════════ */
 .hist-wrap{padding:20px 14px 90px}
@@ -593,12 +664,19 @@ body{
       <div class="ex-tool" id="exTool">—</div>
       <div class="ex-name" id="exName">—</div>
       <div class="ex-fig" id="exFig"></div>
+      <button class="how-btn" id="howBtn" onclick="toggleHow()">كيف أؤدّيه؟ ▾</button>
+      <div class="how-panel" id="howPanel">
+        <ol class="how-steps" id="howSteps"></ol>
+        <div class="how-warn" id="howWarn"></div>
+      </div>
     </div>
 
     <div class="captain" id="capWord">
       <div class="c-ic">🎯</div>
       <div class="c-tx" id="capTxt">—</div>
     </div>
+
+    <div class="last-perf" id="lastPerf"></div>
 
     <div class="set-track" id="setTrack"></div>
     <div class="rep-hint" id="repHint">المستهدف: ١٠–١٢ تكرار</div>
@@ -607,6 +685,14 @@ body{
       <button class="adj" onclick="adjR(-1)">−</button>
       <div class="rep-val"><span class="rv-n" id="repN">١٠</span><span class="rv-l">تكرار</span></div>
       <button class="adj" onclick="adjR(1)">+</button>
+    </div>
+
+    <div class="weight-row" id="weightRow">
+      <span class="wr-lbl">الوزن</span>
+      <button class="wadj" onclick="adjW(-2.5)">−</button>
+      <span class="wr-n" id="wN">٠</span>
+      <span class="wr-u">كجم</span>
+      <button class="wadj" onclick="adjW(2.5)">+</button>
     </div>
 
     <button class="btn-log" onclick="logSet()">+ سجِّل المجموعة</button>
@@ -698,6 +784,7 @@ function ld(){
   try{S=JSON.parse(localStorage.getItem(KEY))||{};}catch{S={};}
   if(!S.log)S.log=[];
   if(!S.streak)S.streak={n:0,last:null};
+  if(!S.hist)S.hist={};
 }
 function sv(){localStorage.setItem(KEY,JSON.stringify(S));}
 
@@ -748,8 +835,8 @@ function ob2(){
 }
 function ob3(){show('s-ob3');}
 function finishOB(){
-  S.user={name:OB.name,sx:OB.sx,lv:OB.lv,eq:OB.eq,goal:OB.goal,days:OB.days,since:Date.now()};
-  S.log=[];S.streak={n:0,last:null};
+  S.user={name:OB.name,sx:OB.sx,lv:OB.lv,eq:OB.eq,goal:OB.goal,days:OB.days,since:Date.now(),cursor:0};
+  S.log=[];S.streak={n:0,last:null};S.hist={};
   sv();
   document.getElementById('navBar').style.display='flex';
   goHome();
@@ -990,13 +1077,17 @@ const SPLITS={
 // محرك البرنامج
 // ══════════════════════════════════════
 
-function todayMuscles(){
+// يومُ البرنامج الحالي حسب مؤشّرٍ يتقدّم مع كلِّ جلسةٍ مكتملة (لا حسب يوم الأسبوع)
+function planForToday(){
   const u=S.user;
   if(!u)return[];
   const split=SPLITS[u.days]||SPLITS[3];
-  const dow=new Date().getDay(); // 0=أحد
-  const idx=dow%split.length;
-  const plan=split[idx];
+  const idx=(u.cursor||0)%split.length;
+  return split[idx];
+}
+
+function todayMuscles(){
+  const plan=planForToday();
   return plan.filter(m=>{
     const last=lastTrainedDate(m);
     if(!last)return true;
@@ -1013,15 +1104,44 @@ function lastTrainedDate(muscleId){
   return null;
 }
 
-function getExForMuscle(muscleId){
-  const u=S.user;
+// عددُ التمارين لكلِّ عضلةٍ حسب عددِ عضلاتِ اليوم — جلسةٌ متوازنة
+function exPerMuscle(n){
+  if(n<=1)return 3;
+  if(n<=3)return 2;
+  return 1;
+}
+
+// الأدواتُ المتاحةُ حسبَ اختيارِ المستخدم
+function allowedTools(){
+  const eq=S.user?.eq||1;
+  return eq===1?['وزن الجسم']
+       :eq===2?['وزن الجسم','دامبل']
+              :['وزن الجسم','دامبل','برج قوة'];
+}
+
+// يُرجِعُ مصفوفةَ تمارينَ مناسبةً للعضلة (أدواتٌ حقيقية + مستوى + تنويع)
+function getExsForMuscle(muscleId,count){
   const d=DB[muscleId];
-  if(!d)return null;
-  const maxDf=u.eq===1?2:u.eq===2?3:4;
-  const minDf=u.lv===1?1:u.lv===2?2:3;
-  const pool=d.ex.filter(e=>e.df<=maxDf&&e.df>=minDf);
-  if(!pool.length)return d.ex[0];
-  return pool[Math.min(u.lv-1,pool.length-1)];
+  if(!d)return[];
+  const tools=allowedTools();
+  let pool=d.ex.filter(e=>tools.includes(e.t));
+  if(!pool.length)pool=[d.ex[0]];
+  // المتقدّمُ يبدأ بالأصعب، المبتدئُ بالأسهل — ثم تنويعُ الأداة
+  const lv=S.user?.lv||1;
+  pool=pool.slice().sort((a,b)=>lv>=2?b.df-a.df:a.df-b.df);
+  return pool.slice(0,Math.min(count,pool.length));
+}
+
+// تقديرُ حجمِ جلسةِ اليوم (للعرضِ في الرئيسية)
+function estimateSession(muscles){
+  const per=exPerMuscle(muscles.length);
+  let exCount=0,sets=0;
+  muscles.forEach(m=>{
+    const list=getExsForMuscle(m,per);
+    exCount+=list.length;
+    sets+=list.reduce((s,e)=>s+e.sets,0);
+  });
+  return{exCount,sets,mins:Math.round(sets*2.5+exCount*2)};
 }
 
 // ══════════════════════════════════════
@@ -1041,13 +1161,9 @@ let SESS={
 };
 
 function forceSession(){
-  // ابدأ بكل العضلات المتاحة بغض النظر عن الاستشفاء
-  const u=S.user;
-  if(!u)return;
-  const split=SPLITS[u.days]||SPLITS[3];
-  const dow=new Date().getDay();
-  const idx=dow%split.length;
-  buildSession(split[idx]);
+  // ابدأ بكل عضلات اليوم بغض النظر عن الاستشفاء
+  const plan=planForToday();
+  if(plan.length)buildSession(plan);
 }
 
 function startSession(){
@@ -1060,10 +1176,10 @@ function startSession(){
 }
 
 function buildSession(muscles){
-  SESS={list:[],idx:0,sets:[],allSets:0,startMs:Date.now(),reps:10,restId:null,restSec:0,done:[]};
+  SESS={list:[],idx:0,sets:[],allSets:0,startMs:Date.now(),reps:10,weight:0,restId:null,restSec:0,done:[]};
+  const per=exPerMuscle(muscles.length);
   muscles.forEach(m=>{
-    const ex=getExForMuscle(m);
-    if(ex)SESS.list.push({muscleId:m,ex});
+    getExsForMuscle(m,per).forEach(ex=>SESS.list.push({muscleId:m,ex}));
   });
   if(!SESS.list.length){toast('لا توجد تمارين مناسبة لمستواك');return;}
   show('s-sess');
@@ -1085,8 +1201,32 @@ function renderEx(){
   document.getElementById('exName').textContent=ex.n;
   document.getElementById('repHint').textContent=`المستهدف: ${ex.reps} تكرار`;
 
-  SESS.reps=defaultReps(ex.reps);
+  // الخطوات + التحذير
+  document.getElementById('howSteps').innerHTML=(ex.steps||[]).map(s=>`<li>${s}</li>`).join('');
+  document.getElementById('howWarn').textContent=ex.warn||'';
+  document.getElementById('howWarn').style.display=ex.warn?'block':'none';
+  document.getElementById('howPanel').classList.remove('open');
+  document.getElementById('howBtn').textContent='كيف أؤدّيه؟ ▾';
+
+  // الوزن: يظهر للدامبل/برج القوة فقط
+  const usesWeight=ex.t==='دامبل'||ex.t==='برج قوة';
+  document.getElementById('weightRow').classList.toggle('hide',!usesWeight);
+
+  // ذاكرة آخر أداء + تهيئة الأرقام
+  const prev=S.hist?.[ex.n];
+  SESS.reps=prev?.reps?prev.reps:defaultReps(ex.reps);
+  SESS.weight=usesWeight?(prev?.weight||0):0;
   document.getElementById('repN').textContent=a(SESS.reps);
+  document.getElementById('wN').textContent=a(SESS.weight);
+
+  const lp=document.getElementById('lastPerf');
+  if(prev){
+    const wTxt=usesWeight&&prev.weight?` × ${a(prev.weight)}كجم`:'';
+    lp.innerHTML=`<span>📈 رقمُك السابق:</span> <b>${a(prev.reps)} تكرار${wTxt}</b> — تجاوزْه اليوم!`;
+    lp.classList.add('on');
+  }else{
+    lp.classList.remove('on');
+  }
 
   // صورة التمرين
   renderExImg(ex.n, item.muscleId);
@@ -1100,6 +1240,18 @@ function renderEx(){
 
   // مؤشرات المجموعات
   renderDots(ex.sets,SESS.sets.length);
+}
+
+function toggleHow(){
+  const p=document.getElementById('howPanel');
+  const b=document.getElementById('howBtn');
+  const open=p.classList.toggle('open');
+  b.textContent=open?'إخفاء الشرح ▴':'كيف أؤدّيه؟ ▾';
+}
+
+function adjW(d){
+  SESS.weight=Math.max(0,Math.min(200,Math.round((SESS.weight+d)*2)/2));
+  document.getElementById('wN').textContent=a(SESS.weight);
 }
 
 function defaultReps(rangeStr){
@@ -1292,14 +1444,16 @@ function adjR(d){
 }
 
 function logSet(){
+  if(SESS.finished)return;            // حمايةٌ من الضغطِ المزدوج على آخرِ مجموعة
   const item=SESS.list[SESS.idx];
   const ex=item.ex;
-  SESS.sets.push(SESS.reps);
+  SESS.sets.push({r:SESS.reps,w:SESS.weight});
   SESS.allSets++;
 
   if(SESS.sets.length>=ex.sets){
-    // انتهى من هذا التمرين
+    // انتهى من هذا التمرين — سجّلْ أفضلَ مجموعةٍ في الذاكرة
     SESS.done.push({muscleId:item.muscleId,exName:ex.n,sets:[...SESS.sets]});
+    recordBest(ex.n,SESS.sets);
     SESS.sets=[];
     if(SESS.idx+1>=SESS.list.length){
       finishSession();
@@ -1316,6 +1470,22 @@ function logSet(){
     document.getElementById('capTxt').innerHTML=cw.txt;
     document.querySelector('.captain .c-ic').textContent=cw.ic;
     startRestThen(()=>{});
+  }
+}
+
+// سجّلْ أفضلَ مجموعةٍ كرقمٍ يُتجاوَزُ لاحقاً + رصدِ الأرقامِ القياسية
+function recordBest(exName,sets){
+  if(!S.hist)S.hist={};
+  let best=sets[0];
+  sets.forEach(s=>{ if(s.w>best.w||(s.w===best.w&&s.r>best.r))best=s; });
+  const prev=S.hist[exName];
+  const isPR=!prev||best.w>prev.weight||(best.w===prev.weight&&best.r>prev.reps);
+  if(isPR){
+    S.hist[exName]={reps:best.r,weight:best.w,date:new Date().toISOString().slice(0,10)};
+    if(prev){ // رقمٌ قياسيٌّ جديد (ليسَ أولَ مرة)
+      SESS.prs=SESS.prs||[];
+      SESS.prs.push({name:exName,reps:best.r,weight:best.w});
+    }
   }
 }
 
@@ -1378,6 +1548,8 @@ function quitSess(){
 }
 
 function finishSession(){
+  if(SESS.finished)return;
+  SESS.finished=true;
   clearInterval(SESS.restId);
   document.getElementById('restOv').classList.remove('on');
   const durMin=Math.round((Date.now()-SESS.startMs)/60000)||1;
@@ -1395,6 +1567,9 @@ function finishSession(){
   };
   S.log.unshift(sess);
   if(S.log.length>200)S.log=S.log.slice(0,200);
+
+  // تقدّمُ مؤشّرِ البرنامج لليومِ التالي في التقسيم
+  if(S.user)S.user.cursor=((S.user.cursor||0)+1);
 
   // الشريط
   const today=new Date().toISOString().slice(0,10);
@@ -1418,6 +1593,21 @@ function finishSession(){
   document.getElementById('dSets').textContent=a(totalSets);
   document.getElementById('dTime').textContent=a(durMin);
   document.getElementById('capClose').textContent=closes[Math.floor(Math.random()*closes.length)];
+
+  // الأرقامُ القياسيةُ الجديدة
+  const prBox=document.getElementById('prBox');
+  const prs=SESS.prs||[];
+  if(prs.length){
+    prBox.innerHTML=`<div class="pr-top">🏅 أرقامٌ قياسيةٌ جديدة</div>`+
+      prs.map(p=>{
+        const w=p.weight?` × ${a(p.weight)}كجم`:'';
+        return `<div class="pr-row"><span>${p.name}</span><b>${a(p.reps)}${w}</b></div>`;
+      }).join('');
+    prBox.style.display='block';
+  }else{
+    prBox.style.display='none';
+  }
+
   show('s-done');
   document.getElementById('navBar').style.display='flex';
   setNb('nb-s');
@@ -1452,14 +1642,13 @@ function renderHome(){
     document.getElementById('msBtn').disabled=false;
     document.getElementById('msBtn').onclick=()=>forceSession();
   }else{
-    const exCount=muscles.length;
-    const sets=muscles.reduce((s,m)=>{const e=getExForMuscle(m);return s+(e?e.sets:3);},0);
-    const mins=Math.round(sets*2.5+muscles.length*3);
+    const est=estimateSession(muscles);
     msTit.textContent=muscles.map(m=>DB[m]?.n||m).join(' + ');
     msChips.innerHTML=muscles.map(m=>`<span class="chip">${DB[m]?.e||'💪'} ${DB[m]?.n||m}</span>`).join('');
-    msMeta.innerHTML=`<span>⏱ ~${a(mins)} دقيقة</span><span>🔢 ${a(exCount)} تمارين</span><span>📦 ~${a(sets)} مجموعات</span>`;
+    msMeta.innerHTML=`<span>⏱ ~${a(est.mins)} دقيقة</span><span>🔢 ${a(est.exCount)} تمارين</span><span>📦 ~${a(est.sets)} مجموعات</span>`;
     document.getElementById('msBtn').textContent='ابدأ الجلسة ▶';
     document.getElementById('msBtn').disabled=false;
+    document.getElementById('msBtn').onclick=()=>startSession();
   }
 
   // الإحصاء
