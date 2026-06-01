@@ -377,6 +377,20 @@ body{
 .last-perf.on{display:flex}
 .last-perf b{color:#fff;font-weight:700}
 
+/* محرك الحمل التدريجي */
+.overload-hint{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 14px;border-radius:10px;
+  margin:0 14px 10px;font-size:.82rem;border:1px solid;
+  animation:up .35s both;
+}
+.oh-weight{background:rgba(176,141,87,.13);border-color:rgba(176,141,87,.38);color:#c9a85c}
+.oh-rep{background:rgba(82,183,136,.1);border-color:rgba(82,183,136,.32);color:#52b788}
+.oh-deload{background:rgba(193,80,60,.1);border-color:rgba(193,80,60,.3);color:#e07060}
+.oh-ic{font-size:1.1rem;line-height:1}
+.oh-txt{flex:1;line-height:1.45;color:inherit}
+.oh-num{font-weight:700;font-size:.88rem;white-space:nowrap;opacity:.9}
+
 /* صف الوزن */
 .weight-row{
   display:flex;align-items:center;justify-content:center;gap:12px;
@@ -939,6 +953,7 @@ body{
     </div>
 
     <div class="last-perf" id="lastPerf"></div>
+    <div id="overloadHint"></div>
 
     <div class="set-track" id="setTrack"></div>
     <div class="rep-hint" id="repHint">المستهدف: ١٠–١٢ تكرار</div>
@@ -1758,6 +1773,23 @@ function renderEx(){
     lp.classList.remove('on');
   }
 
+  // اقتراح الحمل التدريجي
+  const oh=document.getElementById('overloadHint');
+  const sug=suggestNext(ex.n);
+  if(sug){
+    const icons={weight:'⬆️',deload:'⬇️',rep:'➕'};
+    const wTxt=sug.weight&&usesWeight?` × ${a(sug.weight)}كجم`:'';
+    oh.innerHTML=`<span class="oh-ic">${icons[sug.type]}</span><span class="oh-txt">${sug.reason}</span><span class="oh-num">${a(sug.reps)} تكرار${wTxt}</span>`;
+    oh.className='overload-hint oh-'+sug.type;
+    // تعبئةٌ تلقائيةٌ للحقول بالاقتراح
+    SESS.reps=sug.reps;
+    if(sug.weight!==null&&usesWeight)SESS.weight=sug.weight;
+    document.getElementById('repN').textContent=a(SESS.reps);
+    if(usesWeight)document.getElementById('wN').textContent=a(SESS.weight);
+  }else{
+    oh.innerHTML='';oh.className='';
+  }
+
   // صورة التمرين
   renderExImg(ex.n, item.muscleId, ex.df||2);
   renderExSpark(ex.n);
@@ -2260,18 +2292,57 @@ function launchConfetti(){
 }
 
 // سجّلْ أفضلَ مجموعةٍ كرقمٍ يُتجاوَزُ لاحقاً + رصدِ الأرقامِ القياسية
+// ══════════════════════════════════════
+// محرك الحمل التدريجي — Progressive Overload
+// ══════════════════════════════════════
+function suggestNext(exName){
+  const h=S.hist?.[exName];
+  if(!h||!h.sessions||h.sessions.length<2)return null;
+
+  const gc=goalConfig();
+  const s=h.sessions; // newest first
+
+  // حالة ١: أتمَّ الحدَّ الأعلى مرتين متتاليتين → ارفع الوزن
+  if(s[0].r>=gc.repsHi && s[1].r>=gc.repsHi){
+    const bump=h.weight>=20?2.5:1.25; // بار: 2.5 | دامبل: 1.25
+    const sugW=h.weight?h.weight+bump:null;
+    return{type:'weight',weight:sugW,reps:gc.repsLo,
+      reason:`أتممتَ ${a(gc.repsHi)} تكراراً مرتين — ارفعِ الوزنَ`};
+  }
+
+  // حالة ٢: التكرارات تتراجع مرتين (إجهاد) → خفف
+  if(s[0].r<gc.repsLo-1 && s[1].r<gc.repsLo-1 && h.weight>0){
+    const sugW=Math.round(h.weight*0.9*2)/2;
+    return{type:'deload',weight:sugW,reps:gc.repsLo,
+      reason:'أداؤكَ ينخفضُ — خففِ الوزنَ قليلاً'};
+  }
+
+  // حالة ٣: تقدُّمٌ عادي → أضف تكراراً واحداً
+  const sugR=Math.min(h.reps+1,gc.repsHi);
+  if(sugR<=h.reps)return null; // لا اقتراح إن بلغ الحدَّ الأعلى بالفعل
+  return{type:'rep',weight:h.weight,reps:sugR,
+    reason:'أضفْ تكراراً واحداً اليوم'};
+}
+
 function recordBest(exName,sets,muscleId){
   if(!S.hist)S.hist={};
   let best=sets[0];
   sets.forEach(s=>{ if(s.w>best.w||(s.w===best.w&&s.r>best.r))best=s; });
   const prev=S.hist[exName];
   const isPR=!prev||best.w>prev.weight||(best.w===prev.weight&&best.r>prev.reps);
+
+  // سجّلِ الجلسةَ (آخرُ ٦ جلسات للتحليل)
+  const prevSessions=(prev?.sessions||[]).slice(0,5);
+  prevSessions.unshift({r:best.r,w:best.w,date:new Date().toISOString().slice(0,10)});
+
   if(isPR){
-    S.hist[exName]={reps:best.r,weight:best.w,date:new Date().toISOString().slice(0,10),muscleId:muscleId||'other'};
-    if(prev){ // رقمٌ قياسيٌّ جديد (ليسَ أولَ مرة)
+    S.hist[exName]={reps:best.r,weight:best.w,date:new Date().toISOString().slice(0,10),muscleId:muscleId||'other',sessions:prevSessions};
+    if(prev){
       SESS.prs=SESS.prs||[];
       SESS.prs.push({name:exName,reps:best.r,weight:best.w});
     }
+  }else{
+    S.hist[exName]={...prev,sessions:prevSessions};
   }
 }
 
