@@ -470,6 +470,13 @@ body{
 }
 .cc-top{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:.75rem;color:var(--gd)}
 .cc-txt{font-size:.9rem;line-height:1.7;color:var(--tx)}
+.cycle-complete{
+  background:linear-gradient(135deg,rgba(176,141,87,.18),rgba(193,122,62,.12));
+  border:1px solid var(--gd-m);border-radius:var(--r2);
+  padding:13px 16px;width:100%;margin-bottom:14px;
+  font-size:.88rem;color:var(--gd-l);font-weight:700;text-align:center;
+}
+
 .pr-box{
   background:var(--ok-s);border:1px solid rgba(82,183,136,.22);
   border-radius:var(--r2);padding:13px 16px;width:100%;margin-bottom:16px;
@@ -481,6 +488,34 @@ body{
   padding:6px 2px;border-top:1px solid rgba(82,183,136,.16);font-size:.82rem;
 }
 .pr-row b{color:#fff;font-weight:700;white-space:nowrap}
+
+/* ═══════════ MACRO CARD ═══════════ */
+.macro-card{background:var(--sf);border:1px solid var(--line);border-radius:var(--r2);
+  padding:16px;margin:0 14px 16px}
+.macro-hd{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
+.macro-title{font-size:.88rem;font-weight:700;color:var(--tx)}
+.macro-sub{font-size:.72rem;color:var(--tx3);margin-top:2px}
+.macro-add-btn{padding:6px 14px;border-radius:20px;background:var(--gd-s);
+  color:var(--gd);border:1px solid var(--gd-m);font-size:.78rem;font-weight:600;font-family:var(--b)}
+.macro-bar-wrap{background:var(--bg2);border-radius:8px;overflow:hidden;height:14px;margin-bottom:10px}
+.macro-bar{display:flex;height:100%;width:100%}
+.mb-seg{height:100%;transition:width .4s ease;min-width:0}
+.mb-p{background:#B08D57}
+.mb-c{background:#4A90D9}
+.mb-f{background:#C17A3E}
+.macro-labels{display:flex;justify-content:space-between;font-size:.7rem}
+.ml-p{color:#B08D57}.ml-c{color:#4A90D9}.ml-f{color:#C17A3E}
+
+/* modal وجبة */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;
+  display:flex;align-items:center;justify-content:center}
+.modal-box{background:var(--sf2);border:1px solid var(--line);border-radius:var(--r);
+  padding:22px;width:min(320px,90vw)}
+.modal-title{font-size:1.1rem;font-weight:700;color:var(--tx);margin-bottom:14px;text-align:center}
+.modal-fields{display:flex;flex-direction:column;gap:8px}
+.modal-fields label{font-size:.8rem;color:var(--tx2)}
+.modal-fields input{padding:10px 14px;border-radius:10px;border:1px solid var(--line);
+  background:var(--bg2);color:var(--tx);font-size:1rem;font-family:var(--b);text-align:center;width:100%}
 
 /* ═══════════ HISTORY ═══════════ */
 .hist-wrap{padding:20px 14px 90px}
@@ -508,6 +543,41 @@ body{
   background:var(--gd-s);color:var(--gd-l);
 }
 .sr-meta{font-size:.73rem;color:var(--tx2)}
+.sr-ton{font-size:.68rem;color:var(--tx3);margin-top:2px}
+
+/* تبويبات التاريخ */
+.hist-tabs{display:flex;gap:8px;margin-bottom:16px}
+.ht{flex:1;padding:9px 0;border-radius:var(--r2);font-size:.82rem;font-weight:600;
+  background:var(--sf);color:var(--tx2);border:1px solid var(--line);}
+.ht.on{background:var(--gd-s);color:var(--gd);border-color:var(--gd-m);}
+
+/* بطاقات الأرقام القياسية */
+.pr-item{display:flex;align-items:center;gap:12px;
+  background:var(--sf);border:1px solid var(--line);
+  border-radius:var(--r2);padding:13px 16px;margin-bottom:8px}
+.pr-name{flex:1;font-size:.85rem;color:var(--tx)}
+.pr-val{font-size:.82rem;font-weight:700;color:var(--gd);font-family:var(--d)}
+.pr-date{font-size:.65rem;color:var(--tx3);min-width:60px;text-align:left}
+
+/* فهرس التمارين */
+.cat-muscle{margin-bottom:20px}
+.cat-muscle-hd{display:flex;align-items:center;gap:8px;padding:10px 0 8px;
+  font-size:1rem;font-weight:700;color:var(--tx);border-bottom:1px solid var(--line)}
+.cat-muscle-ic{font-size:1.3rem}
+.cat-ex{background:var(--sf);border:1px solid var(--line);
+  border-radius:var(--r2);margin-top:8px;overflow:hidden}
+.cat-ex-hd{display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px;cursor:pointer}
+.cat-ex-name{font-size:.9rem;font-weight:600;color:var(--tx)}
+.cat-ex-meta{font-size:.68rem;color:var(--tx3)}
+.cat-ex-arr{font-size:.75rem;color:var(--tx3);transition:transform .2s}
+.cat-ex-arr.open{transform:rotate(180deg)}
+.cat-ex-body{display:none;padding:0 16px 14px;border-top:1px solid var(--line)}
+.cat-ex-body.open{display:block}
+.cat-steps{margin:10px 0 0;padding-right:16px}
+.cat-steps li{font-size:.8rem;color:var(--tx2);margin-bottom:5px;line-height:1.5}
+.cat-warn{font-size:.75rem;color:#e5a020;margin-top:8px;padding:7px 10px;
+  background:rgba(229,160,32,.1);border-radius:8px;border-right:3px solid #e5a020}
 </style>
 </head>
 <body>
@@ -587,6 +657,10 @@ body{
       <h2 class="ob-h" style="font-size:1.9rem">هدفُك<br>وأيامُك</h2>
       <p class="ob-p">سيُبنى برنامجُك الأسبوعيُّ على هذا.</p>
       <div class="field">
+        <label>وزنُ الجسم (كجم) — لحساب احتياجاتك</label>
+        <input type="number" id="inWeight" placeholder="٧٠" min="30" max="250" style="width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--sf);color:var(--tx);font-size:1rem;font-family:var(--b);text-align:center">
+      </div>
+      <div class="field">
         <label>هدفُك الأساسي</label>
         <div class="choice-grid cg3">
           <button class="ch"    id="gs" onclick="pickG('str',this)"><span class="ci">💪</span>قوة</button>
@@ -625,7 +699,7 @@ body{
 
     <!-- مهمة اليوم -->
     <div class="mission anim" id="missionBox">
-      <div class="ms-tag">تمرينُ اليوم</div>
+      <div class="ms-tag" id="msTag">تمرينُ اليوم</div>
       <div class="ms-title" id="msTitle">جاهزٌ للبدء</div>
       <div class="ms-chips" id="msChips"></div>
       <div class="ms-meta" id="msMeta"></div>
@@ -635,6 +709,29 @@ body{
     <div class="stats-row">
       <div class="stat-card"><span class="stat-v" id="stWk">٠</span><span class="stat-l">جلسات هذا الأسبوع</span></div>
       <div class="stat-card"><span class="stat-v" id="stMo">٠</span><span class="stat-l">مجموعات هذا الشهر</span></div>
+    </div>
+
+    <!-- بطاقة الماكروز -->
+    <div class="macro-card" id="macroCard" style="display:none">
+      <div class="macro-hd">
+        <div>
+          <div class="macro-title">السعرات اليومية</div>
+          <div class="macro-sub" id="macroSub"></div>
+        </div>
+        <button class="macro-add-btn" onclick="openMealModal()">+ وجبة</button>
+      </div>
+      <div class="macro-bar-wrap">
+        <div class="macro-bar" id="macroBar">
+          <div class="mb-seg mb-p" id="mbP"></div>
+          <div class="mb-seg mb-c" id="mbC"></div>
+          <div class="mb-seg mb-f" id="mbF"></div>
+        </div>
+      </div>
+      <div class="macro-labels">
+        <span class="ml-p">🥩 بروتين <span id="mlPg">٠</span>جم</span>
+        <span class="ml-c">🌾 كارب <span id="mlCg">٠</span>جم</span>
+        <span class="ml-f">🫒 دهون <span id="mlFg">٠</span>جم</span>
+      </div>
     </div>
 
     <div class="sec-head">آخرُ الجلسات</div>
@@ -737,6 +834,7 @@ body{
       <div class="cc-top">🎯 الكابتن يقول</div>
       <div class="cc-txt" id="capClose">—</div>
     </div>
+    <div class="cycle-complete" id="cycleComplete" style="display:none"></div>
     <div class="pr-box" id="prBox"></div>
     <button class="btn-gold" onclick="goHome()" style="margin-top:auto">العودة للرئيسية 🏠</button>
   </div>
@@ -747,21 +845,58 @@ body{
   <div class="safe-top"></div>
   <div class="scroll hist-wrap">
     <h2 class="hist-h">سجلُّ التقدم</h2>
-    <div class="sec-head" style="padding-bottom:8px">الأيامُ المدرَّبة</div>
-    <div class="cal-lbl" id="calLbl"></div>
-    <div class="cal" id="calGrid"></div>
-    <div class="sec-head" style="padding-bottom:8px">الجلساتُ الأخيرة</div>
-    <div id="histLog"></div>
+    <div class="hist-tabs">
+      <button class="ht on" id="ht-cal" onclick="histTab('cal')">التقويم</button>
+      <button class="ht" id="ht-pr" onclick="histTab('pr')">الأرقام القياسية</button>
+    </div>
+    <div id="panel-cal">
+      <div class="sec-head" style="padding-bottom:8px">الأيامُ المدرَّبة</div>
+      <div class="cal-lbl" id="calLbl"></div>
+      <div class="cal" id="calGrid"></div>
+      <div class="sec-head" style="padding-bottom:8px">الجلساتُ الأخيرة</div>
+      <div id="histLog"></div>
+    </div>
+    <div id="panel-pr" style="display:none">
+      <div id="prList"></div>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="s-catalog">
+  <div class="safe-top"></div>
+  <div class="scroll hist-wrap">
+    <h2 class="hist-h">فهرسُ التمارين</h2>
+    <div id="catalogList"></div>
   </div>
 </div>
 
 </div><!-- /app -->
+
+<!-- modal وجبة -->
+<div class="modal-overlay" id="mealOverlay" style="display:none" onclick="closeMealModal()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-title">أضفْ وجبة</div>
+    <div class="modal-fields">
+      <label>بروتين (جم)</label>
+      <input type="number" id="mP" placeholder="٠" min="0">
+      <label>كارب (جم)</label>
+      <input type="number" id="mC" placeholder="٠" min="0">
+      <label>دهون (جم)</label>
+      <input type="number" id="mF" placeholder="٠" min="0">
+    </div>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="btn-gold" style="flex:1" onclick="saveMeal()">حفظ</button>
+      <button class="btn-ghost" style="flex:1" onclick="closeMealModal()">إلغاء</button>
+    </div>
+  </div>
+</div>
 
 <!-- شريط التنقل -->
 <nav class="nav" id="navBar" style="display:none">
   <button class="nb on" id="nb-h" onclick="goHome()"><span class="ni">🏠</span><span class="nl">الرئيسية</span></button>
   <button class="nb" id="nb-s" onclick="startSession()"><span class="ni">▶️</span><span class="nl">ابدأ</span></button>
   <button class="nb" id="nb-g" onclick="goHist()"><span class="ni">📊</span><span class="nl">التقدم</span></button>
+  <button class="nb" id="nb-c" onclick="goCatalog()"><span class="ni">📚</span><span class="nl">الفهرس</span></button>
 </nav>
 
 <div class="toast" id="toast"></div>
@@ -785,11 +920,12 @@ function ld(){
   if(!S.log)S.log=[];
   if(!S.streak)S.streak={n:0,last:null};
   if(!S.hist)S.hist={};
+  if(!S.nutrition)S.nutrition={};
 }
 function sv(){localStorage.setItem(KEY,JSON.stringify(S));}
 
 // ─── اختيارات الإعداد ───
-let OB={sx:'m',lv:1,eq:1,goal:'hyp',days:3};
+let OB={sx:'m',lv:1,eq:1,goal:'hyp',days:3,weight:70};
 
 function pick(k,v,el){
   OB[k]=v;
@@ -835,8 +971,10 @@ function ob2(){
 }
 function ob3(){show('s-ob3');}
 function finishOB(){
-  S.user={name:OB.name,sx:OB.sx,lv:OB.lv,eq:OB.eq,goal:OB.goal,days:OB.days,since:Date.now(),cursor:0};
-  S.log=[];S.streak={n:0,last:null};S.hist={};
+  const wt=parseFloat(document.getElementById('inWeight').value)||70;
+  OB.weight=wt;
+  S.user={name:OB.name,sx:OB.sx,lv:OB.lv,eq:OB.eq,goal:OB.goal,days:OB.days,since:Date.now(),cursor:0,weight:wt};
+  S.log=[];S.streak={n:0,last:null};S.hist={};S.nutrition={};
   sv();
   document.getElementById('navBar').style.display='flex';
   goHome();
@@ -1077,6 +1215,29 @@ const SPLITS={
 // محرك البرنامج
 // ══════════════════════════════════════
 
+// ══════════════════════════════════════
+// إعدادُ الهدف — الراحة / التكرار / المجموعات
+// ══════════════════════════════════════
+function goalConfig(){
+  const g=S.user?.goal||'hyp';
+  return{
+    str:{sets:5,repsLo:3, repsHi:5, rest:180,hint:'القوة: ٣–٥ تكرار'},
+    hyp:{sets:4,repsLo:8, repsHi:12,rest:90, hint:'التضخيم: ٨–١٢ تكرار'},
+    end:{sets:3,repsLo:15,repsHi:25,rest:45, hint:'التحمّل: ١٥–٢٥ تكرار'}
+  }[g]||{sets:4,repsLo:8,repsHi:12,rest:90,hint:'التضخيم: ٨–١٢ تكرار'};
+}
+
+// معلوماتُ الدورة الحالية (رقمها + اليوم فيها)
+function cycleInfo(){
+  const u=S.user; if(!u)return{cycle:1,day:1,total:1};
+  const split=SPLITS[u.days]||SPLITS[3];
+  return{
+    cycle:Math.floor((u.cursor||0)/split.length)+1,
+    day:  ((u.cursor||0)%split.length)+1,
+    total:split.length
+  };
+}
+
 // يومُ البرنامج الحالي حسب مؤشّرٍ يتقدّم مع كلِّ جلسةٍ مكتملة (لا حسب يوم الأسبوع)
 function planForToday(){
   const u=S.user;
@@ -1129,7 +1290,10 @@ function getExsForMuscle(muscleId,count){
   // المتقدّمُ يبدأ بالأصعب، المبتدئُ بالأسهل — ثم تنويعُ الأداة
   const lv=S.user?.lv||1;
   pool=pool.slice().sort((a,b)=>lv>=2?b.df-a.df:a.df-b.df);
-  return pool.slice(0,Math.min(count,pool.length));
+  // تنويعٌ بين الدورات: كلُّ دورةٍ تبدأ بتمرينٍ مختلف
+  const offset=(cycleInfo().cycle-1)%Math.max(1,pool.length);
+  const rotated=[...pool.slice(offset),...pool.slice(0,offset)];
+  return rotated.slice(0,Math.min(count,rotated.length));
 }
 
 // تقديرُ حجمِ جلسةِ اليوم (للعرضِ في الرئيسية)
@@ -1194,12 +1358,14 @@ function renderEx(){
   const total=SESS.list.length;
 
   document.getElementById('sTitle').textContent=DB[item.muscleId]?.n||'الجلسة';
-  document.getElementById('sProg').textContent=`تمرينٌ ${a(SESS.idx+1)} من ${a(total)}`;
+  const ci=cycleInfo();
+  document.getElementById('sProg').textContent=`الدورة ${a(ci.cycle)} · اليوم ${a(ci.day)} · تمرينٌ ${a(SESS.idx+1)} من ${a(total)}`;
   document.getElementById('pFill').style.width=`${(SESS.idx/total)*100}%`;
 
   document.getElementById('exTool').textContent=ex.t;
   document.getElementById('exName').textContent=ex.n;
-  document.getElementById('repHint').textContent=`المستهدف: ${ex.reps} تكرار`;
+  const gc=goalConfig();
+  document.getElementById('repHint').textContent=gc.hint;
 
   // الخطوات + التحذير
   document.getElementById('howSteps').innerHTML=(ex.steps||[]).map(s=>`<li>${s}</li>`).join('');
@@ -1214,7 +1380,7 @@ function renderEx(){
 
   // ذاكرة آخر أداء + تهيئة الأرقام
   const prev=S.hist?.[ex.n];
-  SESS.reps=prev?.reps?prev.reps:defaultReps(ex.reps);
+  SESS.reps=prev?.reps?prev.reps:gc.repsLo;
   SESS.weight=usesWeight?(prev?.weight||0):0;
   document.getElementById('repN').textContent=a(SESS.reps);
   document.getElementById('wN').textContent=a(SESS.weight);
@@ -1232,14 +1398,14 @@ function renderEx(){
   renderExImg(ex.n, item.muscleId);
 
   // كلمة الكابتن
-  const cw=captainWord(ex,SESS.sets.length,ex.sets);
+  const cw=captainWord(ex,SESS.sets.length,gc.sets,item.muscleId);
   const el=document.getElementById('capWord');
   el.className='captain '+cw.cls;
   document.getElementById('capTxt').innerHTML=cw.txt;
   document.querySelector('.captain .c-ic').textContent=cw.ic;
 
-  // مؤشرات المجموعات
-  renderDots(ex.sets,SESS.sets.length);
+  // مؤشرات المجموعات — العدد حسب الهدف
+  renderDots(gc.sets,SESS.sets.length);
 }
 
 function toggleHow(){
@@ -1259,24 +1425,99 @@ function defaultReps(rangeStr){
   return m?parseInt(m[1]):10;
 }
 
-function captainWord(ex,setsDone,totalSets){
+function captainWord(ex,setsDone,totalSets,muscleId){
+  const goal=S.user?.goal||'hyp';
+  const r=Math.floor;
+  const p=a=>a[r(Math.random()*a.length)];
+
+  // عباراتٌ مخصَّصةٌ لكل عضلة عند البداية
+  const byMuscle={
+    chest:[
+      {txt:`<b>اسحبِ الكتفينِ للخلف والأسفل</b> قبلَ النزول — تُعزِّزُ عضلةَ الصدرِ وتحمي الكتف.`,ic:'🎯',cls:''},
+      {txt:`<b>المرفقانِ بزاويةِ ٤٥°</b> — ليسَ للخارجِ تماماً، ليسَ للجسمِ تماماً.`,ic:'🎯',cls:''},
+      {txt:`<b>تخيَّلْ أنَّكَ تعصرُ الصدرَ</b> عندَ القمّة — لا تكتفِ بالوصول.`,ic:'🎯',cls:''},
+    ],
+    lats:[
+      {txt:`<b>ابدأِ الحركةَ من الكوع</b> لا من اليد — الظهرُ يقودُ لا الذراع.`,ic:'🎯',cls:''},
+      {txt:`<b>اسحبِ الكتفَ للأسفل أولاً</b> قبلَ ثنيِ المرفق — هذا يُفعِّلُ الظهرَ العريض.`,ic:'🎯',cls:''},
+      {txt:`<b>الجسمُ لوحٌ مستقيم</b> — إذا التوى خصرُك تحوَّلَ الحملُ للعمودِ الفقري.`,ic:'🎯',cls:''},
+    ],
+    delt:[
+      {txt:`<b>الرفعُ حتى محاذاةِ الكتف</b> — أعلى من ذلك يُشغِّلُ الفخّ.`,ic:'🎯',cls:''},
+      {txt:`<b>لا تتأرجحْ بجذعِك</b> — إذا احتجتَ الزخمَ فالوزنُ ثقيلٌ جداً.`,ic:'🎯',cls:''},
+      {txt:`<b>إبهامٌ للأسفل قليلاً</b> عند الرفعِ الجانبي — يستهدفُ الوسطَ بدقّة.`,ic:'🎯',cls:''},
+    ],
+    biceps:[
+      {txt:`<b>الكوعُ ثابتٌ بجانبِ الجسم</b> — إذا تحرَّكَ استعملتَ الكتفَ لا البايسبس.`,ic:'🎯',cls:''},
+      {txt:`<b>النزولُ البطيءُ يبني أكثر</b> — ٣ ثوانٍ نزولاً تُضاعفُ التحفيز.`,ic:'🎯',cls:''},
+      {txt:`<b>افتحِ المرفقَ كاملاً</b> في الأسفل — مدىً كاملٌ = بناءٌ كامل.`,ic:'🎯',cls:''},
+    ],
+    triceps:[
+      {txt:`<b>الكوعانِ ثابتانِ للداخل</b> — إذا انفتحا استعملتَ الكتفَ.`,ic:'🎯',cls:''},
+      {txt:`<b>عصرُ الترايسبسِ في القمّة</b> لثانيةٍ واحدة — الانقباضَ الكاملَ لا يُبدَّل.`,ic:'🎯',cls:''},
+      {txt:`<b>المرفقُ لا يتحرّكُ</b> — هو المحورُ الثابت، لا أداةُ الرفع.`,ic:'🎯',cls:''},
+    ],
+    abs:[
+      {txt:`<b>شُدَّ السرّةَ للعمودِ الفقري</b> قبلَ الرفع — البطنُ مُفعَّلٌ قبلَ الحركة.`,ic:'🎯',cls:''},
+      {txt:`<b>الزفيرُ عندَ الانقباض</b> — لا تحبسِ النَّفَسَ في كرنشِ البطن.`,ic:'🎯',cls:''},
+      {txt:`<b>الرقبةُ محايدة</b> — نظرٌ للسقفِ لا للصدر، تحافظُ على العنق.`,ic:'🎯',cls:''},
+    ],
+    quads:[
+      {txt:`<b>الوزنُ على الكعبَين</b> — إذا رفعتَ أصابعَك واستطعتَ فأنتَ صحيح.`,ic:'🎯',cls:''},
+      {txt:`<b>الركبتانِ تتبعانِ الأصابع</b> — لا تتركهما ينهارانِ للداخل.`,ic:'🎯',cls:''},
+      {txt:`<b>الصدرُ مرفوعٌ طوالَ الحركة</b> — الانحناءُ للأمامِ يحوِّلُ العبءَ للظهر.`,ic:'🎯',cls:''},
+    ],
+    hams:[
+      {txt:`<b>الانحناءُ من الوركِ لا الظهر</b> — فرّقْ بينهما: حرِّكِ الوركَ للخلف.`,ic:'🎯',cls:''},
+      {txt:`<b>الظهرُ مستقيمٌ طوالَ الحركة</b> — أيُّ تقوُّسٍ في أسفلِهِ هو خطرٌ حقيقي.`,ic:'🎯',cls:''},
+      {txt:`<b>اعصرِ الأردافَ في القمّة</b> — هذا يُكمِلُ تفعيلَ الظهرِ والأرداف.`,ic:'🎯',cls:''},
+    ],
+    calves:[
+      {txt:`<b>التمدُّدُ الكاملُ في الأسفل</b> مهمٌّ جداً — الكعبانِ تحتَ مستوى القدم.`,ic:'🎯',cls:''},
+      {txt:`<b>الثانيةُ في القمّة</b> — لا تُنزِلْ فوراً، أبقِ التوتُّرَ في السمانة.`,ic:'🎯',cls:''},
+      {txt:`<b>التحكُّمُ في النزول</b> أهمُّ من السرعة — كلُّ تكرارٍ محسوب.`,ic:'🎯',cls:''},
+    ],
+  };
+  // عباراتٌ حسبَ الهدف — في المنتصف
+  const midsByGoal={
+    str:[
+      {txt:`<b>ركّزْ على الثقل</b> — كلُّ تكرارٍ بقوّةٍ متعمَّدة.`,ic:'⚡',cls:''},
+      {txt:`<b>أقلُّ تكراراً — أعظمُ قوّة.</b> التحكُّمُ يبني العقلَ والعضلة.`,ic:'⚡',cls:''},
+      {txt:`<b>جسمُك يُعيدُ رسمَ نفسَه</b> بينَ الجلسات. استمرّ.`,ic:'💪',cls:''},
+      {txt:`<b>المقاومةُ تبني القوّة.</b> لا تُسرِّعِ النزول.`,ic:'⚡',cls:''},
+    ],
+    hyp:[
+      {txt:`<b>الإحساسُ بالعضلة</b> أهمُّ من الرقم على الوزن.`,ic:'⚡',cls:''},
+      {txt:`<b>تحكُّمٌ في النزول</b> — الطورُ اللاارادي يبني أكثر.`,ic:'⚡',cls:''},
+      {txt:`<b>الألمُ الخفيفُ علامةُ النموّ</b> — الألمُ الحادُّ علامةُ التوقّف.`,ic:'💪',cls:''},
+      {txt:`<b>مدىً كاملٌ = بناءٌ كامل.</b> لا تقصُرِ الحركة.`,ic:'⚡',cls:''},
+    ],
+    end:[
+      {txt:`<b>التنفُّسُ أوّلاً.</b> إيقاعٌ ثابتٌ يجعلُك تُكمِل.`,ic:'🌊',cls:''},
+      {txt:`<b>جسمُك قادرٌ أكثرَ مما تتخيّل.</b> الحدُّ في العقل قبلَ العضلة.`,ic:'🌊',cls:''},
+      {txt:`<b>ثلاثةُ تكراراتٍ إضافية</b> بعدَ ما تظنُّ أنَّكَ انتهيت.`,ic:'🌊',cls:''},
+      {txt:`<b>الراحةُ بالحركة</b> لا بالتوقّف — أبطِئْ ولا تقف.`,ic:'🌊',cls:''},
+    ],
+  };
+  const lasts=[
+    {txt:`<b>آخرُ مجموعة — كلُّ ما تملك الآن!</b> لن تندمَ بعد ثلاثين ثانية.`,ic:'🔥',cls:'fire'},
+    {txt:`<b>هذه المجموعةُ هي الفرق.</b> الجميعُ يُكمِلُ السهل — أكمِلِ الصعب.`,ic:'🔥',cls:'fire'},
+    {txt:`<b>الجسمُ يريدُ التوقُّفَ — العقلُ يختار.</b> اختَرِ الاستمرار.`,ic:'🔥',cls:'fire'},
+    {txt:`<b>آخرُها أهمُّها.</b> المجموعاتُ الصعبةُ هي التي تُحدِثُ الفرق.`,ic:'🔥',cls:'fire'},
+  ];
+
   if(setsDone===0){
-    const starts=[
+    const muscleStarts=byMuscle[muscleId];
+    if(muscleStarts) return p(muscleStarts);
+    const generic=[
       {txt:`<b>ركّزْ على الإحساسِ</b> لا على الرقم — أتقنِ الشكلَ أولاً.`,ic:'🎯',cls:''},
       {txt:`<b>الشكلُ قبلَ الثقل</b> — تنفُّسٌ ثابتٌ في كلِّ تكرار.`,ic:'🎯',cls:''},
       {txt:`<b>ابدأْ هادئاً</b> — الحرارةُ تأتي مع المجموعة الثانية.`,ic:'🎯',cls:''},
     ];
-    return starts[Math.floor(Math.random()*starts.length)];
+    return p(generic);
   }
-  if(setsDone===totalSets-1){
-    return{txt:`<b>آخرُ مجموعة — أعطِها كلَّ ما عندَك!</b> أنتَ قريبٌ من الإنهاء.`,ic:'🔥',cls:'fire'};
-  }
-  const mids=[
-    {txt:`<b>ممتاز!</b> تحكُّمٌ في النزولِ يضاعفُ الفائدة.`,ic:'⚡',cls:''},
-    {txt:`<b>تقدُّمٌ رائع.</b> لا تتأرجحْ — كلُّ تكرارٍ بنيّة.`,ic:'⚡',cls:''},
-    {txt:`<b>أنتَ في المسار الصحيح.</b> الألمُ الخفيفُ علامةُ النموّ.`,ic:'💪',cls:''},
-  ];
-  return mids[Math.floor(Math.random()*mids.length)];
+  if(setsDone>=totalSets-1) return p(lasts);
+  return p(midsByGoal[goal]||midsByGoal.hyp);
 }
 
 function renderDots(total,done){
@@ -1450,10 +1691,11 @@ function logSet(){
   SESS.sets.push({r:SESS.reps,w:SESS.weight});
   SESS.allSets++;
 
-  if(SESS.sets.length>=ex.sets){
+  const targetSets=goalConfig().sets;
+  if(SESS.sets.length>=targetSets){
     // انتهى من هذا التمرين — سجّلْ أفضلَ مجموعةٍ في الذاكرة
     SESS.done.push({muscleId:item.muscleId,exName:ex.n,sets:[...SESS.sets]});
-    recordBest(ex.n,SESS.sets);
+    recordBest(ex.n,SESS.sets,item.muscleId);
     SESS.sets=[];
     if(SESS.idx+1>=SESS.list.length){
       finishSession();
@@ -1462,9 +1704,9 @@ function logSet(){
       startRestThen(()=>{renderEx();});
     }
   }else{
-    renderDots(ex.sets,SESS.sets.length);
+    renderDots(targetSets,SESS.sets.length);
     const nextSet=SESS.sets.length;
-    const cw=captainWord(ex,nextSet,ex.sets);
+    const cw=captainWord(ex,nextSet,targetSets,item.muscleId);
     const el=document.getElementById('capWord');
     el.className='captain '+cw.cls;
     document.getElementById('capTxt').innerHTML=cw.txt;
@@ -1474,14 +1716,14 @@ function logSet(){
 }
 
 // سجّلْ أفضلَ مجموعةٍ كرقمٍ يُتجاوَزُ لاحقاً + رصدِ الأرقامِ القياسية
-function recordBest(exName,sets){
+function recordBest(exName,sets,muscleId){
   if(!S.hist)S.hist={};
   let best=sets[0];
   sets.forEach(s=>{ if(s.w>best.w||(s.w===best.w&&s.r>best.r))best=s; });
   const prev=S.hist[exName];
   const isPR=!prev||best.w>prev.weight||(best.w===prev.weight&&best.r>prev.reps);
   if(isPR){
-    S.hist[exName]={reps:best.r,weight:best.w,date:new Date().toISOString().slice(0,10)};
+    S.hist[exName]={reps:best.r,weight:best.w,date:new Date().toISOString().slice(0,10),muscleId:muscleId||'other'};
     if(prev){ // رقمٌ قياسيٌّ جديد (ليسَ أولَ مرة)
       SESS.prs=SESS.prs||[];
       SESS.prs.push({name:exName,reps:best.r,weight:best.w});
@@ -1491,8 +1733,7 @@ function recordBest(exName,sets){
 
 function startRestThen(cb){
   const item=SESS.list[SESS.idx];
-  const df=item.ex.df;
-  const sec=df>=3?90:60;
+  const sec=goalConfig().rest;
   const nextItem=SESS.idx+1<SESS.list.length?SESS.list[SESS.idx+1]:null;
   const nextTxt=nextItem?`التمرينُ القادم: ${nextItem.ex.n}`:'الجلسةُ على وشكِ الانتهاء 🏁';
   const words=['أنفسْ واستعدّ','خُذْ وقتَك — الجودةُ تتطلبُ استشفاء','الراحةُ جزءٌ من التدريب','ابتلعِ الريقَ وهيّئ نفسك'];
@@ -1569,7 +1810,12 @@ function finishSession(){
   if(S.log.length>200)S.log=S.log.slice(0,200);
 
   // تقدّمُ مؤشّرِ البرنامج لليومِ التالي في التقسيم
-  if(S.user)S.user.cursor=((S.user.cursor||0)+1);
+  if(S.user){
+    const prevCursor=S.user.cursor||0;
+    S.user.cursor=prevCursor+1;
+    const split=SPLITS[S.user.days]||SPLITS[3];
+    SESS.cycleComplete=(S.user.cursor%split.length===0);
+  }
 
   // الشريط
   const today=new Date().toISOString().slice(0,10);
@@ -1595,6 +1841,14 @@ function finishSession(){
   document.getElementById('capClose').textContent=closes[Math.floor(Math.random()*closes.length)];
 
   // الأرقامُ القياسيةُ الجديدة
+  // شارةُ إتمامِ الدورة
+  const cycleEl=document.getElementById('cycleComplete');
+  if(cycleEl){
+    const newCycle=cycleInfo().cycle; // بعد التقدّم
+    cycleEl.style.display=SESS.cycleComplete?'block':'none';
+    if(SESS.cycleComplete) cycleEl.textContent=`🔄 أتممتَ الدورةَ كاملةً! الدورةُ ${a(newCycle)} تبدأ الآن.`;
+  }
+
   const prBox=document.getElementById('prBox');
   const prs=SESS.prs||[];
   if(prs.length){
@@ -1614,6 +1868,67 @@ function finishSession(){
 }
 
 // ══════════════════════════════════════
+// السعرات والماكروز
+// ══════════════════════════════════════
+
+function macroTargets(){
+  const u=S.user; if(!u)return{p:150,c:250,f:60,kcal:2220};
+  const w=u.weight||70;
+  const g=u.goal||'hyp';
+  const p=Math.round(w*2);
+  const f=Math.round(w*1);
+  const c=g==='str'?Math.round(w*3):g==='end'?Math.round(w*5):Math.round(w*4);
+  const kcal=p*4+c*4+f*9;
+  return{p,c,f,kcal};
+}
+
+function todayISO(){return new Date().toISOString().slice(0,10);}
+
+function todayNutrition(){
+  const iso=todayISO();
+  if(!S.nutrition[iso])S.nutrition[iso]={p:0,c:0,f:0};
+  return S.nutrition[iso];
+}
+
+function renderMacroCard(){
+  const card=document.getElementById('macroCard');
+  if(!S.user){card.style.display='none';return;}
+  card.style.display='';
+  const t=macroTargets();
+  const n=todayNutrition();
+  const consumed=n.p*4+n.c*4+n.f*9;
+  const pct=(v,factor)=>Math.min(100,Math.max(0,v*factor/t.kcal*100));
+  const pp=pct(n.p,4), pc=pct(n.c,4), pf=pct(n.f,9);
+  document.getElementById('macroSub').textContent=`${a(consumed)} / ${a(t.kcal)} سعرة`;
+  document.getElementById('mbP').style.width=pp+'%';
+  document.getElementById('mbC').style.width=pc+'%';
+  document.getElementById('mbF').style.width=pf+'%';
+  document.getElementById('mlPg').textContent=a(n.p);
+  document.getElementById('mlCg').textContent=a(n.c);
+  document.getElementById('mlFg').textContent=a(n.f);
+}
+
+function openMealModal(){
+  document.getElementById('mP').value='';
+  document.getElementById('mC').value='';
+  document.getElementById('mF').value='';
+  document.getElementById('mealOverlay').style.display='flex';
+  document.getElementById('mP').focus();
+}
+function closeMealModal(){document.getElementById('mealOverlay').style.display='none';}
+
+function saveMeal(){
+  const p=parseFloat(document.getElementById('mP').value)||0;
+  const c=parseFloat(document.getElementById('mC').value)||0;
+  const f=parseFloat(document.getElementById('mF').value)||0;
+  const n=todayNutrition();
+  n.p+=p; n.c+=c; n.f+=f;
+  sv();
+  closeMealModal();
+  renderMacroCard();
+}
+
+// ══════════════════════════════════════
 // الرئيسية
 // ══════════════════════════════════════
 
@@ -1626,6 +1941,10 @@ function renderHome(){
   document.getElementById('gTime').textContent=greet;
   document.getElementById('gName').textContent=u.name;
   document.getElementById('strkN').textContent=a(S.streak?.n||0);
+
+  // مؤشّرُ الدورة
+  const ci=cycleInfo();
+  document.getElementById('msTag').textContent=`الدورة ${a(ci.cycle)} — اليوم ${a(ci.day)} من ${a(ci.total)}`;
 
   // اليوم
   const muscles=todayMuscles();
@@ -1683,6 +2002,7 @@ function renderHome(){
         </div>
       </div>`;
   });
+  renderMacroCard();
 }
 
 // ══════════════════════════════════════
@@ -1717,13 +2037,101 @@ function renderHist(){
   }
   S.log.slice(0,12).forEach(sess=>{
     const names=sess.muscles.map(m=>DB[m]?.n||m);
+    const ton=computeTonnage(sess);
+    const tonStr=ton>0?` · ${a(ton)} كجم حجم`:'';
     el.innerHTML+=`
       <div class="sess-row">
         <div class="sr-date">${sess.date}</div>
         <div class="sr-chips">${names.map(n=>`<span class="sr-chip">${n}</span>`).join('')}</div>
-        <div class="sr-meta">${a(sess.totalSets||0)} مجموعة · ${a(sess.durMin||0)} دقيقة</div>
+        <div class="sr-meta">${a(sess.totalSets||0)} مجموعة · ${a(sess.durMin||0)} دقيقة${tonStr}</div>
       </div>`;
   });
+}
+
+function computeTonnage(sess){
+  return (sess.exercises||[]).flatMap(e=>e.sets||[])
+    .reduce((t,s)=>t+(s.r*(s.w||0)),0);
+}
+
+function histTab(tab){
+  ['cal','pr'].forEach(t=>{
+    document.getElementById('panel-'+t).style.display=t===tab?'':'none';
+    document.getElementById('ht-'+t).classList.toggle('on',t===tab);
+  });
+  if(tab==='pr') renderPRs();
+}
+
+function renderPRs(){
+  const el=document.getElementById('prList');
+  const hist=S.hist||{};
+  const keys=Object.keys(hist);
+  if(!keys.length){
+    el.innerHTML=`<div style="text-align:center;color:var(--tx3);font-size:.84rem;padding:30px 0">لا أرقام قياسية بعد — أكمل جلسةً لتُسجَّل</div>`;
+    return;
+  }
+  const byMuscle={};
+  keys.forEach(exName=>{
+    const best=hist[exName];
+    const mId=best.muscleId||'other';
+    if(!byMuscle[mId])byMuscle[mId]=[];
+    byMuscle[mId].push({exName,best});
+  });
+  let html='';
+  Object.entries(byMuscle).forEach(([mId,items])=>{
+    const mName=DB[mId]?.n||mId;
+    html+=`<div class="sec-head" style="padding:12px 0 6px">${mName}</div>`;
+    items.forEach(({exName,best})=>{
+      html+=`<div class="pr-item">
+        <div class="pr-name">${exName}</div>
+        <div class="pr-val">${a(best.reps)} × ${a(best.weight)}كجم</div>
+        <div class="pr-date">${best.date||''}</div>
+      </div>`;
+    });
+  });
+  el.innerHTML=html;
+}
+
+// ══════════════════════════════════════
+// فهرس التمارين
+// ══════════════════════════════════════
+
+function goCatalog(){show('s-catalog');setNb('nb-c');renderCatalog();}
+
+function renderCatalog(){
+  const el=document.getElementById('catalogList');
+  let html='';
+  const toolLabel={'وزن الجسم':'وزن الجسم','دامبل':'دامبل','برج قوة':'برج قوة'};
+  const dfLabel={1:'سهل',2:'متوسط',3:'متقدم',4:'شاق'};
+  Object.entries(DB).forEach(([mId,muscle])=>{
+    html+=`<div class="cat-muscle">
+      <div class="cat-muscle-hd"><span class="cat-muscle-ic">${muscle.e||''}</span>${muscle.n}</div>`;
+    (muscle.ex||[]).forEach((ex,i)=>{
+      const uid=`cx-${mId}-${i}`;
+      const steps=(ex.steps||[]).map(s=>`<li>${s}</li>`).join('');
+      html+=`<div class="cat-ex">
+        <div class="cat-ex-hd" onclick="catToggle('${uid}')">
+          <div>
+            <div class="cat-ex-name">${ex.n}</div>
+            <div class="cat-ex-meta">${toolLabel[ex.t]||ex.t} · ${dfLabel[ex.df]||''}</div>
+          </div>
+          <span class="cat-ex-arr" id="arr-${uid}">▾</span>
+        </div>
+        <div class="cat-ex-body" id="${uid}">
+          <ol class="cat-steps">${steps}</ol>
+          ${ex.warn?`<div class="cat-warn">⚠️ ${ex.warn}</div>`:''}
+        </div>
+      </div>`;
+    });
+    html+='</div>';
+  });
+  el.innerHTML=html;
+}
+
+function catToggle(uid){
+  const body=document.getElementById(uid);
+  const arr=document.getElementById('arr-'+uid);
+  const open=body.classList.toggle('open');
+  arr.classList.toggle('open',open);
 }
 
 // ══════════════════════════════════════
