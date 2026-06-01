@@ -588,6 +588,65 @@ body{
 .cat-steps li{font-size:.8rem;color:var(--tx2);margin-bottom:5px;line-height:1.5}
 .cat-warn{font-size:.75rem;color:#e5a020;margin-top:8px;padding:7px 10px;
   background:rgba(229,160,32,.1);border-radius:8px;border-right:3px solid #e5a020}
+
+/* صور التمارين في الفهرس */
+.cat-ex-img-wrap{margin:8px 0;border-radius:10px;overflow:hidden;
+  background:var(--sf3);aspect-ratio:4/3;max-height:160px;
+  display:flex;align-items:center;justify-content:center}
+.cat-ex-img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+.cat-ex-img-wrap img.hide{display:none}
+.cat-img-fallback{font-size:2.5rem;opacity:.35}
+
+/* خريطة العضلات في الفهرس */
+.catalog-map{margin-bottom:14px;text-align:center}
+.catalog-map-title{font-size:.76rem;color:var(--tx2);margin-bottom:10px;letter-spacing:.3px}
+.body-map-wrap{display:inline-block;position:relative}
+.body-map-svg{width:130px;height:auto;display:block;margin:0 auto}
+/* مناطق العضلات القابلة للنقر */
+.mz{cursor:pointer;fill:var(--sf3);stroke:rgba(176,141,87,.3);stroke-width:1;transition:fill .18s,stroke .18s}
+.mz:hover,.mz.active{fill:rgba(176,141,87,.22);stroke:#B08D57;stroke-width:1.5}
+.mz-b{cursor:pointer;fill:transparent;stroke:rgba(176,141,87,.25);stroke-width:1;stroke-dasharray:3 2;transition:fill .18s}
+.mz-b:hover,.mz-b.active{fill:rgba(176,141,87,.15);stroke:#B08D57;stroke-dasharray:none;stroke-width:1.5}
+.bz{fill:var(--sf2);stroke:var(--sf3);stroke-width:.8}
+.map-lbl{font-size:6.5px;fill:rgba(237,232,216,.55);text-anchor:middle;pointer-events:none;font-family:sans-serif}
+.map-filter-all{background:transparent;border:1px solid var(--line);color:var(--tx3);
+  border-radius:20px;padding:5px 16px;font-size:.72rem;cursor:pointer;margin-top:8px;
+  display:inline-block;font-family:var(--b)}
+.map-filter-all:hover{border-color:var(--gd);color:var(--gd)}
+
+/* جدول الأسبوع */
+.sched-wrap{padding:16px 14px 90px}
+.sched-day{background:var(--sf);border:1px solid var(--line);
+  border-radius:var(--r2);margin-bottom:10px;overflow:hidden}
+.sched-day.current{border-color:rgba(176,141,87,.35)}
+.sched-day-hd{display:flex;align-items:center;justify-content:space-between;
+  padding:14px 16px;cursor:pointer;gap:8px}
+.sched-day-title{font-weight:700;font-size:.9rem;color:var(--tx)}
+.sched-day-now{font-size:.65rem;color:var(--gd);display:block;margin-top:1px}
+.sched-day-status{font-size:.69rem;padding:4px 10px;border-radius:20px;
+  font-weight:600;white-space:nowrap;flex-shrink:0}
+.status-done{background:var(--ok-s);color:var(--ok)}
+.status-rest{background:var(--rst-s);color:var(--rest)}
+.status-ready{background:var(--gd-s);color:var(--gd)}
+.sched-day-body{padding:0 16px 14px;display:none}
+.sched-day.open .sched-day-body{display:block}
+.sched-muscles{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;margin-top:6px}
+.sched-m-chip{background:var(--sf2);border:1px solid var(--line);
+  border-radius:20px;padding:4px 12px;font-size:.78rem;color:var(--tx2)}
+.rec-bar-wrap{margin-bottom:10px}
+.rec-bar-lbl{font-size:.67rem;color:var(--tx2);margin-bottom:4px}
+.rec-bar{height:5px;background:var(--sf3);border-radius:3px;overflow:hidden}
+.rec-fill{height:100%;background:var(--rest);border-radius:3px;transition:width .5s}
+
+/* ماكروز — TDEE + مصادر */
+.macro-tdee{font-size:.69rem;color:var(--tx3);margin-top:2px}
+.macro-cite{font-size:.62rem;color:var(--tx3);line-height:1.6;
+  margin-top:8px;padding-top:8px;border-top:1px solid var(--line)}
+.macro-ovr-row{display:flex;gap:8px;margin-top:8px;align-items:center;flex-wrap:wrap}
+.macro-ovr-lbl{font-size:.7rem;color:var(--tx3);flex:0 0 auto}
+.btn-ovr{background:transparent;border:1px solid var(--line);border-radius:12px;
+  padding:5px 12px;font-size:.7rem;color:var(--tx2);font-family:var(--b);cursor:pointer}
+.btn-ovr:hover{border-color:var(--gd);color:var(--gd)}
 </style>
 </head>
 <body>
@@ -700,8 +759,18 @@ body{
       <div class="ob-dots"><div class="od"></div><div class="od"></div><div class="od on"></div></div>
       <h2 class="ob-h" style="font-size:1.9rem">هدفُك<br>وأيامُك</h2>
       <p class="ob-p">سيُبنى برنامجُك الأسبوعيُّ على هذا.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+        <div class="field" style="margin-bottom:0">
+          <label>العمر (سنة)</label>
+          <input type="number" id="inAge" placeholder="٢٥" min="10" max="100" style="width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--sf);color:var(--tx);font-size:1rem;font-family:var(--b);text-align:center">
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>الطول (سم)</label>
+          <input type="number" id="inHeight" placeholder="١٧٥" min="100" max="240" style="width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--sf);color:var(--tx);font-size:1rem;font-family:var(--b);text-align:center">
+        </div>
+      </div>
       <div class="field">
-        <label>وزنُ الجسم (كجم) — لحساب احتياجاتك</label>
+        <label>وزنُ الجسم (كجم)</label>
         <input type="number" id="inWeight" placeholder="٧٠" min="30" max="250" style="width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--sf);color:var(--tx);font-size:1rem;font-family:var(--b);text-align:center">
       </div>
       <div class="field">
@@ -759,8 +828,9 @@ body{
     <div class="macro-card" id="macroCard" style="display:none">
       <div class="macro-hd">
         <div>
-          <div class="macro-title">السعرات اليومية</div>
+          <div class="macro-title">السعراتُ اليومية المُقدَّرة</div>
           <div class="macro-sub" id="macroSub"></div>
+          <div class="macro-tdee" id="macroTDEE"></div>
         </div>
         <button class="macro-add-btn" onclick="openMealModal()">+ وجبة</button>
       </div>
@@ -775,6 +845,12 @@ body{
         <span class="ml-p">🥩 بروتين <span id="mlPg">٠</span>جم</span>
         <span class="ml-c">🌾 كارب <span id="mlCg">٠</span>جم</span>
         <span class="ml-f">🫒 دهون <span id="mlFg">٠</span>جم</span>
+      </div>
+      <div class="macro-cite" id="macroCite"></div>
+      <div class="macro-ovr-row">
+        <span class="macro-ovr-lbl">قيمٌ مُحسَبةٌ علمياً</span>
+        <button class="btn-ovr" onclick="openMacroOvr()">تعديل يدوي ✏️</button>
+        <button class="btn-ovr" id="btnResetOvr" style="display:none" onclick="resetMacroOvr()">استعادة التلقائي ↺</button>
       </div>
     </div>
 
@@ -911,7 +987,75 @@ body{
   <div class="safe-top"></div>
   <div class="scroll hist-wrap">
     <h2 class="hist-h">فهرسُ التمارين</h2>
+    <div class="catalog-map">
+      <div class="catalog-map-title">اضغطِ العضلةَ لتصفيةِ التمارين</div>
+      <div class="body-map-wrap">
+        <svg class="body-map-svg" viewBox="0 0 130 255" xmlns="http://www.w3.org/2000/svg">
+          <!-- جسم - خلفية -->
+          <circle class="bz" cx="65" cy="19" r="13"/>
+          <rect class="bz" x="60" y="31" width="10" height="9" rx="3"/>
+          <path class="bz" d="M40 40 L30 47 L26 92 L40 92 L43 112 L87 112 L90 92 L104 92 L100 47 L90 40 Z"/>
+          <rect class="bz" x="19" y="49" width="12" height="38" rx="6"/>
+          <rect class="bz" x="99" y="49" width="12" height="38" rx="6"/>
+          <rect class="bz" x="18" y="88" width="11" height="25" rx="5"/>
+          <rect class="bz" x="101" y="88" width="11" height="25" rx="5"/>
+          <rect class="bz" x="43" y="112" width="44" height="17" rx="7"/>
+          <rect class="bz" x="43" y="129" width="17" height="44" rx="8"/>
+          <rect class="bz" x="70" y="129" width="17" height="44" rx="8"/>
+          <rect class="bz" x="45" y="175" width="13" height="38" rx="6"/>
+          <rect class="bz" x="72" y="175" width="13" height="38" rx="6"/>
+          <ellipse class="bz" cx="52" cy="216" rx="9" ry="4"/>
+          <ellipse class="bz" cx="79" cy="216" rx="9" ry="4"/>
+          <!-- مناطق العضلات -->
+          <!-- صدر -->
+          <rect class="mz" data-mid="chest" onclick="filterCatalog('chest')" x="44" y="47" width="42" height="28" rx="5"/>
+          <text class="map-lbl" x="65" y="64">صدر</text>
+          <!-- كتف -->
+          <ellipse class="mz" data-mid="delt" onclick="filterCatalog('delt')" cx="32" cy="53" rx="11" ry="8"/>
+          <ellipse class="mz" data-mid="delt" onclick="filterCatalog('delt')" cx="98" cy="53" rx="11" ry="8"/>
+          <text class="map-lbl" x="32" y="62">كتف</text>
+          <text class="map-lbl" x="98" y="62">كتف</text>
+          <!-- ظهر عريض (جانبا الجذع) -->
+          <rect class="mz" data-mid="lats" onclick="filterCatalog('lats')" x="37" y="60" width="10" height="26" rx="4"/>
+          <rect class="mz" data-mid="lats" onclick="filterCatalog('lats')" x="83" y="60" width="10" height="26" rx="4"/>
+          <text class="map-lbl" x="42" y="75">ظهر</text>
+          <text class="map-lbl" x="88" y="75">ظهر</text>
+          <!-- بطن -->
+          <rect class="mz" data-mid="abs" onclick="filterCatalog('abs')" x="47" y="77" width="36" height="28" rx="5"/>
+          <text class="map-lbl" x="65" y="93">بطن</text>
+          <!-- بايسبس (يسار أمامي) -->
+          <rect class="mz" data-mid="biceps" onclick="filterCatalog('biceps')" x="20" y="52" width="10" height="24" rx="5"/>
+          <text class="map-lbl" x="25" y="70" font-size="5.5">بايسبس</text>
+          <!-- ترايسبس (يمين خلفي متقطع) -->
+          <rect class="mz-b" data-mid="triceps" onclick="filterCatalog('triceps')" x="100" y="52" width="10" height="24" rx="5"/>
+          <text class="map-lbl" x="105" y="70" font-size="5.5">ترايسبس</text>
+          <!-- أرداف وظهر الفخذ -->
+          <rect class="mz-b" data-mid="hams" onclick="filterCatalog('hams')" x="43" y="112" width="44" height="17" rx="7"/>
+          <text class="map-lbl" x="65" y="123">أرداف</text>
+          <!-- رباعية -->
+          <rect class="mz" data-mid="quads" onclick="filterCatalog('quads')" x="44" y="131" width="15" height="40" rx="7"/>
+          <rect class="mz" data-mid="quads" onclick="filterCatalog('quads')" x="71" y="131" width="15" height="40" rx="7"/>
+          <text class="map-lbl" x="52" y="153">رباعية</text>
+          <text class="map-lbl" x="79" y="153">رباعية</text>
+          <!-- سمانة -->
+          <rect class="mz" data-mid="calves" onclick="filterCatalog('calves')" x="46" y="177" width="11" height="34" rx="5"/>
+          <rect class="mz" data-mid="calves" onclick="filterCatalog('calves')" x="73" y="177" width="11" height="34" rx="5"/>
+          <text class="map-lbl" x="52" y="197">سمانة</text>
+          <text class="map-lbl" x="79" y="197">سمانة</text>
+        </svg>
+      </div>
+      <button class="map-filter-all" onclick="filterCatalog(null)">عرضُ جميعِ التمارين</button>
+    </div>
     <div id="catalogList"></div>
+  </div>
+</div>
+
+<!-- ══════════════ SCHEDULE ══════════════ -->
+<div class="screen" id="s-schedule">
+  <div class="safe-top"></div>
+  <div class="scroll sched-wrap">
+    <h2 class="hist-h">جدولُ أسبوعي</h2>
+    <div id="schedGrid"></div>
   </div>
 </div>
 
@@ -936,12 +1080,39 @@ body{
   </div>
 </div>
 
+<!-- modal تعديل الماكروز -->
+<div class="modal-overlay" id="macroOvrOverlay" style="display:none" onclick="closeMacroOvr()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-title">تعديل أهدافِ الماكروز</div>
+    <p style="font-size:.76rem;color:var(--tx3);text-align:center;margin-bottom:14px">القيمُ بالجرام يومياً</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px">
+      <div>
+        <label style="font-size:.72rem;color:var(--tx2);display:block;margin-bottom:4px">🥩 بروتين</label>
+        <input type="number" id="ovrP" min="0" max="500" style="width:100%;padding:9px;border-radius:9px;border:1px solid var(--line);background:var(--sf);color:var(--tx);font-size:.9rem;font-family:var(--b);text-align:center">
+      </div>
+      <div>
+        <label style="font-size:.72rem;color:var(--tx2);display:block;margin-bottom:4px">🌾 كارب</label>
+        <input type="number" id="ovrC" min="0" max="800" style="width:100%;padding:9px;border-radius:9px;border:1px solid var(--line);background:var(--sf);color:var(--tx);font-size:.9rem;font-family:var(--b);text-align:center">
+      </div>
+      <div>
+        <label style="font-size:.72rem;color:var(--tx2);display:block;margin-bottom:4px">🫒 دهون</label>
+        <input type="number" id="ovrF" min="0" max="300" style="width:100%;padding:9px;border-radius:9px;border:1px solid var(--line);background:var(--sf);color:var(--tx);font-size:.9rem;font-family:var(--b);text-align:center">
+      </div>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn-gold" style="flex:1" onclick="saveMacroOvr()">حفظ</button>
+      <button class="btn-ghost" style="flex:1" onclick="closeMacroOvr()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
 <!-- شريط التنقل -->
 <nav class="nav" id="navBar" style="display:none">
   <button class="nb on" id="nb-h" onclick="goHome()"><span class="ni">🏠</span><span class="nl">الرئيسية</span></button>
   <button class="nb" id="nb-s" onclick="startSession()"><span class="ni">▶️</span><span class="nl">ابدأ</span></button>
   <button class="nb" id="nb-g" onclick="goHist()"><span class="ni">📊</span><span class="nl">التقدم</span></button>
   <button class="nb" id="nb-c" onclick="goCatalog()"><span class="ni">📚</span><span class="nl">الفهرس</span></button>
+  <button class="nb" id="nb-sch" onclick="goSchedule()"><span class="ni">📅</span><span class="nl">جدولي</span></button>
 </nav>
 
 <div class="toast" id="toast"></div>
@@ -1081,8 +1252,11 @@ function ob2(){
 function ob3(){show('s-ob3');}
 function finishOB(){
   const wt=parseFloat(document.getElementById('inWeight').value)||70;
-  OB.weight=wt;
-  S.user={name:OB.name,sx:OB.sx,lv:OB.lv,eq:OB.eq,goal:OB.goal,days:OB.days,since:Date.now(),cursor:0,weight:wt};
+  const ag=parseInt(document.getElementById('inAge')?.value)||25;
+  const ht=parseFloat(document.getElementById('inHeight')?.value)||175;
+  OB.weight=wt; OB.age=ag; OB.height=ht;
+  S.user={name:OB.name,sx:OB.sx,lv:OB.lv,eq:OB.eq,goal:OB.goal,days:OB.days,
+          since:Date.now(),cursor:0,weight:wt,age:ag,height:ht};
   S.log=[];S.streak={n:0,last:null};S.hist={};S.nutrition={};
   const id=Date.now().toString();
   PROFILES.push({id,data:S});
@@ -1446,8 +1620,7 @@ function renderEx(){
   document.getElementById('howSteps').innerHTML=(ex.steps||[]).map(s=>`<li>${s}</li>`).join('');
   document.getElementById('howWarn').textContent=ex.warn||'';
   document.getElementById('howWarn').style.display=ex.warn?'block':'none';
-  document.getElementById('howPanel').classList.remove('open');
-  document.getElementById('howBtn').textContent='كيف أؤدّيه؟ ▾';
+  // الخطوات دائماً ظاهرة — لا يحتاج تبديل
 
   // الوزن: يظهر للدامبل/برج القوة فقط
   const usesWeight=ex.t==='دامبل'||ex.t==='برج قوة';
@@ -1953,14 +2126,39 @@ function finishSession(){
 // ══════════════════════════════════════
 
 function macroTargets(){
-  const u=S.user; if(!u)return{p:150,c:250,f:60,kcal:2220};
-  const w=u.weight||70;
-  const g=u.goal||'hyp';
-  const p=Math.round(w*2);
-  const f=Math.round(w*1);
-  const c=g==='str'?Math.round(w*3):g==='end'?Math.round(w*5):Math.round(w*4);
-  const kcal=p*4+c*4+f*9;
-  return{p,c,f,kcal};
+  const u=S.user;
+  if(!u) return{p:150,c:250,f:60,kcal:2220,tdee:2220,bmr:1700,auto:true};
+  // إذا كان هناك تعديل يدوي
+  if(u.macroOverride){
+    const o=u.macroOverride;
+    const kcal=o.p*4+o.c*4+o.f*9;
+    // احسب TDEE للعرض فقط
+    const w=u.weight||70,h=u.height||175,age=u.age||25,days=u.days||3;
+    const bmr=u.sx==='f'?Math.round(10*w+6.25*h-5*age-161):Math.round(10*w+6.25*h-5*age+5);
+    const tdee=Math.round(bmr*({2:1.375,3:1.55,4:1.725,5:1.9}[days]||1.55));
+    return{p:o.p,c:o.c,f:o.f,kcal,tdee,bmr,auto:false};
+  }
+  // ─── معادلة Mifflin-St Jeor 1990 ───
+  const w=u.weight||70, h=u.height||175, age=u.age||25;
+  const g=u.goal||'hyp', days=u.days||3;
+  const bmr=u.sx==='f'
+    ? Math.round(10*w + 6.25*h - 5*age - 161)
+    : Math.round(10*w + 6.25*h - 5*age + 5);
+  // معامل النشاط حسب أيام التدريب
+  const actMult={2:1.375,3:1.55,4:1.725,5:1.9}[days]||1.55;
+  const tdee=Math.round(bmr*actMult);
+  // فائضٌ حسب الهدف
+  const surplus=g==='str'?200:g==='hyp'?300:0;
+  const kcal=tdee+surplus;
+  // ─── ISSN 2017 للبروتين ───
+  // str: 1.6–2.2 g/kg → نستخدم 2.0
+  // hyp: 1.6–2.0 g/kg → نستخدم 1.8
+  // end: 1.2–1.6 g/kg → نستخدم 1.4
+  const pFactor=g==='str'?2.0:g==='hyp'?1.8:1.4;
+  const p=Math.round(w*pFactor);
+  const f=Math.round(w*0.9); // 0.9 g/kg دهون — الحد الأدنى الصحي
+  const c=Math.max(50,Math.round((kcal-p*4-f*9)/4));
+  return{p,c,f,kcal,tdee,bmr,auto:true};
 }
 
 function todayISO(){return new Date().toISOString().slice(0,10);}
@@ -1980,13 +2178,28 @@ function renderMacroCard(){
   const consumed=n.p*4+n.c*4+n.f*9;
   const pct=(v,factor)=>Math.min(100,Math.max(0,v*factor/t.kcal*100));
   const pp=pct(n.p,4), pc=pct(n.c,4), pf=pct(n.f,9);
-  document.getElementById('macroSub').textContent=`${a(consumed)} / ${a(t.kcal)} سعرة`;
+
+  document.getElementById('macroSub').textContent=`${a(consumed)} / ${a(t.kcal)} سعرة (هدفٌ يومي)`;
+  document.getElementById('macroTDEE').textContent=
+    `معدل حرق الصيانة: ${a(t.tdee)} سعرة | البازل: ${a(t.bmr)} سعرة`;
+
   document.getElementById('mbP').style.width=pp+'%';
   document.getElementById('mbC').style.width=pc+'%';
   document.getElementById('mbF').style.width=pf+'%';
-  document.getElementById('mlPg').textContent=a(n.p);
-  document.getElementById('mlCg').textContent=a(n.c);
-  document.getElementById('mlFg').textContent=a(n.f);
+  document.getElementById('mlPg').textContent=a(t.p);
+  document.getElementById('mlCg').textContent=a(t.c);
+  document.getElementById('mlFg').textContent=a(t.f);
+
+  // الاستشهاد العلمي
+  const g=S.user.goal||'hyp';
+  const goalLabel=g==='str'?'القوة (+٢٠٠ سعرة فائض)':g==='hyp'?'التضخيم (+٣٠٠ سعرة فائض)':'التحمّل (توازن السعرات)';
+  document.getElementById('macroCite').innerHTML=
+    `📐 <b>معادلة Mifflin–St Jeor (1990)</b> لحساب الأيض الأساسي × معامل نشاطٍ (${a(S.user.days||3)} أيام/أسبوع)<br>
+     🥩 <b>ISSN (2017)</b> — بروتين ${g==='str'?'٢.٠':g==='hyp'?'١.٨':'١.٤'} جم/كجم لهدف ${goalLabel}`;
+
+  // إظهار زر الاستعادة إذا كان هناك تعديل يدوي
+  const resetBtn=document.getElementById('btnResetOvr');
+  if(resetBtn) resetBtn.style.display=t.auto?'none':'inline-block';
 }
 
 function openMealModal(){
@@ -2178,26 +2391,29 @@ function renderPRs(){
 
 function goCatalog(){show('s-catalog');setNb('nb-c');renderCatalog();}
 
+const EQ_LABEL={'bw':'وزن الجسم','syr':'سيور','db':'دامبل','bar':'بار','dip':'موازي','ring':'حلقات','tower':'برج قوة'};
+const DF_LABEL={1:'سهل',2:'متوسط',3:'متقدم',4:'شاق'};
+
 function renderCatalog(){
   const el=document.getElementById('catalogList');
   let html='';
-  const toolLabel={'وزن الجسم':'وزن الجسم','دامبل':'دامبل','برج قوة':'برج قوة'};
-  const dfLabel={1:'سهل',2:'متوسط',3:'متقدم',4:'شاق'};
   Object.entries(DB).forEach(([mId,muscle])=>{
-    html+=`<div class="cat-muscle">
+    html+=`<div class="cat-muscle" data-mid="${mId}">
       <div class="cat-muscle-hd"><span class="cat-muscle-ic">${muscle.e||''}</span>${muscle.n}</div>`;
     (muscle.ex||[]).forEach((ex,i)=>{
       const uid=`cx-${mId}-${i}`;
+      const esc=ex.n.replace(/'/g,"\\'");
       const steps=(ex.steps||[]).map(s=>`<li>${s}</li>`).join('');
       html+=`<div class="cat-ex">
-        <div class="cat-ex-hd" onclick="catToggle('${uid}')">
+        <div class="cat-ex-hd" onclick="catToggle('${uid}','${esc}')">
           <div>
             <div class="cat-ex-name">${ex.n}</div>
-            <div class="cat-ex-meta">${toolLabel[ex.t]||ex.t} · ${dfLabel[ex.df]||''}</div>
+            <div class="cat-ex-meta">${EQ_LABEL[ex.t]||ex.t} · ${DF_LABEL[ex.df]||''}</div>
           </div>
           <span class="cat-ex-arr" id="arr-${uid}">▾</span>
         </div>
         <div class="cat-ex-body" id="${uid}">
+          <div class="cat-ex-img-wrap" id="catimg-${uid}"></div>
           <ol class="cat-steps">${steps}</ol>
           ${ex.warn?`<div class="cat-warn">⚠️ ${ex.warn}</div>`:''}
         </div>
@@ -2208,11 +2424,161 @@ function renderCatalog(){
   el.innerHTML=html;
 }
 
-function catToggle(uid){
+let catImgTimers={};
+function catToggle(uid, exName){
   const body=document.getElementById(uid);
   const arr=document.getElementById('arr-'+uid);
   const open=body.classList.toggle('open');
   arr.classList.toggle('open',open);
+  if(open && exName) loadCatImg(uid, exName);
+  if(!open && catImgTimers[uid]){
+    clearInterval(catImgTimers[uid]);
+    delete catImgTimers[uid];
+  }
+}
+
+function loadCatImg(uid, exName){
+  const wrap=document.getElementById('catimg-'+uid);
+  if(!wrap || wrap.dataset.loaded) return;
+  wrap.dataset.loaded='1';
+  const key=EXIMG[exName];
+  if(!key){
+    wrap.innerHTML=`<div class="cat-img-fallback">💪</div>`;
+    return;
+  }
+  const u0=`${IMG_BASE}${key}/0.jpg`;
+  const u1=`${IMG_BASE}${key}/1.jpg`;
+  wrap.innerHTML=`
+    <img id="ci0-${uid}" src="${u0}" alt="${exName}">
+    <img id="ci1-${uid}" src="${u1}" alt="${exName}" class="hide">`;
+  const img0=document.getElementById('ci0-'+uid);
+  img0.onerror=()=>{ wrap.innerHTML=`<div class="cat-img-fallback">💪</div>`; };
+  img0.onload=()=>{
+    let fr=0;
+    catImgTimers[uid]=setInterval(()=>{
+      const a=document.getElementById('ci0-'+uid);
+      const b=document.getElementById('ci1-'+uid);
+      if(!a||!b){clearInterval(catImgTimers[uid]);return;}
+      fr=1-fr;
+      a.classList.toggle('hide',fr===1);
+      b.classList.toggle('hide',fr===0);
+    },900);
+  };
+}
+
+function filterCatalog(mId){
+  document.querySelectorAll('.cat-muscle').forEach(el=>{
+    el.style.display=(!mId||el.dataset.mid===mId)?'':'none';
+  });
+  document.querySelectorAll('.mz,.mz-b').forEach(z=>{
+    z.classList.toggle('active', z.getAttribute('data-mid')===mId && mId!==null);
+  });
+  if(mId){
+    const t=document.querySelector(`.cat-muscle[data-mid="${mId}"]`);
+    if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+}
+
+// ══════════════════════════════════════
+// جدول الأسبوع
+// ══════════════════════════════════════
+
+function goSchedule(){show('s-schedule');setNb('nb-sch');renderSchedule();}
+
+function renderSchedule(){
+  const el=document.getElementById('schedGrid');
+  if(!S.user){el.innerHTML='';return;}
+  const split=SPLITS[S.user.days]||SPLITS[3];
+  const ci=cycleInfo();
+  let html='';
+
+  split.forEach((muscles, i)=>{
+    const dayNum=i+1;
+    const isCurrent=(ci.day-1)===i;
+
+    // حالة كل عضلة: هل تستشفي؟
+    let minRemHrs=Infinity, maxRecHrs=0, anyRecovering=false, anyTrained=false;
+    muscles.forEach(m=>{
+      const last=lastTrainedDate(m);
+      if(!last) return;
+      const rec=DB[m]?.rec||48;
+      const hrsEl=(Date.now()-new Date(last).getTime())/3600000;
+      const hrsRem=Math.max(0, rec-hrsEl);
+      if(hrsRem>0){ anyRecovering=true; if(hrsRem<minRemHrs)minRemHrs=hrsRem; if(rec>maxRecHrs)maxRecHrs=rec; }
+      else{ anyTrained=true; }
+    });
+
+    let status='ready';
+    if(anyRecovering) status='rest';
+    else if(anyTrained) status='done';
+
+    const statusTxt=status==='rest'
+      ? `🛌 استشفاء — ${a(Math.round(minRemHrs))} ساعة`
+      : status==='done' ? '✅ مكتمل' : '🟢 جاهز';
+    const statusCls=status==='rest'?'status-rest':status==='done'?'status-done':'status-ready';
+
+    let recBarHtml='';
+    if(status==='rest' && maxRecHrs>0){
+      const pct=Math.round(100*(1-minRemHrs/maxRecHrs));
+      recBarHtml=`<div class="rec-bar-wrap">
+        <div class="rec-bar-lbl">تعافٍ: ${a(pct)}٪</div>
+        <div class="rec-bar"><div class="rec-fill" style="width:${pct}%"></div></div>
+      </div>`;
+    }
+
+    const chips=muscles.map(m=>`<span class="sched-m-chip">${DB[m]?.e||'💪'} ${DB[m]?.n||m}</span>`).join('');
+    const startBtn=status!=='rest'
+      ? `<button class="btn-gold" onclick="buildSession(${JSON.stringify(muscles)})" style="margin-top:8px;padding:10px;font-size:.85rem">ابدأ هذا اليوم ▶</button>`
+      : `<div style="font-size:.75rem;color:var(--tx3);margin-top:6px">الاستشفاءُ واجبٌ — انتظرِ اكتمالَ التعافي</div>`;
+
+    html+=`<div class="sched-day${isCurrent?' current':''}" data-day="${i}">
+      <div class="sched-day-hd" onclick="this.parentElement.classList.toggle('open')">
+        <div>
+          <div class="sched-day-title">اليوم ${a(dayNum)}</div>
+          ${isCurrent?`<div class="sched-day-now">◀ دورة ${a(ci.cycle)} — يومُك الحالي</div>`:''}
+        </div>
+        <span class="sched-day-status ${statusCls}">${statusTxt}</span>
+      </div>
+      <div class="sched-day-body">
+        <div class="sched-muscles">${chips}</div>
+        ${recBarHtml}
+        ${startBtn}
+      </div>
+    </div>`;
+  });
+
+  el.innerHTML=html;
+  const cur=document.querySelector('.sched-day.current');
+  if(cur) cur.classList.add('open');
+}
+
+// ══════════════════════════════════════
+// تعديل الماكروز يدوياً
+// ══════════════════════════════════════
+
+function openMacroOvr(){
+  const t=macroTargets();
+  document.getElementById('ovrP').value=t.p;
+  document.getElementById('ovrC').value=t.c;
+  document.getElementById('ovrF').value=t.f;
+  document.getElementById('macroOvrOverlay').style.display='flex';
+}
+function closeMacroOvr(){document.getElementById('macroOvrOverlay').style.display='none';}
+function saveMacroOvr(){
+  const p=parseInt(document.getElementById('ovrP').value)||0;
+  const c=parseInt(document.getElementById('ovrC').value)||0;
+  const f=parseInt(document.getElementById('ovrF').value)||0;
+  if(!S.user)return;
+  S.user.macroOverride={p,c,f};
+  sv();
+  closeMacroOvr();
+  renderMacroCard();
+}
+function resetMacroOvr(){
+  if(!S.user)return;
+  delete S.user.macroOverride;
+  sv();
+  renderMacroCard();
 }
 
 // ══════════════════════════════════════
