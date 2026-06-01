@@ -596,12 +596,15 @@ body{
 .cat-ex-img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
 .cat-ex-img-wrap img.hide{display:none}
 .cat-img-fallback{font-size:2.5rem;opacity:.35}
+.cat-svg-fallback{opacity:.6;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+.cat-svg-fallback svg{width:120px;height:auto}
 
 /* خريطة العضلات في الفهرس */
 .catalog-map{margin-bottom:14px;text-align:center}
 .catalog-map-title{font-size:.76rem;color:var(--tx2);margin-bottom:10px;letter-spacing:.3px}
 .body-map-wrap{display:inline-block;position:relative}
-.body-map-svg{width:130px;height:auto;display:block;margin:0 auto}
+.body-map-svg{width:min(260px,96%);height:auto;display:block;margin:0 auto}
+.map-view-lbl{font-size:7px;fill:rgba(176,141,87,.7);font-family:sans-serif;pointer-events:none}
 /* مناطق العضلات القابلة للنقر */
 .mz{cursor:pointer;fill:var(--sf3);stroke:rgba(176,141,87,.3);stroke-width:1;transition:fill .18s,stroke .18s}
 .mz:hover,.mz.active{fill:rgba(176,141,87,.22);stroke:#B08D57;stroke-width:1.5}
@@ -876,7 +879,7 @@ body{
   </div>
   <div class="pbar"><div class="pfill" id="pFill" style="width:0%"></div></div>
 
-  <div class="scroll">
+  <div class="scroll pb">
     <div class="ex-now anim">
       <div class="ex-tool" id="exTool">—</div>
       <div class="ex-name" id="exName">—</div>
@@ -969,6 +972,7 @@ body{
     <div class="hist-tabs">
       <button class="ht on" id="ht-cal" onclick="histTab('cal')">التقويم</button>
       <button class="ht" id="ht-pr" onclick="histTab('pr')">الأرقام القياسية</button>
+      <button class="ht" id="ht-sch" onclick="histTab('sch')">الجدول</button>
     </div>
     <div id="panel-cal">
       <div class="sec-head" style="padding-bottom:8px">الأيامُ المدرَّبة</div>
@@ -980,6 +984,9 @@ body{
     <div id="panel-pr" style="display:none">
       <div id="prList"></div>
     </div>
+    <div id="panel-sch" style="display:none">
+      <div id="schedGrid"></div>
+    </div>
   </div>
 </div>
 
@@ -990,58 +997,133 @@ body{
     <div class="catalog-map">
       <div class="catalog-map-title">اضغطِ العضلةَ لتصفيةِ التمارين</div>
       <div class="body-map-wrap">
-        <svg class="body-map-svg" viewBox="0 0 130 255" xmlns="http://www.w3.org/2000/svg">
-          <!-- جسم - خلفية -->
-          <circle class="bz" cx="65" cy="19" r="13"/>
-          <rect class="bz" x="60" y="31" width="10" height="9" rx="3"/>
-          <path class="bz" d="M40 40 L30 47 L26 92 L40 92 L43 112 L87 112 L90 92 L104 92 L100 47 L90 40 Z"/>
-          <rect class="bz" x="19" y="49" width="12" height="38" rx="6"/>
-          <rect class="bz" x="99" y="49" width="12" height="38" rx="6"/>
-          <rect class="bz" x="18" y="88" width="11" height="25" rx="5"/>
-          <rect class="bz" x="101" y="88" width="11" height="25" rx="5"/>
-          <rect class="bz" x="43" y="112" width="44" height="17" rx="7"/>
-          <rect class="bz" x="43" y="129" width="17" height="44" rx="8"/>
-          <rect class="bz" x="70" y="129" width="17" height="44" rx="8"/>
-          <rect class="bz" x="45" y="175" width="13" height="38" rx="6"/>
-          <rect class="bz" x="72" y="175" width="13" height="38" rx="6"/>
-          <ellipse class="bz" cx="52" cy="216" rx="9" ry="4"/>
-          <ellipse class="bz" cx="79" cy="216" rx="9" ry="4"/>
-          <!-- مناطق العضلات -->
-          <!-- صدر -->
-          <rect class="mz" data-mid="chest" onclick="filterCatalog('chest')" x="44" y="47" width="42" height="28" rx="5"/>
-          <text class="map-lbl" x="65" y="64">صدر</text>
-          <!-- كتف -->
-          <ellipse class="mz" data-mid="delt" onclick="filterCatalog('delt')" cx="32" cy="53" rx="11" ry="8"/>
-          <ellipse class="mz" data-mid="delt" onclick="filterCatalog('delt')" cx="98" cy="53" rx="11" ry="8"/>
-          <text class="map-lbl" x="32" y="62">كتف</text>
-          <text class="map-lbl" x="98" y="62">كتف</text>
-          <!-- ظهر عريض (جانبا الجذع) -->
-          <rect class="mz" data-mid="lats" onclick="filterCatalog('lats')" x="37" y="60" width="10" height="26" rx="4"/>
-          <rect class="mz" data-mid="lats" onclick="filterCatalog('lats')" x="83" y="60" width="10" height="26" rx="4"/>
-          <text class="map-lbl" x="42" y="75">ظهر</text>
-          <text class="map-lbl" x="88" y="75">ظهر</text>
-          <!-- بطن -->
-          <rect class="mz" data-mid="abs" onclick="filterCatalog('abs')" x="47" y="77" width="36" height="28" rx="5"/>
-          <text class="map-lbl" x="65" y="93">بطن</text>
-          <!-- بايسبس (يسار أمامي) -->
-          <rect class="mz" data-mid="biceps" onclick="filterCatalog('biceps')" x="20" y="52" width="10" height="24" rx="5"/>
-          <text class="map-lbl" x="25" y="70" font-size="5.5">بايسبس</text>
-          <!-- ترايسبس (يمين خلفي متقطع) -->
-          <rect class="mz-b" data-mid="triceps" onclick="filterCatalog('triceps')" x="100" y="52" width="10" height="24" rx="5"/>
-          <text class="map-lbl" x="105" y="70" font-size="5.5">ترايسبس</text>
-          <!-- أرداف وظهر الفخذ -->
-          <rect class="mz-b" data-mid="hams" onclick="filterCatalog('hams')" x="43" y="112" width="44" height="17" rx="7"/>
-          <text class="map-lbl" x="65" y="123">أرداف</text>
+        <svg class="body-map-svg" viewBox="0 0 200 248" xmlns="http://www.w3.org/2000/svg">
+
+          <!-- ═══════════ أمامي ═══════════ -->
+          <text class="map-view-lbl" x="50" y="8" text-anchor="middle">أمامي</text>
+
+          <!-- جسم — الصورة الظلية الأمامية -->
+          <circle class="bz" cx="50" cy="20" r="11"/>
+          <path class="bz" d="M47,31 L47,37 L53,37 L53,31 Z"/>
+          <path class="bz" d="M47,37 C40,39 27,44 24,51 L21,88 L27,90 C27,82 29,73 30,69 L34,110 L66,110 L70,69 C71,73 73,82 73,90 L79,88 L76,51 C73,44 60,39 53,37 Z"/>
+          <path class="bz" d="M24,51 C18,56 16,65 16,75 L19,85 L29,82 L28,57 Z"/>
+          <path class="bz" d="M76,51 C82,56 84,65 84,75 L81,85 L71,82 L72,57 Z"/>
+          <path class="bz" d="M19,85 C17,92 17,101 18,109 L23,111 L29,84 Z"/>
+          <path class="bz" d="M81,85 C83,92 83,101 82,109 L77,111 L71,84 Z"/>
+          <path class="bz" d="M34,110 C31,117 31,124 34,128 L66,128 C69,124 69,117 66,110 Z"/>
+          <path class="bz" d="M34,128 C31,138 31,157 34,172 L47,172 L49,128 Z"/>
+          <path class="bz" d="M51,128 L53,172 L66,172 C69,157 69,138 66,128 Z"/>
+          <path class="bz" d="M34,172 C32,182 32,199 34,214 L47,214 L47,172 Z"/>
+          <path class="bz" d="M53,172 L53,214 L66,214 C68,199 68,182 66,172 Z"/>
+          <ellipse class="bz" cx="40" cy="217" rx="9" ry="4"/>
+          <ellipse class="bz" cx="60" cy="217" rx="9" ry="4"/>
+
+          <!-- صدر — شكل D مزدوج -->
+          <path class="mz" data-mid="chest" onclick="filterCatalog('chest')"
+            d="M35,46 C33,52 33,60 36,66 L50,64 L50,43 C44,43 37,44 35,46 Z"/>
+          <path class="mz" data-mid="chest" onclick="filterCatalog('chest')"
+            d="M65,46 C67,52 67,60 64,66 L50,64 L50,43 C56,43 63,44 65,46 Z"/>
+          <text class="map-lbl" x="50" y="59">صدر</text>
+
+          <!-- كتف أمامي -->
+          <ellipse class="mz" data-mid="delt" onclick="filterCatalog('delt')" cx="22" cy="53" rx="9" ry="8"/>
+          <ellipse class="mz" data-mid="delt" onclick="filterCatalog('delt')" cx="78" cy="53" rx="9" ry="8"/>
+          <text class="map-lbl" x="22" y="53">كتف</text>
+          <text class="map-lbl" x="78" y="53">كتف</text>
+
+          <!-- بايسبس -->
+          <path class="mz" data-mid="biceps" onclick="filterCatalog('biceps')"
+            d="M17,58 C15,65 15,75 18,83 L26,81 C24,73 24,64 26,58 Z"/>
+          <path class="mz" data-mid="biceps" onclick="filterCatalog('biceps')"
+            d="M83,58 C85,65 85,75 82,83 L74,81 C76,73 76,64 74,58 Z"/>
+          <text class="map-lbl" x="19" y="73" font-size="5">بايسبس</text>
+          <text class="map-lbl" x="81" y="73" font-size="5">بايسبس</text>
+
+          <!-- بطن — شبكة ٣×٢ -->
+          <rect class="mz" data-mid="abs" onclick="filterCatalog('abs')" x="38" y="70" width="9" height="8" rx="2"/>
+          <rect class="mz" data-mid="abs" onclick="filterCatalog('abs')" x="53" y="70" width="9" height="8" rx="2"/>
+          <rect class="mz" data-mid="abs" onclick="filterCatalog('abs')" x="38" y="81" width="9" height="8" rx="2"/>
+          <rect class="mz" data-mid="abs" onclick="filterCatalog('abs')" x="53" y="81" width="9" height="8" rx="2"/>
+          <rect class="mz" data-mid="abs" onclick="filterCatalog('abs')" x="38" y="92" width="9" height="8" rx="2"/>
+          <rect class="mz" data-mid="abs" onclick="filterCatalog('abs')" x="53" y="92" width="9" height="8" rx="2"/>
+          <text class="map-lbl" x="50" y="91">بطن</text>
+
           <!-- رباعية -->
-          <rect class="mz" data-mid="quads" onclick="filterCatalog('quads')" x="44" y="131" width="15" height="40" rx="7"/>
-          <rect class="mz" data-mid="quads" onclick="filterCatalog('quads')" x="71" y="131" width="15" height="40" rx="7"/>
-          <text class="map-lbl" x="52" y="153">رباعية</text>
-          <text class="map-lbl" x="79" y="153">رباعية</text>
-          <!-- سمانة -->
-          <rect class="mz" data-mid="calves" onclick="filterCatalog('calves')" x="46" y="177" width="11" height="34" rx="5"/>
-          <rect class="mz" data-mid="calves" onclick="filterCatalog('calves')" x="73" y="177" width="11" height="34" rx="5"/>
-          <text class="map-lbl" x="52" y="197">سمانة</text>
-          <text class="map-lbl" x="79" y="197">سمانة</text>
+          <path class="mz" data-mid="quads" onclick="filterCatalog('quads')"
+            d="M34,130 C31,141 31,158 35,171 L47,171 L48,130 Z"/>
+          <path class="mz" data-mid="quads" onclick="filterCatalog('quads')"
+            d="M52,130 L53,171 L65,171 C69,158 69,141 66,130 Z"/>
+          <text class="map-lbl" x="41" y="153">رباعية</text>
+          <text class="map-lbl" x="59" y="153">رباعية</text>
+
+          <!-- سمانة أمامية -->
+          <path class="mz" data-mid="calves" onclick="filterCatalog('calves')"
+            d="M35,175 C33,184 33,199 35,210 L44,210 L45,175 Z"/>
+          <path class="mz" data-mid="calves" onclick="filterCatalog('calves')"
+            d="M55,175 L56,210 L65,210 C67,199 67,184 65,175 Z"/>
+          <text class="map-lbl" x="40" y="195">سمانة</text>
+          <text class="map-lbl" x="60" y="195">سمانة</text>
+
+          <!-- فاصل عمودي -->
+          <line x1="100" y1="5" x2="100" y2="243" stroke="rgba(176,141,87,.18)" stroke-width="0.6"/>
+
+          <!-- ═══════════ خلفي ═══════════ -->
+          <text class="map-view-lbl" x="150" y="8" text-anchor="middle">خلفي</text>
+
+          <!-- جسم — الصورة الظلية الخلفية -->
+          <circle class="bz" cx="150" cy="20" r="11"/>
+          <path class="bz" d="M147,31 L147,37 L153,37 L153,31 Z"/>
+          <path class="bz" d="M147,37 C140,39 127,44 124,51 L121,88 L127,90 C127,82 129,73 130,69 L134,110 L166,110 L170,69 C171,73 173,82 173,90 L179,88 L176,51 C173,44 160,39 153,37 Z"/>
+          <path class="bz" d="M124,51 C118,56 116,65 116,75 L119,85 L129,82 L128,57 Z"/>
+          <path class="bz" d="M176,51 C182,56 184,65 184,75 L181,85 L171,82 L172,57 Z"/>
+          <path class="bz" d="M119,85 C117,92 117,101 118,109 L123,111 L129,84 Z"/>
+          <path class="bz" d="M181,85 C183,92 183,101 182,109 L177,111 L171,84 Z"/>
+          <path class="bz" d="M134,110 C131,117 131,124 134,128 L166,128 C169,124 169,117 166,110 Z"/>
+          <path class="bz" d="M134,128 C131,138 131,157 134,172 L147,172 L149,128 Z"/>
+          <path class="bz" d="M151,128 L153,172 L166,172 C169,157 169,138 166,128 Z"/>
+          <path class="bz" d="M134,172 C132,182 132,199 134,214 L147,214 L147,172 Z"/>
+          <path class="bz" d="M153,172 L153,214 L166,214 C168,199 168,182 166,172 Z"/>
+          <ellipse class="bz" cx="140" cy="217" rx="9" ry="4"/>
+          <ellipse class="bz" cx="160" cy="217" rx="9" ry="4"/>
+
+          <!-- ظهر عريض — شكل V -->
+          <path class="mz-b" data-mid="lats" onclick="filterCatalog('lats')"
+            d="M127,52 C123,58 123,76 130,102 L143,110 L143,68 C139,60 133,55 127,52 Z"/>
+          <path class="mz-b" data-mid="lats" onclick="filterCatalog('lats')"
+            d="M173,52 C177,58 177,76 170,102 L157,110 L157,68 C161,60 167,55 173,52 Z"/>
+          <text class="map-lbl" x="133" y="78">ظهر</text>
+          <text class="map-lbl" x="167" y="78">ظهر</text>
+
+          <!-- كتف خلفي -->
+          <ellipse class="mz-b" data-mid="delt" onclick="filterCatalog('delt')" cx="122" cy="53" rx="9" ry="8"/>
+          <ellipse class="mz-b" data-mid="delt" onclick="filterCatalog('delt')" cx="178" cy="53" rx="9" ry="8"/>
+          <text class="map-lbl" x="122" y="53">كتف</text>
+          <text class="map-lbl" x="178" y="53">كتف</text>
+
+          <!-- ترايسبس -->
+          <path class="mz-b" data-mid="triceps" onclick="filterCatalog('triceps')"
+            d="M117,58 C115,65 115,75 118,83 L126,81 C124,73 124,64 126,58 Z"/>
+          <path class="mz-b" data-mid="triceps" onclick="filterCatalog('triceps')"
+            d="M183,58 C185,65 185,75 182,83 L174,81 C176,73 176,64 174,58 Z"/>
+          <text class="map-lbl" x="119" y="73" font-size="5">ترايسبس</text>
+          <text class="map-lbl" x="181" y="73" font-size="5">ترايسبس</text>
+
+          <!-- هامسترينج + أرداف -->
+          <path class="mz-b" data-mid="hams" onclick="filterCatalog('hams')"
+            d="M134,112 C131,123 131,144 135,170 L147,170 L149,112 Z"/>
+          <path class="mz-b" data-mid="hams" onclick="filterCatalog('hams')"
+            d="M151,112 L153,170 L165,170 C169,144 169,123 166,112 Z"/>
+          <text class="map-lbl" x="141" y="144">هامسترينج</text>
+          <text class="map-lbl" x="159" y="144">هامسترينج</text>
+
+          <!-- سمانة خلفية -->
+          <path class="mz-b" data-mid="calves" onclick="filterCatalog('calves')"
+            d="M135,175 C133,184 133,199 135,210 L144,210 L145,175 Z"/>
+          <path class="mz-b" data-mid="calves" onclick="filterCatalog('calves')"
+            d="M155,175 L156,210 L165,210 C167,199 167,184 165,175 Z"/>
+          <text class="map-lbl" x="140" y="195">سمانة</text>
+          <text class="map-lbl" x="160" y="195">سمانة</text>
+
         </svg>
       </div>
       <button class="map-filter-all" onclick="filterCatalog(null)">عرضُ جميعِ التمارين</button>
@@ -1050,14 +1132,6 @@ body{
   </div>
 </div>
 
-<!-- ══════════════ SCHEDULE ══════════════ -->
-<div class="screen" id="s-schedule">
-  <div class="safe-top"></div>
-  <div class="scroll sched-wrap">
-    <h2 class="hist-h">جدولُ أسبوعي</h2>
-    <div id="schedGrid"></div>
-  </div>
-</div>
 
 </div><!-- /app -->
 
@@ -1112,7 +1186,6 @@ body{
   <button class="nb" id="nb-s" onclick="startSession()"><span class="ni">▶️</span><span class="nl">ابدأ</span></button>
   <button class="nb" id="nb-g" onclick="goHist()"><span class="ni">📊</span><span class="nl">التقدم</span></button>
   <button class="nb" id="nb-c" onclick="goCatalog()"><span class="ni">📚</span><span class="nl">الفهرس</span></button>
-  <button class="nb" id="nb-sch" onclick="goSchedule()"><span class="ni">📅</span><span class="nl">جدولي</span></button>
 </nav>
 
 <div class="toast" id="toast"></div>
@@ -1643,7 +1716,7 @@ function renderEx(){
   }
 
   // صورة التمرين
-  renderExImg(ex.n, item.muscleId);
+  renderExImg(ex.n, item.muscleId, ex.df||2);
 
   // كلمة الكابتن
   const cw=captainWord(ex,SESS.sets.length,gc.sets,item.muscleId);
@@ -1774,14 +1847,13 @@ function renderDots(total,done){
 
 // ── صورة التمرين الحقيقية مع تبديل إطارين ──
 let imgTimer=null;
-function renderExImg(exName, muscleId){
+function renderExImg(exName, muscleId, df){
   clearInterval(imgTimer);
   const key=EXIMG[exName];
   const fig=document.getElementById('exFig');
-  const emoji=DB[muscleId]?.e||'💪';
 
   if(!key){
-    fig.innerHTML=`<div class="ex-fallback">${emoji}</div>`;
+    fig.innerHTML=`<div class="ex-fallback">${drawEx(muscleId||'abs', df||2)}</div>`;
     return;
   }
 
@@ -1795,7 +1867,7 @@ function renderExImg(exName, muscleId){
 
   // تحقق من تحميل الصورة
   const img0=document.getElementById('exImg0');
-  img0.onerror=()=>{ fig.innerHTML=`<div class="ex-fallback">${emoji}</div>`; };
+  img0.onerror=()=>{ fig.innerHTML=`<div class="ex-fallback">${drawEx(muscleId||'abs', df||2)}</div>`; };
 
   // بدء تبديل الإطارين بعد التحميل
   img0.onload=()=>{
@@ -2348,11 +2420,12 @@ function computeTonnage(sess){
 }
 
 function histTab(tab){
-  ['cal','pr'].forEach(t=>{
+  ['cal','pr','sch'].forEach(t=>{
     document.getElementById('panel-'+t).style.display=t===tab?'':'none';
     document.getElementById('ht-'+t).classList.toggle('on',t===tab);
   });
   if(tab==='pr') renderPRs();
+  if(tab==='sch') renderSchedule();
 }
 
 function renderPRs(){
@@ -2405,7 +2478,7 @@ function renderCatalog(){
       const esc=ex.n.replace(/'/g,"\\'");
       const steps=(ex.steps||[]).map(s=>`<li>${s}</li>`).join('');
       html+=`<div class="cat-ex">
-        <div class="cat-ex-hd" onclick="catToggle('${uid}','${esc}')">
+        <div class="cat-ex-hd" onclick="catToggle('${uid}','${esc}','${mId}',${ex.df||2})">
           <div>
             <div class="cat-ex-name">${ex.n}</div>
             <div class="cat-ex-meta">${EQ_LABEL[ex.t]||ex.t} · ${DF_LABEL[ex.df]||''}</div>
@@ -2425,34 +2498,34 @@ function renderCatalog(){
 }
 
 let catImgTimers={};
-function catToggle(uid, exName){
+function catToggle(uid, exName, muscleId, df){
   const body=document.getElementById(uid);
   const arr=document.getElementById('arr-'+uid);
   const open=body.classList.toggle('open');
   arr.classList.toggle('open',open);
-  if(open && exName) loadCatImg(uid, exName);
+  if(open && exName) loadCatImg(uid, exName, muscleId, df||2);
   if(!open && catImgTimers[uid]){
     clearInterval(catImgTimers[uid]);
     delete catImgTimers[uid];
   }
 }
 
-function loadCatImg(uid, exName){
+function loadCatImg(uid, exName, muscleId, df){
   const wrap=document.getElementById('catimg-'+uid);
   if(!wrap || wrap.dataset.loaded) return;
   wrap.dataset.loaded='1';
   const key=EXIMG[exName];
-  if(!key){
-    wrap.innerHTML=`<div class="cat-img-fallback">💪</div>`;
-    return;
-  }
+  const svgFallback=()=>{
+    wrap.innerHTML=`<div class="cat-img-fallback cat-svg-fallback">${drawEx(muscleId||'abs', df||2)}</div>`;
+  };
+  if(!key){ svgFallback(); return; }
   const u0=`${IMG_BASE}${key}/0.jpg`;
   const u1=`${IMG_BASE}${key}/1.jpg`;
   wrap.innerHTML=`
     <img id="ci0-${uid}" src="${u0}" alt="${exName}">
     <img id="ci1-${uid}" src="${u1}" alt="${exName}" class="hide">`;
   const img0=document.getElementById('ci0-'+uid);
-  img0.onerror=()=>{ wrap.innerHTML=`<div class="cat-img-fallback">💪</div>`; };
+  img0.onerror=svgFallback;
   img0.onload=()=>{
     let fr=0;
     catImgTimers[uid]=setInterval(()=>{
@@ -2483,7 +2556,7 @@ function filterCatalog(mId){
 // جدول الأسبوع
 // ══════════════════════════════════════
 
-function goSchedule(){show('s-schedule');setNb('nb-sch');renderSchedule();}
+function goSchedule(){goHist();histTab('sch');}
 
 function renderSchedule(){
   const el=document.getElementById('schedGrid');
