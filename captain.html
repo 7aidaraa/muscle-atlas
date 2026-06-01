@@ -723,26 +723,20 @@ body{
       <div class="field">
         <label>المعداتُ المتوفرةُ لديك (اختَرِ كلَّ ما لديك)</label>
         <div class="eq-grid">
-          <div class="eq-item on" id="eq-bw" onclick="toggleEq('bw',this)">
-            <span class="eq-ic">🤸</span><div><div class="eq-lbl">وزن الجسم</div><div class="eq-sub">دائماً متاح</div></div>
+          <div class="eq-item on" id="eq-bw" onclick="toggleEq('bw',this)" style="grid-column:span 2">
+            <span class="eq-ic">🏋️</span><div><div class="eq-lbl">وزن الجسم + دامبل</div><div class="eq-sub">دائماً متاح</div></div>
           </div>
           <div class="eq-item" id="eq-syr" onclick="toggleEq('syr',this)">
             <span class="eq-ic">🔴</span><div><div class="eq-lbl">سيور مقاومة</div><div class="eq-sub">Resistance Bands</div></div>
           </div>
-          <div class="eq-item" id="eq-db" onclick="toggleEq('db',this)">
-            <span class="eq-ic">🏋️</span><div><div class="eq-lbl">دامبل</div><div class="eq-sub">Dumbbells</div></div>
-          </div>
           <div class="eq-item" id="eq-bar" onclick="toggleEq('bar',this)">
             <span class="eq-ic">🔲</span><div><div class="eq-lbl">بار أفقي</div><div class="eq-sub">Pull-up Bar</div></div>
           </div>
-          <div class="eq-item" id="eq-dip" onclick="toggleEq('dip',this)">
-            <span class="eq-ic">🟦</span><div><div class="eq-lbl">موازي</div><div class="eq-sub">Dip Bars</div></div>
-          </div>
-          <div class="eq-item" id="eq-ring" onclick="toggleEq('ring',this)">
+          <div class="eq-item" id="eq-ring" onclick="toggleEq('ring',this)" style="grid-column:span 2">
             <span class="eq-ic">⭕</span><div><div class="eq-lbl">حلقات جمباز</div><div class="eq-sub">Gymnastic Rings</div></div>
           </div>
           <div class="eq-item" id="eq-tower" onclick="toggleEq('tower',this)" style="grid-column:span 2">
-            <span class="eq-ic">🗼</span><div><div class="eq-lbl">برج قوة</div><div class="eq-sub">يشمل البار والموازي</div></div>
+            <span class="eq-ic">🗼</span><div><div class="eq-lbl">برج قوة + موازي</div><div class="eq-sub">يشمل البار والغطس</div></div>
           </div>
         </div>
       </div>
@@ -1286,12 +1280,11 @@ function pick(k,v,el){
   });
 }
 function toggleEq(key,el){
-  if(key==='bw')return; // وزن الجسم دائماً مفعّل
+  if(key==='bw')return; // وزن الجسم + دامبل دائماً مفعّل
   el.classList.toggle('on');
-  // تفعيل برج القوة يفعّل البار والموازي تلقائياً
+  // برج القوة يفعّل البار تلقائياً
   if(key==='tower'&&el.classList.contains('on')){
     document.getElementById('eq-bar')?.classList.add('on');
-    document.getElementById('eq-dip')?.classList.add('on');
   }
   OB.eq=Array.from(document.querySelectorAll('.eq-item.on')).map(e=>e.id.replace('eq-',''));
   if(!OB.eq.includes('bw'))OB.eq.push('bw');
@@ -1438,7 +1431,7 @@ const EXIMG={
   'الضغط الألماسي':                  'Diamond_Push-Up',
   'الضغط المنحدر':                   'Decline_Push-Up',
   'ضغط الصدر بالسيور':               'Pushups',
-  'ضغط الصدر بالدامبل أرضاً':       'Dumbbell_Flyes',
+  'ضغط الصدر بالدامبل أرضاً':       'Dumbbell_Floor_Press',
   'فتح الصدر بالدامبل':             'Dumbbell_Flyes',
   'الغطس على الموازي للصدر':         'Dips_-_Chest_Version',
   'ضغط الصدر على الحلقات':           'Pushups',
@@ -1451,13 +1444,13 @@ const EXIMG={
   'التجديف بكلا الدامبل':            'Bent_Over_Two-Dumbbell_Row',
   'السحب على الحلقات':               'Inverted_Row',
   // كتف
-  'ضغط البايك':                      'Pike_Push-up',
+  'ضغط البايك':                      'Handstand_Push-Ups',
   'ضغط اليدستاند':                   'Handstand_Push-Ups',
   'رفع جانبي بالدامبل':              'Side_Lateral_Raise',
-  'رفع أمامي بالدامبل':              'Front_Raise',
+  'رفع أمامي بالدامبل':              'Front_Dumbbell_Raise',
   'ضغط الكتف بالدامبل':              'Dumbbell_Shoulder_Press',
   'رفع جانبي بالسيور':               'Side_Lateral_Raise',
-  'الرفع الخلفي بالدامبل':           'Side_Lateral_Raise',
+  'الرفع الخلفي بالدامبل':           'Lying_Rear_Delt_Raise',
   // بايسبس
   'ثني بقبضة محايدة':                'Hammer_Curls',
   'العقلة بالمسك السفلي':            'Chin-Up',
@@ -1470,8 +1463,8 @@ const EXIMG={
   'الغطس على الكرسي':                'Bench_Dips',
   'الغطس على الموازي للترايسبس':     'Dips_-_Triceps_Version',
   'مد الترايسبس بالدامبل':           'Tricep_Dumbbell_Kickback',
-  'مد الترايسبس فوق الرأس':          'Tricep_Dumbbell_Kickback',
-  'مد الترايسبس بالسيور':            'Tricep_Dumbbell_Kickback',
+  'مد الترايسبس فوق الرأس':          'Seated_Triceps_Press',
+  'مد الترايسبس بالسيور':            'Triceps_Pushdown_-_Rope_Attachment',
   'الغطس على الحلقات':               'Dips_-_Triceps_Version',
   // بطن
   'الكرنش الأساسي':                  'Crunches',
@@ -1479,7 +1472,7 @@ const EXIMG={
   'البلانك':                         'Plank',
   'رفع الساقين':                     'Leg_Raises',
   'المتسلق':                         'Mountain_Climbers',
-  'البلانك الجانبي':                 'Side_Plank',
+  'البلانك الجانبي':                 'Side_Bridge',
   'التويست الروسي بالدامبل':         'Russian_Twist',
   'رفع الساقين على البار':            'Hanging_Leg_Raise',
   // رباعية
@@ -1492,7 +1485,7 @@ const EXIMG={
   'سكوات الكأس':                     'Dumbbell_Squat',
   'السكوات بالسيور':                 'Bodyweight_Squat',
   // ظهر الفخذ
-  'الجسر الأرضي':                    'Glute_Bridge',
+  'الجسر الأرضي':                    'Single_Leg_Glute_Bridge',
   'الجسر بساق واحدة':               'Single_Leg_Glute_Bridge',
   'الرومانيان ديدلفت بالدامبل':      'Romanian_Deadlift',
   'ديدلفت ساق مستقيمة':             'Romanian_Deadlift',
@@ -1598,7 +1591,9 @@ function allowedTools(){
   const arr=Array.isArray(eq)?eq:['bw'];
   const set=new Set(arr);
   set.add('bw');
+  set.add('db'); // bw+db دائماً معاً
   if(set.has('tower')){set.add('bar');set.add('dip');}
+  if(set.has('dip'))set.add('tower'); // توافق خلفي
   return [...set];
 }
 
