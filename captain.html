@@ -161,6 +161,53 @@ body{
 @keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 .anim{animation:up .35s cubic-bezier(.2,.7,.3,1) both}
 
+/* ── خريطة الحرارة ── */
+.mz.heat-tired{fill:rgba(193,80,60,.35);stroke:rgba(193,80,60,.7)}
+.mz.heat-ready{fill:rgba(82,183,136,.28);stroke:rgba(82,183,136,.65)}
+.mz-b.heat-tired{fill:rgba(193,80,60,.25);stroke:rgba(193,80,60,.6);stroke-dasharray:none}
+.mz-b.heat-ready{fill:rgba(82,183,136,.2);stroke:rgba(82,183,136,.55);stroke-dasharray:none}
+
+/* ── نقاط الاستشفاء في الرئيسية ── */
+.rec-dots{display:flex;flex-wrap:wrap;gap:6px;padding:10px 0 4px;justify-content:center}
+.rec-dot{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:default}
+.rec-dot-ic{width:10px;height:10px;border-radius:50%;transition:transform .2s}
+.rec-dot-lbl{font-size:.48rem;color:var(--tx3);letter-spacing:.5px;text-align:center}
+.rd-tired .rec-dot-ic{background:#c1503c;box-shadow:0 0 6px rgba(193,80,60,.5)}
+.rd-ready .rec-dot-ic{background:#52b788;box-shadow:0 0 6px rgba(82,183,136,.4)}
+.rd-fresh .rec-dot-ic{background:var(--gd);box-shadow:0 0 6px rgba(176,141,87,.4)}
+.rd-untrained .rec-dot-ic{background:var(--sf3)}
+
+/* ── spark-line ── */
+.ex-spark{display:block;margin:4px auto 0;opacity:.75}
+.spark-dot{transition:r .2s}
+.pr-spark{display:block;margin-top:4px}
+
+/* ── عداد الراحة: نبضة تحذيرية ── */
+@keyframes ringPulse{0%,100%{transform:rotate(-90deg) scale(1)}50%{transform:rotate(-90deg) scale(1.04)}}
+.ring-warn{animation:ringPulse .7s ease-in-out infinite}
+.ring-warn .ring-f{stroke:#c1503c !important}
+.ring-warn .ring-n{color:#e07060 !important}
+
+/* ── confetti ── */
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden}
+@keyframes confFall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+.conf-p{position:absolute;top:-10px;width:8px;height:8px;border-radius:2px;animation:confFall linear forwards}
+
+/* ── شاشة الإنجاز: توناج ── */
+.done-stats{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;width:100%;margin-bottom:20px}
+.done-tonnage{background:linear-gradient(135deg,rgba(176,141,87,.18),rgba(193,122,62,.1));border:1px solid var(--gd-m);border-radius:var(--r2);padding:10px 6px;text-align:center}
+.dt-v{font-family:var(--d);font-size:1.1rem;color:var(--gd);display:block}
+.dt-l{font-size:.55rem;color:var(--tx3)}
+
+/* ── شارات ── */
+.badges-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:8px 0 16px}
+.badge-chip{display:flex;flex-direction:column;align-items:center;gap:3px;background:var(--sf);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-width:64px}
+.badge-chip.new{border-color:var(--gd-m);background:linear-gradient(135deg,rgba(176,141,87,.12),rgba(193,122,62,.08));animation:up .4s both}
+.badge-ic{font-size:1.6rem;line-height:1}
+.badge-nm{font-size:.55rem;color:var(--tx2);text-align:center;line-height:1.3}
+.badge-new-lbl{font-size:.5rem;color:var(--gd);font-weight:700;letter-spacing:1px}
+.badges-hd{font-size:.7rem;color:var(--gd);letter-spacing:2px;margin:12px 0 4px;text-align:center}
+
 /* ═══════════ ONBOARDING ═══════════ */
 .ob-wrap{flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:28px 22px 36px}
 .ob-logo{display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:24px}
@@ -813,6 +860,7 @@ body{
       <div class="ms-title" id="msTitle">جاهزٌ للبدء</div>
       <div class="ms-chips" id="msChips"></div>
       <div class="ms-meta" id="msMeta"></div>
+      <div class="rec-dots" id="recDots"></div>
       <button class="btn-gold" id="msBtn" onclick="startSession()">ابدأ الجلسة ▶</button>
     </div>
 
@@ -877,6 +925,7 @@ body{
     <div class="ex-now anim">
       <div class="ex-tool" id="exTool">—</div>
       <div class="ex-name" id="exName">—</div>
+      <canvas id="exSparkCanvas" class="ex-spark" width="120" height="28" style="display:none"></canvas>
       <div class="ex-fig" id="exFig"></div>
       <div class="how-panel" id="howPanel">
         <ol class="how-steps" id="howSteps"></ol>
@@ -947,7 +996,9 @@ body{
       <div class="ds"><span class="ds-v" id="dEx">٠</span><span class="ds-l">تمارين</span></div>
       <div class="ds"><span class="ds-v" id="dSets">٠</span><span class="ds-l">مجموعات</span></div>
       <div class="ds"><span class="ds-v" id="dTime">٠</span><span class="ds-l">دقيقة</span></div>
+      <div class="done-tonnage"><span class="dt-v" id="dTon">٠</span><span class="dt-l">كجم توناج</span></div>
     </div>
+    <div id="newBadgesBox"></div>
     <div class="cap-close">
       <div class="cc-top">🎯 الكابتن يقول</div>
       <div class="cc-txt" id="capClose">—</div>
@@ -1709,6 +1760,7 @@ function renderEx(){
 
   // صورة التمرين
   renderExImg(ex.n, item.muscleId, ex.df||2);
+  renderExSpark(ex.n);
 
   // كلمة الكابتن
   const cw=captainWord(ex,SESS.sets.length,gc.sets,item.muscleId);
@@ -1871,7 +1923,7 @@ function renderExImg(exName, muscleId, df){
       frame=1-frame;
       a.classList.toggle('hide',frame===1);
       b.classList.toggle('hide',frame===0);
-    },900);
+    },600);
   };
 }
 
@@ -2020,6 +2072,193 @@ function logSet(){
   }
 }
 
+// ══════════════════════════════════════
+// خريطة الحرارة والاستشفاء
+// ══════════════════════════════════════
+
+function muscleHeat(mId){
+  const rec=(DB[mId]?.rec||48)*3600000; // ساعات → ms
+  let lastMs=0;
+  (S.log||[]).forEach(sess=>{
+    if((sess.muscles||[]).includes(mId)){
+      const t=new Date(sess.iso||sess.date).getTime();
+      if(t>lastMs)lastMs=t;
+    }
+  });
+  if(!lastMs)return{status:'untrained',pct:0};
+  const elapsed=Date.now()-lastMs;
+  const pct=Math.min(1,elapsed/rec);
+  return{
+    status:pct<0.5?'tired':pct<1?'ready':'fresh',
+    pct
+  };
+}
+
+function applyHeatmap(){
+  document.querySelectorAll('.mz,.mz-b').forEach(el=>{
+    const mId=el.dataset.mid;
+    if(!mId)return;
+    const h=muscleHeat(mId);
+    el.classList.remove('heat-tired','heat-ready');
+    if(h.status==='tired')el.classList.add('heat-tired');
+    else if(h.status==='ready')el.classList.add('heat-ready');
+  });
+}
+
+function renderRecDots(){
+  const el=document.getElementById('recDots');
+  if(!el)return;
+  const muscles=Object.keys(DB);
+  el.innerHTML=muscles.map(mId=>{
+    const h=muscleHeat(mId);
+    const cls=`rd-${h.status}`;
+    const lbl=DB[mId]?.n||mId;
+    return`<div class="rec-dot ${cls}" title="${lbl}">
+      <div class="rec-dot-ic"></div>
+      <div class="rec-dot-lbl">${lbl.slice(0,4)}</div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════
+// Spark-lines
+// ══════════════════════════════════════
+
+function exWeightHistory(exName,n){
+  const out=[];
+  for(const sess of (S.log||[])){
+    for(const ex of (sess.exercises||[])){
+      if(ex.exName===exName){
+        const maxW=Math.max(...(ex.sets||[]).map(s=>s.w||0));
+        const maxR=Math.max(...(ex.sets||[]).map(s=>s.r||0));
+        out.push({w:maxW,r:maxR,iso:sess.iso||''});
+        break;
+      }
+    }
+    if(out.length>=n)break;
+  }
+  return out.reverse();
+}
+
+function drawSparkCanvas(canvas,data,color){
+  if(!canvas||!data.length)return;
+  canvas.style.display='block';
+  const ctx=canvas.getContext('2d');
+  const W=canvas.width,H=canvas.height;
+  ctx.clearRect(0,0,W,H);
+  const vals=data.map(d=>d.w||d.r||0);
+  const mn=Math.min(...vals),mx=Math.max(...vals);
+  const range=mx-mn||1;
+  const pts=vals.map((v,i)=>({
+    x:i*(W-8)/(vals.length-1||1)+4,
+    y:H-4-((v-mn)/range)*(H-8)
+  }));
+  // area fill
+  ctx.beginPath();
+  ctx.moveTo(pts[0].x,H);
+  pts.forEach(p=>ctx.lineTo(p.x,p.y));
+  ctx.lineTo(pts[pts.length-1].x,H);
+  ctx.closePath();
+  const grad=ctx.createLinearGradient(0,0,0,H);
+  grad.addColorStop(0,color+'55');
+  grad.addColorStop(1,color+'00');
+  ctx.fillStyle=grad;
+  ctx.fill();
+  // line
+  ctx.beginPath();
+  pts.forEach((p,i)=>i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y));
+  ctx.strokeStyle=color;
+  ctx.lineWidth=1.5;
+  ctx.lineJoin='round';
+  ctx.stroke();
+  // last dot
+  const last=pts[pts.length-1];
+  ctx.beginPath();
+  ctx.arc(last.x,last.y,2.5,0,Math.PI*2);
+  ctx.fillStyle=color;
+  ctx.fill();
+}
+
+function renderExSpark(exName){
+  const canvas=document.getElementById('exSparkCanvas');
+  if(!canvas)return;
+  const data=exWeightHistory(exName,8);
+  if(data.length<2){canvas.style.display='none';return;}
+  drawSparkCanvas(canvas,data,'#B08D57');
+}
+
+// ══════════════════════════════════════
+// شارات الإنجاز
+// ══════════════════════════════════════
+
+const BADGES=[
+  {id:'first',ic:'🎯',nm:'أول خطوة',cond:()=>(S.log||[]).length>=1},
+  {id:'week1',ic:'🔥',nm:'أسبوع كامل',cond:()=>(S.streak?.n||0)>=7},
+  {id:'sets100',ic:'💯',nm:'١٠٠ مجموعة',cond:()=>(S.log||[]).reduce((s,l)=>s+(l.totalSets||0),0)>=100},
+  {id:'sess10',ic:'🏅',nm:'١٠ جلسات',cond:()=>(S.log||[]).length>=10},
+  {id:'sess30',ic:'🏆',nm:'٣٠ جلسة',cond:()=>(S.log||[]).length>=30},
+  {id:'ton1000',ic:'⚡',nm:'١٠٠٠ كجم',cond:()=>(S.log||[]).reduce((s,sess)=>{
+    return s+(sess.exercises||[]).flatMap(e=>e.sets||[]).reduce((t,st)=>t+(st.r||0)*(st.w||0),0);
+  },0)>=1000},
+  {id:'streak14',ic:'🌟',nm:'١٤ يوم متتالي',cond:()=>(S.streak?.n||0)>=14},
+  {id:'cycle2',ic:'🔄',nm:'دورتان',cond:()=>cycleInfo().cycle>=3},
+];
+
+function checkBadges(){
+  if(!S.user)return[];
+  if(!S.user.badges)S.user.badges=[];
+  const newOnes=[];
+  BADGES.forEach(b=>{
+    if(!S.user.badges.includes(b.id)&&b.cond()){
+      S.user.badges.push(b.id);
+      newOnes.push(b);
+    }
+  });
+  return newOnes;
+}
+
+function renderBadges(container,newIds=[]){
+  if(!container)return;
+  const earned=(S.user?.badges||[]);
+  if(!earned.length){container.innerHTML='';return;}
+  const list=BADGES.filter(b=>earned.includes(b.id));
+  container.innerHTML=`<div class="badges-hd">✦ إنجازاتك</div><div class="badges-row">`+
+    list.map(b=>{
+      const isNew=newIds.includes(b.id);
+      return`<div class="badge-chip${isNew?' new':''}">
+        <span class="badge-ic">${b.ic}</span>
+        <span class="badge-nm">${b.nm}</span>
+        ${isNew?`<span class="badge-new-lbl">جديد!</span>`:''}
+      </div>`;
+    }).join('')+'</div>';
+}
+
+// ══════════════════════════════════════
+// Confetti
+// ══════════════════════════════════════
+
+function launchConfetti(){
+  const wrap=document.createElement('div');
+  wrap.className='confetti-wrap';
+  document.body.appendChild(wrap);
+  const colors=['#B08D57','#C17A3E','#52b788','#e07060','#EDE8D8','#7ecced'];
+  for(let i=0;i<55;i++){
+    const p=document.createElement('div');
+    p.className='conf-p';
+    p.style.cssText=`
+      left:${Math.random()*100}%;
+      background:${colors[i%colors.length]};
+      width:${6+Math.random()*6}px;
+      height:${6+Math.random()*6}px;
+      border-radius:${Math.random()>0.5?'50%':'2px'};
+      animation-duration:${1.4+Math.random()*1.2}s;
+      animation-delay:${Math.random()*0.6}s;
+    `;
+    wrap.appendChild(p);
+  }
+  setTimeout(()=>wrap.remove(),3500);
+}
+
 // سجّلْ أفضلَ مجموعةٍ كرقمٍ يُتجاوَزُ لاحقاً + رصدِ الأرقامِ القياسية
 function recordBest(exName,sets,muscleId){
   if(!S.hist)S.hist={};
@@ -2058,8 +2297,11 @@ function startRestThen(cb){
     document.getElementById('restN').textContent=a(left);
     const off=circ*(1-left/sec);
     document.getElementById('ringF').style.strokeDashoffset=String(off);
+    // نبضة تحذيرية في آخر 10 ثوانٍ
+    document.querySelector('.ring-wrap svg')?.classList.toggle('ring-warn',left<=10);
     if(left<=0){
       clearInterval(SESS.restId);
+      document.querySelector('.ring-wrap svg')?.classList.remove('ring-warn');
       document.getElementById('restOv').classList.remove('on');
       cb();
     }
@@ -2151,11 +2393,13 @@ function finishSession(){
     'الاستشفاءُ الآنَ بنيانُك. نَمْ جيداً وتغذَّ صح.',
     'الفارقُ بينَ جسدٍ متغيّرٍ وغيرِه: العودةُ مرةً أخرى. احضرْ.',
   ];
+  const tonnage=SESS.done.reduce((s,d)=>s+(d.sets||[]).reduce((t,st)=>t+(st.r||0)*(st.w||0),0),0);
   document.getElementById('doneH').textContent=`أحسنتَ، ${S.user?.name||'بطل'}!`;
   document.getElementById('doneP').textContent=`${a(muscles.length)} عضلاتٍ، ${a(totalSets)} مجموعة.`;
   document.getElementById('dEx').textContent=a(SESS.done.length);
   document.getElementById('dSets').textContent=a(totalSets);
   document.getElementById('dTime').textContent=a(durMin);
+  document.getElementById('dTon').textContent=a(Math.round(tonnage));
   document.getElementById('capClose').textContent=closes[Math.floor(Math.random()*closes.length)];
 
   // الأرقامُ القياسيةُ الجديدة
@@ -2183,6 +2427,10 @@ function finishSession(){
   show('s-done');
   document.getElementById('navBar').style.display='flex';
   setNb('nb-s');
+  launchConfetti();
+  const newBadges=checkBadges();
+  sv();
+  renderBadges(document.getElementById('newBadgesBox'), newBadges.map(b=>b.id));
 }
 
 // ══════════════════════════════════════
@@ -2327,6 +2575,9 @@ function renderHome(){
     document.getElementById('msBtn').disabled=false;
     document.getElementById('msBtn').onclick=()=>startSession();
   }
+
+  renderRecDots();
+  applyHeatmap();
 
   // الإحصاء
   const now=new Date();
@@ -2527,7 +2778,7 @@ function loadCatImg(uid, exName, muscleId, df){
       fr=1-fr;
       a.classList.toggle('hide',fr===1);
       b.classList.toggle('hide',fr===0);
-    },900);
+    },600);
   };
 }
 
